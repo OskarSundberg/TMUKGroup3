@@ -26,3 +26,18 @@ I, Oskar Sundberg, declare that I am the sole author of the content I add to thi
 4. ivonilsson
 
 --- 
+
+# The Plan
+
+Make the best chat application ever
+
+## Language
+
+We will use C#
+
+### Build System
+
+Not yet decided
+
+
+---
