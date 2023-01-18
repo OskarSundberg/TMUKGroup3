@@ -10,6 +10,8 @@ I, Samuel Wallander Leyongberg, declare that I am the sole author of the content
 
 I, Oskar Sundberg, declare that I am the sole author of the content I add to this repository.
 
+I, Ivo Nilsson, declare that I am the sole author of the content I add to this repository.
+
 
 ---
 
