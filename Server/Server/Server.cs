@@ -21,31 +21,17 @@ namespace Server
             {
                 Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 listener.Bind(iPEndPoint);
-
                 listener.Listen(10);
 
-                Console.WriteLine("Waiting for anything");
-                Socket handler = listener.Accept();
-
-                string msg = null;
-                byte[] bytes = null;
                 while (true)
                 {
-                    bytes = new byte[4096];
-                    int bytesRead = handler.Receive(bytes);
-                    msg += Encoding.UTF8.GetString(bytes);
-                    if (msg.IndexOf("\n") > -1)
-                    {
-                        break;
-                    }
+                    Console.WriteLine("Waiting for anything");
+                    Socket handler = listener.Accept();
+                    Thread thread = new Thread(() => Sessions.ServerSession(handler));
+                    thread.Start();
+                    Console.WriteLine("Sent connection to session");
+
                 }
-
-                Console.WriteLine($"Text received : {msg}");
-
-                byte[] echo = Encoding.UTF8.GetBytes(msg);
-                handler.Send(echo);
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
             }
             catch (Exception e)
             {
