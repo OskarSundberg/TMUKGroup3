@@ -43,7 +43,7 @@ We will use C#
 
 Not yet decided
 
-##Compiling and running instructions
+## Compiling and running instructions
 
 Open the project in Visual Studio and press the start button or hotkey F5.
 
