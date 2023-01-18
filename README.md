@@ -31,15 +31,20 @@ I, Ivo Nilsson, declare that I am the sole author of the content I add to this r
 
 # The Plan
 
-Make the best chat application ever
+We are going to make a chat-serivce hosted on the same network. It is going to be a chatroom
+service with several features which are yet to be decided. Some of the features that will be implemented is a open chatroom 
+and features such as direct messages.
 
 ## Language
 
 We will use C#
 
-### Build System
+## Build System
 
 Not yet decided
 
+##Compiling and running instructions
+
+Open the project in Visual Studio and press the start button or hotkey F5.
 
 ---
