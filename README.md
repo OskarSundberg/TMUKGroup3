@@ -48,3 +48,6 @@ Not yet decided
 Open the project in Visual Studio and press the start button or hotkey F5.
 
 ---
+ # Kanban
+
+[Kanban](https://github.com/users/OskarSundberg/projects/2/views/1)
