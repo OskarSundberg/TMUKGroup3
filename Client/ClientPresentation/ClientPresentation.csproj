@@ -7,4 +7,14 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ClientBusiness\ClientBusiness.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Views\" />
+    <Folder Include="ViewModel\" />
+  </ItemGroup>
+
 </Project>
