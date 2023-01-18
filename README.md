@@ -1,16 +1,4 @@
-# WELCOME 
-
----
-
-I, Simon de Reuver, declare that I am the sole author of the content I add to this repository.
-
-I, Gustav Pråmell, declare that I am the sole author of the content I add to this repository.
-
-I, Samuel Wallander Leyongberg, declare that I am the sole author of the content I add to this repository.
-
-I, Oskar Sundberg, declare that I am the sole author of the content I add to this repository.
-
-I, Ivo Nilsson, declare that I am the sole author of the content I add to this repository.
+# Chat application
 
 
 ---
@@ -45,9 +33,26 @@ Not yet decided
 
 ## Compiling and running instructions
 
-Open the project in Visual Studio and press the start button or hotkey F5.
+Open the server project in Visual studio and start by pressing F5
+
+Then run the Client project in Visual studio and start by pressing F5
+
+Now type in the Client window to chat
 
 ---
+
  # Kanban
 
-[Kanban](https://github.com/users/OskarSundberg/projects/2/views/1)
+This is a link to the [Kanban](https://github.com/users/OskarSundberg/projects/2/views/1)
+
+---
+
+I, Simon de Reuver, declare that I am the sole author of the content I add to this repository.
+
+I, Gustav Pråmell, declare that I am the sole author of the content I add to this repository.
+
+I, Samuel Wallander Leyongberg, declare that I am the sole author of the content I add to this repository.
+
+I, Oskar Sundberg, declare that I am the sole author of the content I add to this repository.
+
+I, Ivo Nilsson, declare that I am the sole author of the content I add to this repository.
