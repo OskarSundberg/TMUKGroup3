@@ -1,61 +1,44 @@
 {
   "version": 3,
   "targets": {
-    "net6.0-windows7.0": {
-      "ClientBusiness/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/ClientBusiness.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ClientBusiness.dll": {}
-        }
-      }
-    }
+    "net6.0-windows7.0": {}
   },
-  "libraries": {
-    "ClientBusiness/1.0.0": {
-      "type": "project",
-      "path": "../ClientBusiness/ClientBusiness.csproj",
-      "msbuildProject": "../ClientBusiness/ClientBusiness.csproj"
-    }
-  },
+  "libraries": {},
   "projectFileDependencyGroups": {
-    "net6.0-windows7.0": [
-      "ClientBusiness >= 1.0.0"
-    ]
+    "net6.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\oskar\\.nuget\\packages\\": {}
+    "C:\\Users\\46763\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\oskar\\OneDrive\\Dokument\\TUMKLabb3\\TMUKGroup3\\Client\\ClientPresentation\\ClientPresentation.csproj",
+      "projectUniqueName": "C:\\Users\\46763\\Desktop\\TMUKGroup3\\Client\\Client\\ClientPresentation\\ClientPresentation.csproj",
       "projectName": "ClientPresentation",
-      "projectPath": "C:\\Users\\oskar\\OneDrive\\Dokument\\TUMKLabb3\\TMUKGroup3\\Client\\ClientPresentation\\ClientPresentation.csproj",
-      "packagesPath": "C:\\Users\\oskar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\oskar\\OneDrive\\Dokument\\TUMKLabb3\\TMUKGroup3\\Client\\ClientPresentation\\obj\\",
+      "projectPath": "C:\\Users\\46763\\Desktop\\TMUKGroup3\\Client\\Client\\ClientPresentation\\ClientPresentation.csproj",
+      "packagesPath": "C:\\Users\\46763\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\46763\\Desktop\\TMUKGroup3\\Client\\Client\\ClientPresentation\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\oskar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\46763\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0-windows"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {}
       },
       "frameworks": {
         "net6.0-windows7.0": {
           "targetAlias": "net6.0-windows",
-          "projectReferences": {
-            "C:\\Users\\oskar\\OneDrive\\Dokument\\TUMKLabb3\\TMUKGroup3\\Client\\ClientBusiness\\ClientBusiness.csproj": {
-              "projectPath": "C:\\Users\\oskar\\OneDrive\\Dokument\\TUMKLabb3\\TMUKGroup3\\Client\\ClientBusiness\\ClientBusiness.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -86,7 +69,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   }
