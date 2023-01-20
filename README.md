@@ -5,15 +5,15 @@
 
 # GitHub handles
 
-0. simondereuver
+* simondereuver (Simon de Reuver)
 
-1. Pramell94
+* Pramell94 (Gustav Pråmell)
 
-2. samwalle
+* samwalle (Samuel Wallander Leyongberg)
 
-3. OskarSundberg
+* OskarSundberg (Oskar Sundberg)
 
-4. ivonilsson
+* ivonilsson (Ivo Nilsson)
 
 --- 
 
