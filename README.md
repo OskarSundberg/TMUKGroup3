@@ -19,9 +19,11 @@
 
 # The Plan
 
-We are going to make a chat-serivce hosted on the same network. It is going to be a chatroom
-service with several features which are yet to be decided. Some of the features that will be implemented is a open chatroom 
-and features such as direct messages.
+We are going to make a chat-service hosted either locally or remotely. It is going to be a chatroom
+service with several features such as a general chatroom for clients connected to the server and direct 
+messaging from client to client over the server. All messages are going to be encrypted which makes our 
+chat-service secure. We are going to create a GUI in WPF which is connected to the code-behind client 
+files. 
 
 ## Language
 
