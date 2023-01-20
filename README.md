@@ -37,7 +37,7 @@ Open the server project in Visual studio and start by pressing F5
 
 Then run the Client project in Visual studio and start by pressing F5
 
-Now type in the Client window to chat
+Now type in the Client window to chat.
 
 ---
 
