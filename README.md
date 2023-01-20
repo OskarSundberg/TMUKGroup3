@@ -33,9 +33,9 @@ Not yet decided.
 
 ## Compiling and running instructions
 
-Open the server project in Visual studio and start by pressing F5
+Open the server project in Visual studio and start by pressing F5.
 
-Then run the Client project in Visual studio and start by pressing F5
+Then run the Client project in Visual studio and start by pressing F5.
 
 Now type in the Client window to chat.
 
