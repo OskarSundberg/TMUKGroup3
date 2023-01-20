@@ -29,7 +29,7 @@ We will use C#
 
 ## Build System
 
-Not yet decided
+Not yet decided.
 
 ## Compiling and running instructions
 
