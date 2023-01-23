@@ -3,4 +3,5 @@
 Server/Server/obj/
 Client/ClientPresentation/obj
 Client/ClientBusiness/obj
+Client/ClientBusiness/bin
 desktop.ini
