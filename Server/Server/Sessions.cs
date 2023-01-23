@@ -13,6 +13,11 @@ namespace Server
         {
             string msg = null;
             byte[] bytes = null;
+            string welcomeMsg = "Welcome to the chat User!";
+            byte[] echoWelcomeMsg = Encoding.UTF8.GetBytes(welcomeMsg);
+            handler.Send(echoWelcomeMsg);
+
+
             while (true)
             {
                 bytes = new byte[4096];
@@ -23,6 +28,7 @@ namespace Server
                     break;
                 }
             }
+            //Testing purpose
             Console.WriteLine($"Text received : {msg}");
 
             byte[] echo = Encoding.UTF8.GetBytes(msg);
