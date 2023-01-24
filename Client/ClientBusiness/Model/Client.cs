@@ -5,23 +5,17 @@
     using System.Net.Sockets;
     using System.Text;
 
-    public class SocketClient
+    public class Client
     {
-        public static int Main(string[] args)
-        {
-            StartClient();
-            return 0;
-        }
-
-        public static void StartClient()
+        public void StartClient()
         {
             byte[] bytes = new byte[1024];
 
             try
             {
                 IPHostEntry host = Dns.GetHostEntry("localhost");
-                IPAddress ipAddress = host.AddressList[0];
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 11000);
+                IPAddress ipAddress = host.AddressList[1];
+                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 13375);
 
                 Socket sender = new Socket(ipAddress.AddressFamily,
                     SocketType.Stream, ProtocolType.Tcp);
@@ -32,7 +26,7 @@
 
                     Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIIII");//This is a test<EOF>");
+                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIII\n");//This is a test<EOF>");
 
                     int bytesSent = sender.Send(msg);
 

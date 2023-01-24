@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ClientBusiness.Model;
 
 namespace ClientPresentation
 {
@@ -22,6 +23,8 @@ namespace ClientPresentation
     {
         public MainWindow()
         {
+            Client client = new Client();
+            client.StartClient();
             InitializeComponent();
         }
     }
