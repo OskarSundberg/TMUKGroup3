@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition  Width="2*"/>
+            <ColumnDefinition  Width="5*"/>
+            <ColumnDefinition  Width="1*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <!--here the pepole onlie will be visible-->
+        </StackPanel>
+        <TextBox Grid.Row="2" Grid.Column="1">
+            <!--here the user adds what they like to write-->
+        </TextBox>
+        <Button Grid.Row="2"></Button>
     </Grid>
 </Window>
