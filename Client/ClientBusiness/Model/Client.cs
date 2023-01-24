@@ -1,4 +1,4 @@
-﻿namespace ClientBusiness
+﻿namespace ClientBusiness.Model
 {
     using System;
     using System.Net;
@@ -7,7 +7,7 @@
 
     public class SocketClient
     {
-        public static int Main(String[] args)
+        public static int Main(string[] args)
         {
             StartClient();
             return 0;
