@@ -9,7 +9,8 @@ namespace Server
         static void Main(string[] args)
         {
             StartServer();
-            for(int j = 0; j < 2; j++)
+
+            for(int i = 0; i < 2; i++)
             { }
             return;
         }
