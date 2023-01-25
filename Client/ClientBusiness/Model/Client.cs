@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Net;
     using System.Net.Sockets;
+    using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Text;
 
@@ -11,6 +12,8 @@
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
+
+        public Socket sender { get; private set; }
         public string Name
         {
             get { return name; }
@@ -24,14 +27,14 @@
         }
         public void StartClient()
         {
-            byte[] bytes = new byte[1024];
+            
 
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(Console.ReadLine());
                 IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
-                Socket sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
@@ -39,15 +42,20 @@
 
                     Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-                    byte[] msg = Encoding.ASCII.GetBytes(GetMessageFromClient()) ;
+                    //this line gets userinput from console and sends to server, could be used later on in thread
+                    //Thread sendMessageThread = new Thread(() => GetMessageFromClient());
+                    Thread sendMessageThread = new Thread(GetMessageFromClient);
+                    sendMessageThread.IsBackground = true;
+                    sendMessageThread.Start();
 
-                    int bytesSent = sender.Send(msg);
+                    //int bytesSent = sender.Send(msg);
+                    //Thread recieveMessageThread = new Thread(() => RecieveMessageFromServer());
+                    Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
+                    recieveMessageThread.IsBackground = true;
+                    recieveMessageThread.Start();
 
-                    int bytesRec = sender.Receive(bytes);
-                    Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
-
-                    sender.Shutdown(SocketShutdown.Both);
-                    sender.Close();
+                    //sender.Shutdown(SocketShutdown.Both);
+                    //sender.Close();
                 }
                 catch (ArgumentNullException e)
                 {
@@ -68,11 +76,30 @@
             }
         }
 
-        public string GetMessageFromClient()
+        public void GetMessageFromClient()
         {
-            //test prompt
-            Console.WriteLine("Enter the text you want to send here: ");
-            return Console.ReadLine() + "\n"; 
+            while (true) 
+            {
+                //test prompt, remove later and only keep the return line
+                Console.WriteLine("Enter the text you want to send here: ");
+                byte[] msg = Encoding.UTF8.GetBytes(Console.ReadLine() + "\n");
+
+                int bytesSent = sender.Send(msg);
+            }
+        }
+
+        public void RecieveMessageFromServer()
+        {
+            int bytesRec;
+            byte[] bytes = new byte[4100];
+            while (true)
+            {
+                bytesRec = sender.Receive(bytes);
+                if (bytesRec != 0)
+                {
+                    Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                }
+            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
