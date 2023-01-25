@@ -16,9 +16,12 @@ namespace Server
         }
         public static void StartServer()
         {
-            IPHostEntry iPHostEntry = Dns.GetHostEntry("localhost");
+            string hostName = Dns.GetHostName();
+            IPHostEntry iPHostEntry = Dns.GetHostEntry(hostName);
             IPAddress iPAddress = iPHostEntry.AddressList[1];
-            IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, 13375);
+            int port = 13375;
+            IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, port);
+            Console.WriteLine("Pleas connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
             {
