@@ -12,6 +12,18 @@ namespace Server
         private string ipAddress;
         private bool isOnline;
 
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string IpAddress
+        {
+            get { return ipAddress; }
+            set { ipAddress = value; }
+        }
+
         public bool IsOnline
         {
             get { return isOnline; }
