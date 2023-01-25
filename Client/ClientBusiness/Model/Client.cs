@@ -41,7 +41,7 @@
 
                     Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIII\n");//This is a test<EOF>");
+                    byte[] msg = Encoding.ASCII.GetBytes(GetMessageFromClient()) ;//This is a test<EOF>");
 
                     int bytesSent = sender.Send(msg);
 
@@ -70,6 +70,13 @@
             {
                 Console.WriteLine(e.ToString());
             }
+        }
+
+        public string GetMessageFromClient()
+        {
+            //test prompt
+            Console.WriteLine("Enter the text you want to send here: ");
+            return Console.ReadLine() + "\n"; 
         }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
