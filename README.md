@@ -35,11 +35,25 @@ Not yet decided.
 
 ## Compiling and running instructions
 
-Open the server project in Visual studio and start by pressing F5.
+Open ...\TMUKGroup3\Server\Server as current directory in CLI
 
-Then run the Client project in Visual studio and start by pressing F5.
+Input 
 
-Now type in the Client window to chat.
+     dotnet build
+
+     dotnet run
+
+Now the server is started! Time to start a client
+
+Open ...\TMUKGroup3\Client\ClientPresentation as current directory in CLI
+
+Input 
+
+     dotnet build
+
+     dotnet run
+
+Now you have a working Client.
 
 ---
 
