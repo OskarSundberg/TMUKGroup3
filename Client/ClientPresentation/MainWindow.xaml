@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ClientPresentation"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="2*"/>
@@ -26,4 +27,5 @@
         </TextBox>
         <Button Grid.Row="2"></Button>
     </Grid>
+    
 </Window>
