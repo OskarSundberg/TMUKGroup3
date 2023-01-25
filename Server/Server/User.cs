@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,14 +9,14 @@ namespace Server
 {
     internal class User
     {
-        private string name;
+        private Socket handler;
         private string ipAddress;
         private bool isOnline;
 
-        public string Name
+        public Socket Handler
         {
-            get { return name; }
-            set { name = value; }
+            get { return handler; }
+            set { handler = value; }
         }
 
         public string IpAddress
@@ -30,10 +31,10 @@ namespace Server
             set { isOnline = value; }
         }
 
-        public User(string ipAddress, string name)
+        public User(string ipAddress, Socket handler)
         {
             this.ipAddress = ipAddress;
-            this.name = name;
+            this.handler = handler;
         }
     }
 }
