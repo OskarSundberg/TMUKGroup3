@@ -28,21 +28,19 @@
 
             try
             {
-                IPHostEntry host = Dns.GetHostEntry("localhost");
-                IPAddress ipAddress = host.AddressList[1];
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 13375);
+                IPAddress ipAddress = IPAddress.Parse(Console.ReadLine());
+                IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
-                Socket sender = new Socket(ipAddress.AddressFamily,
-                    SocketType.Stream, ProtocolType.Tcp);
+                Socket sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
-                    sender.Connect(remoteEP);
+                    sender.Connect(server);
 
                     Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIII\n");//This is a test<EOF>");
-
+                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIII\n");
+                        
                     int bytesSent = sender.Send(msg);
 
                     int bytesRec = sender.Receive(bytes);
@@ -50,21 +48,19 @@
 
                     sender.Shutdown(SocketShutdown.Both);
                     sender.Close();
-
                 }
-                catch (ArgumentNullException ane)
+                catch (ArgumentNullException e)
                 {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    Console.WriteLine("ArgumentNullException : {0}", e.ToString());
                 }
-                catch (SocketException se)
+                catch (SocketException e)
                 {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
+                    Console.WriteLine("SocketException : {0}", e.ToString());
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Unexpected exception : {0}", e.ToString());
                 }
-
             }
             catch (Exception e)
             {
