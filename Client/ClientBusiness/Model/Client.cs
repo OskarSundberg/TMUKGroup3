@@ -25,6 +25,32 @@
                 OnPropertyChanged();
             }
         }
+
+        private string sendMsg;
+        public string SendMsg
+        {
+            get { return sendMsg; }
+            set
+            {
+                if (value == sendMsg)
+                    return;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string reviedMsg;
+        public string ReviedMsg
+        {
+            get { return reviedMsg; }
+            set
+            {
+                if (value == reviedMsg)
+                    return;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
         public void StartClient()
         {
             
