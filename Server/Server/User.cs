@@ -10,7 +10,7 @@ namespace Server
     internal class User
     {
         private Socket handler;
-        private string ipAddress;
+        private string name;
         private bool isOnline;
 
         public Socket Handler
@@ -19,10 +19,10 @@ namespace Server
             set { handler = value; }
         }
 
-        public string IpAddress
+        public string Name
         {
-            get { return ipAddress; }
-            set { ipAddress = value; }
+            get { return Name; }
+            set { name = value; }
         }
 
         public bool IsOnline
@@ -31,9 +31,9 @@ namespace Server
             set { isOnline = value; }
         }
 
-        public User(string ipAddress, Socket handler)
+        public User(string name, Socket handler)
         {
-            this.ipAddress = ipAddress;
+            this.Name = name;
             this.handler = handler;
         }
     }
