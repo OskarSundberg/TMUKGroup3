@@ -6,12 +6,10 @@ namespace Server
 {
     internal class Server
     {
+        public static Allchat allchat = new Allchat();
         static void Main(string[] args)
         {
             StartServer();
-
-            for(int i = 0; i < 2; i++)
-            { }
             return;
         }
         public static void StartServer()
@@ -33,8 +31,9 @@ namespace Server
                 {
                     Console.WriteLine("Waiting for anything");
                     Socket handler = listener.Accept();
-                    Thread thread = new Thread(() => Sessions.ServerSession(handler));
-                    thread.Start();
+                    User user = new User("xoxo", handler);
+                    //For when user is created
+                    allchat.UserJoin(user);
                     Console.WriteLine("Sent connection to session");
 
                 }
