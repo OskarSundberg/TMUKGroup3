@@ -51,13 +51,13 @@
                 OnPropertyChanged();
             }
         }
-        public void StartClient()
+        public void StartClient(string ip)
         {
             
 
             try
             {
-                IPAddress ipAddress = IPAddress.Parse(Console.ReadLine());
+                IPAddress ipAddress = IPAddress.Parse(ip);
                 IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
                 sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);

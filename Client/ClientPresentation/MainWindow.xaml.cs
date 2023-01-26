@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ClientBusiness.Model;
 using ClientPresentation.ViewModels;
+using ClientPresentation.Views;
 
 namespace ClientPresentation
 {
@@ -25,9 +26,12 @@ namespace ClientPresentation
         public MainWindowViewModel ViewModel { get; set; }
         public MainWindow()
         {
+            EstablishConnection ec = new EstablishConnection();
+            ec.ShowDialog();
+            string ip = ec.IpAddress;
             ViewModel = new MainWindowViewModel();
             Client client = new Client();
-            client.StartClient();
+            client.StartClient(ip);
             InitializeComponent(); 
             
         }
