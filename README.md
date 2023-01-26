@@ -31,9 +31,11 @@ We will use C#
 
 ## Build System
 
-Not yet decided.
+We will use .NET in CLI as the build system
 
 ## Compiling and running instructions
+
+First make sure you have the [.NET SDK](https://dotnet.microsoft.com/en-us/download) installed  
 
 Open ...\TMUKGroup3\Server\Server as current directory in CLI
 
