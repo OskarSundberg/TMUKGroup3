@@ -59,6 +59,22 @@ Now you have a working Client.
 
 ---
 
+## Linter
+
+Too use a linter in the project use the command
+
+    dotnet format
+
+for more specific scenarois use
+
+``` dotnet format whitespace ``` For fixing whitespace
+
+``` dotnet format style ``` Runs code style analyzer
+
+for more commands check out [Github](https://github.com/dotnet/format)
+
+---
+
  # Kanban
 
 This is a link to the [Kanban](https://github.com/users/OskarSundberg/projects/2/views/1)
