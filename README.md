@@ -31,9 +31,11 @@ We will use C#
 
 ## Build System
 
-Not yet decided.
+We will use .NET in CLI as the build system
 
 ## Compiling and running instructions
+
+First make sure you have the [.NET SDK](https://dotnet.microsoft.com/en-us/download) installed  
 
 Open ...\TMUKGroup3\Server\Server as current directory in CLI
 
@@ -54,6 +56,22 @@ Input
      dotnet run
 
 Now you have a working Client.
+
+---
+
+## Linter
+
+Too use a linter in the project use the command
+
+    dotnet format
+
+for more specific scenarois use
+
+``` dotnet format whitespace ``` For fixing whitespace
+
+``` dotnet format style ``` Runs code style analyzer
+
+for more commands check out [Github](https://github.com/dotnet/format)
 
 ---
 
