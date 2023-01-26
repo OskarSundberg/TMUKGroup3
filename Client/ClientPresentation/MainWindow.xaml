@@ -3,10 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ClientPresentation"
+        xmlns:local="clr-namespace:ClientPresentation.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    
+
+    <Window.DataContext>
+        <local:MainWindowViewModel x:Name="ClinetViewModel"/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition  Width="2*"/>
@@ -19,13 +23,28 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1">
-            <!--here the pepole onlie will be visible-->
-        </StackPanel>
-        <TextBox Grid.Row="2" Grid.Column="1">
-            <!--here the user adds what they like to write-->
-        </TextBox>
-        <Button Grid.Row="2"></Button>
+        <ComboBox x:Name="ClinetsOnline" Grid.Column="0" Height="30" VerticalAlignment="Top" IsEditable="True" SelectedIndex="0" FontSize="20"
+        ItemsSource = "{Binding ClientList}"
+        DisplayMemberPath = "Name"
+        SelectedItem = "{Binding Path = Chosen_Client}"
+        SelectedValue = "{Binding UserName}"  Grid.Row="1"/>
+
+        <!--here the pepole onlie will be visible-->
+        <!--This is ugly so we need to fix it :Z shuld be a textblock-->
+        <ComboBox x:Name="UserName" Grid.Column="0" Height="30" VerticalAlignment="Top" IsEditable="True" SelectedIndex="0" FontSize="20"
+        ItemsSource = "{Binding UserClient}"
+        DisplayMemberPath = "Name"
+        SelectedItem = "{Binding Path = UserClinet1}"
+        Grid.Row="0"/>
+
+        <!--here the user adds what they like to write-->
+        <TextBox x:Name="SendBox" Text="{Binding Path=SendBox, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
+        
+        
+        <!--Here is the send button-->
+        <Button Grid.Row="2" Grid.Column="3"
+            Content="Send"
+            Click="Button_Click_Save"/>
+
     </Grid>
-    
 </Window>
