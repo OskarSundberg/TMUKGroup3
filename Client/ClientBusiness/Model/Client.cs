@@ -4,6 +4,7 @@
     using System.ComponentModel;
     using System.Net;
     using System.Net.Sockets;
+    using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Text;
 
@@ -11,6 +12,8 @@
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
+
+        public Socket sender { get; private set; }
         public string Name
         {
             get { return name; }
@@ -22,53 +25,106 @@
                 OnPropertyChanged();
             }
         }
-        public void StartClient()
+
+        private string sendMsg;
+        public string SendMsg
         {
-            byte[] bytes = new byte[1024];
+            get { return sendMsg; }
+            set
+            {
+                if (value == sendMsg)
+                    return;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string reviedMsg;
+        public string ReviedMsg
+        {
+            get { return reviedMsg; }
+            set
+            {
+                if (value == reviedMsg)
+                    return;
+                name = value;
+                OnPropertyChanged();
+            }
+        }
+        public void StartClient(string ip)
+        {
+            
 
             try
             {
-                IPHostEntry host = Dns.GetHostEntry("localhost");
-                IPAddress ipAddress = host.AddressList[1];
-                IPEndPoint remoteEP = new IPEndPoint(ipAddress, 13375);
+                IPAddress ipAddress = IPAddress.Parse(ip);
+                IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
-                Socket sender = new Socket(ipAddress.AddressFamily,
-                    SocketType.Stream, ProtocolType.Tcp);
+                sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
 
                 try
                 {
-                    sender.Connect(remoteEP);
+                    sender.Connect(server);
 
                     Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
 
-                    byte[] msg = Encoding.ASCII.GetBytes("SUIIIIII\n");//This is a test<EOF>");
+                    //this line gets userinput from console and sends to server, could be used later on in thread
+                    //Thread sendMessageThread = new Thread(() => GetMessageFromClient());
+                    Thread sendMessageThread = new Thread(GetMessageFromClient);
+                    sendMessageThread.IsBackground = true;
+                    sendMessageThread.Start();
 
-                    int bytesSent = sender.Send(msg);
+                    //int bytesSent = sender.Send(msg);
+                    //Thread recieveMessageThread = new Thread(() => RecieveMessageFromServer());
+                    Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
+                    recieveMessageThread.IsBackground = true;
+                    recieveMessageThread.Start();
 
-                    int bytesRec = sender.Receive(bytes);
-                    Console.WriteLine("Echoed test = {0}", Encoding.ASCII.GetString(bytes, 0, bytesRec));
-
-                    sender.Shutdown(SocketShutdown.Both);
-                    sender.Close();
-
+                    //sender.Shutdown(SocketShutdown.Both);
+                    //sender.Close();
                 }
-                catch (ArgumentNullException ane)
+                catch (ArgumentNullException e)
                 {
-                    Console.WriteLine("ArgumentNullException : {0}", ane.ToString());
+                    Console.WriteLine("ArgumentNullException : {0}", e.ToString());
                 }
-                catch (SocketException se)
+                catch (SocketException e)
                 {
-                    Console.WriteLine("SocketException : {0}", se.ToString());
+                    Console.WriteLine("SocketException : {0}", e.ToString());
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine("Unexpected exception : {0}", e.ToString());
                 }
-
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
+            }
+        }
+
+        public void GetMessageFromClient()
+        {
+            while (true) 
+            {
+                //test prompt, remove later and only keep the return line
+                Console.WriteLine("Enter the text you want to send here: ");
+                byte[] msg = Encoding.UTF8.GetBytes(Console.ReadLine() + "\n");
+
+                int bytesSent = sender.Send(msg);
+            }
+        }
+
+        public void RecieveMessageFromServer()
+        {
+            int bytesRec;
+            byte[] bytes = new byte[64000]; //nearly max size
+            while (true)
+            {
+                bytesRec = sender.Receive(bytes);
+                if (bytesRec != 0)
+                {
+                    Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                }
             }
         }
 

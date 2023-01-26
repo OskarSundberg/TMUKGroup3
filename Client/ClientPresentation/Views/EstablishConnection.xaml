@@ -1,0 +1,39 @@
+﻿<Window x:Class="ClientPresentation.Views.EstablishConnection"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientPresentation.Views"
+        mc:Ignorable="d"
+        x:Name="EC"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Title="EstablishConnection" Height="450" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBox x:Name="FirstIP" Grid.Column="1" Text="{Binding Path=FirstIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxLength="3" BorderThickness="1,1,0,1" Width="40" Height="25" TextAlignment="Center"/>
+        <TextBox x:Name="FirstDot" Grid.Column="2" Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="70" Height="25" TextAlignment="Center" Focusable="False"/>
+        <TextBox x:Name="SecondIP" Grid.Column="3" Text="{Binding Path=SecondIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxLength="3" BorderThickness="0,1,0,1" Width="40" Height="25" TextAlignment="Center"/>
+        <TextBox x:Name="SecondDot" Grid.Column="4" Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="70" Height="25" TextAlignment="Center" Focusable="False"/>
+        <TextBox x:Name="ThirdIP" Grid.Column="5" Text="{Binding Path=ThirdIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxLength="3" BorderThickness="0,1,0,1" Width="40" Height="25" TextAlignment="Center"/>
+        <TextBox x:Name="ThirdDot" Grid.Column="6" Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="70" Height="25" TextAlignment="Center" Focusable="False"/>
+        <TextBox x:Name="FourthIP" Grid.Column="7" Text="{Binding Path=FourthIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Center" MaxLength="3" BorderThickness="0,1,1,1" Width="40" Height="25" TextAlignment="Center"/>
+
+        <Button x:Name="ConnectBtn" Grid.Column="4" Content="Connect" VerticalAlignment="Bottom" Click="ConnectToServerClick"/>
+    </Grid>
+</Window>

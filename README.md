@@ -31,15 +31,47 @@ We will use C#
 
 ## Build System
 
-Not yet decided.
+We will use .NET in CLI as the build system
 
 ## Compiling and running instructions
 
-Open the server project in Visual studio and start by pressing F5.
+First make sure you have the [.NET SDK](https://dotnet.microsoft.com/en-us/download) installed  
 
-Then run the Client project in Visual studio and start by pressing F5.
+Open ...\TMUKGroup3\Server\Server as current directory in CLI
 
-Now type in the Client window to chat.
+Input 
+
+     dotnet build
+
+     dotnet run
+
+Now the server is started! Time to start a client
+
+Open ...\TMUKGroup3\Client\ClientPresentation as current directory in CLI
+
+Input 
+
+     dotnet build
+
+     dotnet run
+
+Now you have a working Client.
+
+---
+
+## Linter
+
+Too use a linter in the project use the command
+
+    dotnet format
+
+for more specific scenarois use
+
+``` dotnet format whitespace ``` For fixing whitespace
+
+``` dotnet format style ``` Runs code style analyzer
+
+for more commands check out [Github](https://github.com/dotnet/format)
 
 ---
 

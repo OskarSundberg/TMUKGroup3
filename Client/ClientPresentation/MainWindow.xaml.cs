@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ClientBusiness.Model;
+using ClientPresentation.ViewModels;
+using ClientPresentation.Views;
 
 namespace ClientPresentation
 {
@@ -21,11 +23,25 @@ namespace ClientPresentation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindowViewModel ViewModel { get; set; }
         public MainWindow()
         {
+            EstablishConnection ec = new EstablishConnection();
+            ec.ShowDialog();
+            string ip = ec.IpAddress;
+            ViewModel = new MainWindowViewModel();
             Client client = new Client();
-            client.StartClient();
-            InitializeComponent();
+            client.StartClient(ip);
+            InitializeComponent(); 
+            
+        }
+
+        private void Button_Click_Save(object sender, RoutedEventArgs e)
+        {
+            string msg = SendBox.Text;
+            SendBox.Clear();
+            Client c  = ViewModel.ClientList[0];
+            c.SendMsg = msg;
         }
     }
 }
