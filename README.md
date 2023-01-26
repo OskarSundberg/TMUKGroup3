@@ -59,6 +59,26 @@ Now you have a working Client.
 
 ---
 
+## Code Coverage
+
+First make sure to install .NET tool
+
+``` dotnet tool install --global dotnet-coverage ```
+
+Open ```...\TMUKGroup3\Server\Server``` or ```...\TMUKGroup3\Client\ClientPresentation``` as current directory in CLI
+
+Now run this command to generate a .cobertura report
+
+``` dotnet coverage collect dotnet test --output .\coveragereport\Codecovarge --output-format cobertura ```
+
+Now to convert the cobertura files to HTML run it's command
+
+``` reportgenerator -reports:".\coveragereport\Codecovarge.cobertura.xml" -targetdir:"coveragereport" -reporttype:Html ```
+
+You will now find a index.htm files in the coveragereport folder.
+
+---
+
 ## Linter
 
 Too use a linter in the project use the command
