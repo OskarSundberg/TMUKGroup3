@@ -11,7 +11,7 @@ namespace Server
     {
         List<User> userList = new List<User>();
         object lockThread = new object();
-        public void UserJoin(User newUser)
+        public int UserJoin(User newUser)
         {
             userList.Add(newUser);
             Thread thread = new Thread(() => Monitor(newUser));
@@ -20,7 +20,7 @@ namespace Server
             string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
             byte[] echoWelcomeMsg = Encoding.UTF8.GetBytes(welcomeMsg);
             newUser.Handler.Send(echoWelcomeMsg);
-
+            return 1;
         }
         public void Monitor(User user)
         {

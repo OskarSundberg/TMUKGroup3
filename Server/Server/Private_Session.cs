@@ -15,9 +15,6 @@ namespace Server
         {
             members.Add(userOne);
             members.Add(userTwo);
-        }
-        private void Start_PrivateChat(User personOne, User personTwo)
-        {
             foreach (User user in members)
             {
                 Thread thread = new Thread(() => Monitor(user));
