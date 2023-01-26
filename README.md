@@ -59,6 +59,14 @@ Now you have a working Client.
 
 ---
 
+## Unit test
+
+To run a unit test Open ```...\TMUKGroup3\Server``` or ```...\TMUKGroup3\Client``` as current directory in CLI
+
+And run ``` dotnet test ```
+
+---
+
 ## Code Coverage
 
 First make sure to install .NET tool
