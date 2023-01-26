@@ -41,9 +41,9 @@ Open ...\TMUKGroup3\Server\Server as current directory in CLI
 
 Input 
 
-     dotnet build
+``` dotnet build ```
 
-     dotnet run
+``` dotnet run ```
 
 Now the server is started! Time to start a client
 
@@ -51,9 +51,9 @@ Open ...\TMUKGroup3\Client\ClientPresentation as current directory in CLI
 
 Input 
 
-     dotnet build
+``` dotnet build ```
 
-     dotnet run
+``` dotnet run ```
 
 Now you have a working Client.
 
@@ -65,7 +65,9 @@ First make sure to install .NET tool
 
 ``` dotnet tool install --global dotnet-coverage ```
 
-Open ```...\TMUKGroup3\Server\Server``` or ```...\TMUKGroup3\Client\ClientPresentation``` as current directory in CLI
+``` dotnet tool install -g dotnet-reportgenerator-globaltool ```
+
+Open ```...\TMUKGroup3\Server``` or ```...\TMUKGroup3\Client``` as current directory in CLI
 
 Now run this command to generate a .cobertura report
 
@@ -95,7 +97,7 @@ for more commands check out [Github](https://github.com/dotnet/format)
 
 ---
 
- # Kanban
+# Kanban
 
 This is a link to the [Kanban](https://github.com/users/OskarSundberg/projects/2/views/1)
 
