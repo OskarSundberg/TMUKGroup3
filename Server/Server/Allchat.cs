@@ -17,7 +17,7 @@ namespace Server
             Thread thread = new Thread(() => Monitor(newUser));
             thread.IsBackground = true;
             thread.Start();
-            string welcomeMsg = "$Welcome to the chat {newUser.Name}!";
+            string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
             byte[] echoWelcomeMsg = Encoding.UTF8.GetBytes(welcomeMsg);
             newUser.Handler.Send(echoWelcomeMsg);
 
@@ -43,6 +43,9 @@ namespace Server
                 //Testing purpose
                 Console.WriteLine($"Text received : {msg}");
                 Echo(msg);
+                bytes = null;
+                msg = null;
+                bytesRead = 0;
                 Thread.Sleep(1000);
             }
 

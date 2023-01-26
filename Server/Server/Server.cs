@@ -31,8 +31,7 @@ namespace Server
                 {
                     Console.WriteLine("Waiting for anything");
                     Socket handler = listener.Accept();
-                    User user = new User("xoxo", handler);
-                    //For when user is created
+                    User user = new User("Name", handler);
                     allchat.UserJoin(user);
                     Console.WriteLine("Sent connection to session");
 
