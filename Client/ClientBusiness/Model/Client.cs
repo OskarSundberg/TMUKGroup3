@@ -117,7 +117,7 @@
         public void RecieveMessageFromServer()
         {
             int bytesRec;
-            byte[] bytes = new byte[4100];
+            byte[] bytes = new byte[64000]; //nearly max size
             while (true)
             {
                 bytesRec = sender.Receive(bytes);
