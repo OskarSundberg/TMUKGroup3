@@ -7,29 +7,31 @@ namespace ServerNUnit
 {
     public class Tests
     {
+        Allchat echoTest;
+        User testUserOne;
+        User testUserTwo;
+
+        [SetUp]
+        public void Setup()
+        {
+            echoTest = new Allchat();
+            testUserOne = new User("Sam", null);
+            testUserTwo = new User("Samme", null);
+        }
+
         [Test]
         public void Echo_Testing()
         {
-            //ARANGE
-            var echoTest = new Allchat();
-
-            //ACT
-            echoTest.Echo("");
-
             //ASSERT
-            Assert.AreEqual(1, echoTest.Echo(""));
+            Assert.AreEqual(1, echoTest.Echo("123"));
         }
 
         [Test]
         public void User_Test()
         {
-            var user = new User("Sam", null);
-
-            user.Name = "Test";
-            user.IsOnline = false;
-
-            Assert.AreEqual("Test", user.Name);
-            Assert.AreEqual(false, user.IsOnline);
+            Assert.IsNull(testUserTwo.Handler);
+            Assert.AreEqual("Sam", testUserOne.Name);
+            Assert.AreEqual(false, testUserOne.IsOnline);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Server
         }
         public void Monitor(User user)
         {
-            byte[] bytes = new byte[4096];
+            byte[] bytes = new byte[60000];
             int bytesRead;
             string msg = null;
 
@@ -32,7 +32,7 @@ namespace Server
             {
                 while (true)
                 {
-                    bytes = new byte[4096];
+                    bytes = new byte[60000];
                     bytesRead = user.Handler.Receive(bytes);
                     msg += Encoding.UTF8.GetString(bytes);
                     if (msg.IndexOf("\n") > -1)

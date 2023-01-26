@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Server
 {
-    internal class Privte_Sessions
+    internal class Private_Session
     {
         List<User> members = new List<User>();
-        public Privte_Sessions(User userOne, User userTwo)
+        public Private_Session(User userOne, User userTwo)
         {
             members.Add(userOne);
             members.Add(userTwo);
         }
-        private void Start_PrivteChat(User personOne, User personTwo)
+        private void Start_PrivateChat(User personOne, User personTwo)
         {
             foreach (User user in members)
             {
