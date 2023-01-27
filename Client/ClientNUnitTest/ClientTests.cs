@@ -24,5 +24,19 @@ namespace ClientNUnitTest
             // Assert.AreEqual(2, result);
             Assert.Fail();
         }
+
+        [Test] 
+        public void TestClientName() 
+        {
+            //ARRANGE
+            Client client = new Client();
+
+            //ACT
+            client.Name = "Test";
+
+            //ASSERT
+            Assert.AreEqual("Test", client.Name); 
+        
+        }
     }
 }
