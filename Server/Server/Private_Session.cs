@@ -37,7 +37,7 @@ namespace Server
         public int Echo(string msg)
         {
             byte[] echo = Encoding.UTF8.GetBytes(msg);
-            foreach(User u in members)
+            foreach (User u in members)
             {
                 u.Handler.Send(echo);
             }

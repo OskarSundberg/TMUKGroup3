@@ -45,7 +45,7 @@ namespace ServerNUnit
             senderEndTwo.Connect(server);
 
             allChatTest = new Allchat();
-            
+
             //Creating test user that will not be closed
             testUserOne = new User("Sam", senderOne);
             testUserTwo = new User("Samme", senderTwo);
