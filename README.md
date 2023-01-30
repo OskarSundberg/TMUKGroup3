@@ -1,5 +1,6 @@
 # Chat application
 
+[![Build Status for Chat program][build-status]][build-log]
 
 ---
 
@@ -120,3 +121,8 @@ I, Samuel Wallander Leyongberg, declare that I am the sole author of the content
 I, Oskar Sundberg, declare that I am the sole author of the content I add to this repository.
 
 I, Ivo Nilsson, declare that I am the sole author of the content I add to this repository.
+
+---
+
+[build-log]:    https://github.com/OskarSundberg/TMUKGroup3/actions/workflows/build.yml
+[build-status]: https://github.com/OskarSundberg/TMUKGroup3/actions/workflows/build.yml/badge.svg
