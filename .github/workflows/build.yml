@@ -17,9 +17,9 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
 		#Restores
-      - name: Restore dependencies Server
+      - name: Install dependencies Server
         run: dotnet restore ./Server/Server.sln
-      - name: Restore dependencies Client
+      - name: Install dependencies Client
         run: dotnet restore ./Client/Client.sln
 		#Checks Version
       - name: dotnet version
