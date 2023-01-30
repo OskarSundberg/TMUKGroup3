@@ -38,23 +38,25 @@ We will use .NET in CLI as the build system
 
 First make sure you have the [.NET SDK](https://dotnet.microsoft.com/en-us/download) installed  
 
-Open ...\TMUKGroup3\Server\Server as current directory in CLI
+To run Server open `...\TMUKGroup3` as current directory in CLI
 
-Input 
+Input:
 
-``` dotnet build ```
-
-``` dotnet run ```
+``` 
+dotnet build .\Server\Server.sln
+dotnet run --project .\Server\Server\Server.csproj
+```
 
 Now the server is started! Time to start a client
 
-Open ...\TMUKGroup3\Client\ClientPresentation as current directory in CLI
+Open `...\TMUKGroup3` as current directory in CLI
 
-Input 
+Input:
 
-``` dotnet build ```
-
-``` dotnet run ```
+``` 
+dotnet build .\Client\Client.sln
+dotnet run --project .\Client\ClientPresentation\ClientPresentation.csproj
+```
 
 Now you have a working Client.
 
@@ -62,9 +64,10 @@ Now you have a working Client.
 
 ## Unit test
 
-To run a unit test Open ```...\TMUKGroup3\Server``` or ```...\TMUKGroup3\Client``` as current directory in CLI
-
-And run ``` dotnet test ```
+For Server unit tests input: 
+    dotnet test ./Server/Server.sln
+For Client uni tests input:
+	dotnet test ./Client/Client.sln
 
 ---
 
@@ -72,19 +75,20 @@ And run ``` dotnet test ```
 
 First make sure to install .NET tool
 
-``` dotnet tool install --global dotnet-coverage ```
+``` 
+dotnet tool install --global dotnet-coverage
+dotnet tool install -g dotnet-reportgenerator-globaltool 
+```
 
-``` dotnet tool install -g dotnet-reportgenerator-globaltool ```
-
-Open ```...\TMUKGroup3\Server``` or ```...\TMUKGroup3\Client``` as current directory in CLI
+Open `...\TMUKGroup3\Server` or `...\TMUKGroup3\Client` as current directory in CLI
 
 Now run this command to generate a .cobertura report
 
-``` dotnet coverage collect dotnet test --output .\coveragereport\Codecovarge --output-format cobertura ```
+    dotnet coverage collect dotnet test --output .\coveragereport\Codecovarge --output-format cobertura
 
 Now to convert the cobertura files to HTML run it's command
 
-``` reportgenerator -reports:".\coveragereport\Codecovarge.cobertura.xml" -targetdir:"coveragereport" -reporttype:Html ```
+    reportgenerator -reports:".\coveragereport\Codecovarge.cobertura.xml" -targetdir:"coveragereport" -reporttype:Html
 
 You will now find a index.htm files in the coveragereport folder.
 
@@ -98,9 +102,9 @@ Too use a linter in the project use the command
 
 for more specific scenarois use
 
-``` dotnet format whitespace ``` For fixing whitespace
+`dotnet format whitespace` For fixing whitespace
 
-``` dotnet format style ``` Runs code style analyzer
+`dotnet format style` Runs code style analyzer
 
 for more commands check out [Github](https://github.com/dotnet/format)
 
