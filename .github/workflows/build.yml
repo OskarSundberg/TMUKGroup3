@@ -17,8 +17,12 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
       - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet clean
+      - name: Build ./Server
+        run: dotnet build ./Server
+      - name: Build ./Client
+        run: dotnet build ./Client
       - name: Test ./Server
-        run: dotnet test --no-restore --verbosity normal
+        run: dotnet test ./Server
+        name: Test ./Client
+        run: dotnet test ./Client
