@@ -80,17 +80,22 @@ dotnet tool install --global dotnet-coverage
 dotnet tool install -g dotnet-reportgenerator-globaltool 
 ```
 
-Open `...\TMUKGroup3\Server` or `...\TMUKGroup3\Client` as current directory in CLI
+Open `...\TMUKGroup3\` as current directory in CLI
 
-Now run this command to generate a .cobertura report
+To get code coverage report for Server Input:
 
-    dotnet coverage collect dotnet test --output .\coveragereport\Codecovarge --output-format cobertura
+```
+dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
+reportgenerator -reports:"Server\coveragereport\**\coverage.cobertura.xml" -targetdir:"Server\coveragereport" -reporttype:Html
+```
 
-Now to convert the cobertura files to HTML run it's command
+To get code coverage report for Client Input:
+```
+dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Client/coveragereport/
+reportgenerator -reports:"Client\coveragereport\**\coverage.cobertura.xml" -targetdir:"Client\coveragereport" -reporttype:Html
+```
 
-    reportgenerator -reports:".\coveragereport\Codecovarge.cobertura.xml" -targetdir:"coveragereport" -reporttype:Html
-
-You will now find a index.htm files in the coveragereport folder.
+You will now find a index.html file in the `...\TMUKGroup3\Server\coveragereport` or `...\TMUKGroup3\Client\coveragereport` folder.
 
 ---
 
