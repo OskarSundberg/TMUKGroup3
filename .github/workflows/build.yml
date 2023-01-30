@@ -20,6 +20,8 @@ jobs:
         run: dotnet restore ./Server
       - name: Install dependencies
         run: dotnet restore ./Client
+      - name: dotnet version
+        run: dotnet --version
       - name: Build ./Server
         run: dotnet build ./Server
       - name: Build ./Client
@@ -28,3 +30,7 @@ jobs:
         run: dotnet test ./Server
       - name: Test ./Client
         run: dotnet test ./Client
+      - name: Linter ./Server
+        run: dotnet format ./Server
+      - name: Linter ./Client
+        run: dotnet format ./Client
