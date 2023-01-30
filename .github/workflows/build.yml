@@ -24,5 +24,5 @@ jobs:
         run: dotnet build ./Client
       - name: Test ./Server
         run: dotnet test ./Server
-        name: Test ./Client
+      - name: Test ./Client
         run: dotnet test ./Client
