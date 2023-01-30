@@ -20,24 +20,29 @@ jobs:
         run: dotnet restore ./Server/Server.sln
       - name: Install dependencies
         run: dotnet restore ./Client/Client.sln
+
       - name: dotnet version
         run: dotnet --version
+
       - name: Build ./Server
         run: dotnet build ./Server/Server.sln --no-restore
       - name: Build ./Client
         run: dotnet build ./Client/Client.sln --no-restore
+
       - name: Test ./Server
         run: dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
       - name: Test ./Client 
         run: dotnet test ./Client/Client.sln --verbosity normal --collect:"XPlat Code Coverage" --results-directory .Client/coveragereport/
+
       - name: Linter ./Server
         run: dotnet format ./Server/Server.sln
       - name: Linter ./Client
         run: dotnet format ./Client/Client.sln
+
 	    - name: Code Coverage Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          filename: coveragereport/**/coverage.cobertura.xml
+          filename: ./Server/coveragereport/**/coverage.cobertura.xml
           badge: true
           fail_below_min: true
           format: markdown
