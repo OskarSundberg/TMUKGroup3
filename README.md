@@ -64,9 +64,12 @@ Now you have a working Client.
 
 ## Unit test
 
-For Server unit tests input: 
+For Server unit tests input:
+
     dotnet test ./Server/Server.sln
+
 For Client uni tests input:
+
 	dotnet test ./Client/Client.sln
 
 ---
