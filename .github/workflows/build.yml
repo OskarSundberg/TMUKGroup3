@@ -44,7 +44,7 @@ jobs:
         with:
           reports: 'Server\coveragereport\**\coverage.cobertura.xml'
           targetdir: 'Server\coveragereport'
-          -reporttypes: 'TeamCitySummary'
+          reporttypes: 'TeamCitySummary'
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
