@@ -38,3 +38,16 @@ jobs:
         run: dotnet format ./Server/Server.sln
       - name: Linter ./Client
         run: dotnet format ./Client/Client.sln
+
+      - name: ReportGenerator
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
+        with:
+          reports: 'Server\coveragereport\**\coverage.cobertura.xml'
+          targetdir: 'Server\coveragereport'
+          -reporttypes: 'Html;Badges;MarkdownSummaryGithub
+
+      - name: Upload coverage report artifact
+        uses: actions/upload-artifact@v2.2.3
+        with:
+          name: coverage.cobertura
+          path: Server\coveragereport
