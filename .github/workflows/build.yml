@@ -49,7 +49,7 @@ jobs:
       - name: Code Coverage Summary Report
         uses: insightsengineering/coverage-action@v2
         with:
-          path: Server\coveragereport\**\coverage.cobertura.xml
+          path: .\Server\coveragereport\**\coverage.cobertura.xml
           threshold: 50
           fail: false
           publish: true
