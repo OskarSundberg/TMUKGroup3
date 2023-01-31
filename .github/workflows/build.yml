@@ -44,7 +44,7 @@ jobs:
         with:
           reports: 'Server\coveragereport\**\coverage.cobertura.xml'
           targetdir: 'Server\coveragereport'
-          -reporttypes: 'Html;Badges;MarkdownSummaryGithub
+          -reporttypes: 'Html;Badges;MarkdownSummaryGithub'
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
