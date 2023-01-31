@@ -44,15 +44,8 @@ jobs:
         with:
           reports: 'Server\coveragereport\**\coverage.cobertura.xml'
           targetdir: 'Server\coveragereport'
-          reporttypes: 'TeamCitySummary;Html;Badges'
-
-      - name: Code Coverage Summary Report
-        uses: insightsengineering/coverage-action@v2
-        with:
-          path: .\Server\coveragereport\**\coverage.cobertura.xml
-          threshold: 50
-          fail: false
-          publish: true
+          reporttypes: 'TeamCitySummary;HtmlSummary'
+          verbosity: 'Info'
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
