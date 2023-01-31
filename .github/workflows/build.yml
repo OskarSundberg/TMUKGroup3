@@ -16,6 +16,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet-version }}
+
       - name: Install dependencies
         run: dotnet restore ./Server/Server.sln
       - name: Install dependencies
@@ -24,31 +25,39 @@ jobs:
       - name: dotnet version
         run: dotnet --version
 
-      - name: Build ./Server
+      - name: Build Server
         run: dotnet build ./Server/Server.sln --no-restore
-      - name: Build ./Client
+      - name: Build Client
         run: dotnet build ./Client/Client.sln --no-restore
 
-      - name: Test ./Server
+      - name: Test Server
         run: dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
-      - name: Test ./Client 
+      - name: Test Client 
         run: dotnet test ./Client/Client.sln --verbosity normal --collect:"XPlat Code Coverage" --results-directory .Client/coveragereport/
 
-      - name: Linter ./Server
+      - name: Linter Server
         run: dotnet format ./Server/Server.sln
-      - name: Linter ./Client
+      - name: Linter Client
         run: dotnet format ./Client/Client.sln
 
-      - name: ReportGenerator
+      - name: ReportGenerator Server
         uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
         with:
           reports: 'Server\coveragereport\**\coverage.cobertura.xml'
           targetdir: 'Server\coveragereport'
-          reporttypes: 'TeamCitySummary;HtmlSummary'
-          verbosity: 'Info'
+          reporttypes: 'HtmlSummary'
+      
+      - name: ReportGenerator Client
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
+        with:
+          reports: 'Client\coveragereport\**\coverage.cobertura.xml'
+          targetdir: 'Client\coveragereport'
+          reporttypes: 'HtmlSummary'
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: coverage.cobertura
-          path: Server\coveragereport
+          name: CoverageReport
+          path: |
+            Server\coveragereport\index.htlm
+            Client\coveragereport\index.htlm
