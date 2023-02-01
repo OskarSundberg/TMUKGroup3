@@ -22,11 +22,28 @@ namespace ClientPresentation.Views
 
         private string ipAddress;
 
+        private string name;
+
+        private string portNumber;
+
         public string IpAddress
         {
             get { return ipAddress; }
             set { ipAddress = value; }
         }
+
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string PortNumber
+        {
+            get { return portNumber; }
+            set { portNumber = value; }
+        }
+
         public EstablishConnection()
         {
             InitializeComponent();
@@ -44,6 +61,8 @@ namespace ClientPresentation.Views
         private void ConnectToServerClick(object sender, RoutedEventArgs e)
         {
             ipAddress = SectionsToString();
+            portNumber = portID.Text;
+            name = userID.Text;
             EC.Close();
         }
 
