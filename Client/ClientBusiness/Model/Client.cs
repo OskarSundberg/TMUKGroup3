@@ -13,7 +13,7 @@
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
-        
+
         public static Socket Sender { get; set; }
         public string Name
         {
@@ -35,7 +35,7 @@
             {
                 if (value == null || Name == null)
                     return;
-                
+
                 GetMessageFromClient(Name + ": " + value);
                 sendMsg = value;
                 OnPropertyChanged();
@@ -56,7 +56,7 @@
         }
         public void StartClient(string ip)
         {
-            
+
 
             try
             {
@@ -64,7 +64,7 @@
                 IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
                 Sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                
+
 
                 try
                 {
@@ -97,12 +97,8 @@
 
         public void GetMessageFromClient(string msgstr)
         {
-                //test prompt, remove later and only keep the return line
-                //Console.WriteLine("Enter the text you want to send here: ");
-                byte[] msg = Encoding.UTF8.GetBytes(msgstr + "\n");
-
-                int bytesSent = Sender.Send(msg);
-         
+            byte[] msg = Encoding.UTF8.GetBytes(msgstr + "\n");
+            int bytesSent = Sender.Send(msg);
         }
 
         public void RecieveMessageFromServer()
