@@ -17,7 +17,7 @@ namespace Server
             members.Add(userTwo);
             foreach (User user in members)
             {
-                Thread thread = new Thread(() => Monitor(user));
+                user.Thread = new Thread(() => Monitor(user));
             }
         }
         public int EndSession(User person)
