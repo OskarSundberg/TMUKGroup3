@@ -33,7 +33,7 @@ jobs:
       - name: Test Server
         run: dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
       - name: Test Client 
-        run: dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory .Client/coveragereport/
+        run: dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Client/coveragereport/
 
       - name: Linter Server
         run: dotnet format ./Server/Server.sln
