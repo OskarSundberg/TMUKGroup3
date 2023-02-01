@@ -14,9 +14,9 @@ namespace Server
         public int UserJoin(User newUser)
         {
             userList.Add(newUser);
-            Thread thread = new Thread(() => Monitor(newUser));
-            thread.IsBackground = true;
-            thread.Start();
+            newUser.Thread = new Thread(() => Monitor(newUser));
+            newUser.Thread.IsBackground = true;
+            newUser.Thread.Start();
             string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
             byte[] echoWelcomeMsg = Encoding.UTF8.GetBytes(welcomeMsg);
             newUser.Handler.Send(echoWelcomeMsg);
