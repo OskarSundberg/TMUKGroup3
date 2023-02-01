@@ -60,5 +60,5 @@ jobs:
         with:
           name: CoverageReport
           path: |
-            Server\coveragereport\summary.htlm
-            Client\coveragereport\summary.htlm
+            Server\coveragereport\summary.html
+            Client\coveragereport\summary.html
