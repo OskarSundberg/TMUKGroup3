@@ -7,13 +7,14 @@
     using System.Reflection;
     using System.Runtime.CompilerServices;
     using System.Text;
+    using System.Xml.Linq;
 
     public class Client : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
 
-        public Socket sender { get; private set; }
+        public static Socket Sender { get; set; }
         public string Name
         {
             get { return name; }
@@ -32,9 +33,11 @@
             get { return sendMsg; }
             set
             {
-                if (value == sendMsg)
+                if (value == null || Name == null)
                     return;
-                name = value;
+
+                GetMessageFromClient(Name + ": " + value);
+                sendMsg = value;
                 OnPropertyChanged();
             }
         }
@@ -53,35 +56,25 @@
         }
         public void StartClient(string ip)
         {
-            
+
 
             try
             {
                 IPAddress ipAddress = IPAddress.Parse(ip);
                 IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
-                sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                Sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+
 
                 try
                 {
-                    sender.Connect(server);
+                    Sender.Connect(server);
 
-                    Console.WriteLine("Socket connected to {0}", sender.RemoteEndPoint.ToString());
+                    Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
 
-                    //this line gets userinput from console and sends to server, could be used later on in thread
-                    //Thread sendMessageThread = new Thread(() => GetMessageFromClient());
-                    Thread sendMessageThread = new Thread(GetMessageFromClient);
-                    sendMessageThread.IsBackground = true;
-                    sendMessageThread.Start();
-
-                    //int bytesSent = sender.Send(msg);
-                    //Thread recieveMessageThread = new Thread(() => RecieveMessageFromServer());
                     Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
                     recieveMessageThread.IsBackground = true;
                     recieveMessageThread.Start();
-
-                    //sender.Shutdown(SocketShutdown.Both);
-                    //sender.Close();
                 }
                 catch (ArgumentNullException e)
                 {
@@ -102,16 +95,10 @@
             }
         }
 
-        public void GetMessageFromClient()
+        public void GetMessageFromClient(string msgstr)
         {
-            while (true) 
-            {
-                //test prompt, remove later and only keep the return line
-                Console.WriteLine("Enter the text you want to send here: ");
-                byte[] msg = Encoding.UTF8.GetBytes(Console.ReadLine() + "\n");
-
-                int bytesSent = sender.Send(msg);
-            }
+            byte[] msg = Encoding.UTF8.GetBytes(msgstr + "\n");
+            int bytesSent = Sender.Send(msg);
         }
 
         public void RecieveMessageFromServer()
@@ -120,7 +107,7 @@
             byte[] bytes = new byte[64000]; //nearly max size
             while (true)
             {
-                bytesRec = sender.Receive(bytes);
+                bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
                     Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));

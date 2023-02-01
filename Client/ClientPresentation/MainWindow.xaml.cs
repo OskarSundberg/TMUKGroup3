@@ -43,7 +43,7 @@ namespace ClientPresentation
         {
             string msg = SendBox.Text;
             SendBox.Clear();
-            Client c = ViewModel.ClientList[0];
+            Client c = ViewModel.UserClient[0];
             c.SendMsg = msg;
         }
     }

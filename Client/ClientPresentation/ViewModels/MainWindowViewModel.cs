@@ -26,10 +26,6 @@ namespace ClientPresentation.ViewModels
             Client client = (new Client() { Name = "Dictator" });
             UserClient.Add(client);
             UserName = client.Name;
-            ClientList.Add(new Client() { Name = "Ivo" });
-            ClientList.Add(new Client() { Name = "Simon" });
-            ClientList.Add(new Client() { Name = "Gustav" });
-            ClientList.Add(new Client() { Name = "Samuel" });
         }
 
 
