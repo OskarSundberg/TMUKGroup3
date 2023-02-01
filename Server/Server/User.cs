@@ -12,6 +12,7 @@ namespace Server
         private Socket handler;
         private string name;
         private bool isOnline;
+        private Thread thread;
 
         public Socket Handler
         {
@@ -29,6 +30,12 @@ namespace Server
         {
             get { return isOnline; }
             set { isOnline = value; }
+        }
+
+        public Thread Thread
+        {
+            get { return thread; }
+            set { thread = value; }
         }
 
         public User(string name, Socket handler)
