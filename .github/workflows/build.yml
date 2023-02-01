@@ -33,7 +33,7 @@ jobs:
       - name: Test Server
         run: dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
       - name: Test Client 
-        run: dotnet test ./Client/Client.sln --verbosity normal --collect:"XPlat Code Coverage" --results-directory .Client/coveragereport/
+        run: dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory .Client/coveragereport/
 
       - name: Linter Server
         run: dotnet format ./Server/Server.sln
@@ -46,7 +46,7 @@ jobs:
           reports: 'Server\coveragereport\**\coverage.cobertura.xml'
           targetdir: 'Server\coveragereport'
           reporttypes: 'HtmlSummary'
-      
+
       - name: ReportGenerator Client
         uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
         with:
