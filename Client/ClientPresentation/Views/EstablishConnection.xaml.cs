@@ -49,10 +49,15 @@ namespace ClientPresentation.Views
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This method gets the IP from userinput in establishconnection window
+        /// </summary>
+        /// <param></param>
+        /// <returns> Returns IPAdress </returns>
         private string SectionsToString()
         {
             string ipAddress;
-
+            
             ipAddress = FirstIP.Text + "." + SecondIP.Text + "." + ThirdIP.Text + "." + FourthIP.Text;
 
             return ipAddress;
