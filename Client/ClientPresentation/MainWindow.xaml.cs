@@ -32,15 +32,18 @@ namespace ClientPresentation
             ViewModel = new MainWindowViewModel();
             Client client = new Client();
             client.StartClient(ip);
-            InitializeComponent(); 
-            
+            InitializeComponent();
+
         }
 
+        /// <summary>
+        /// Used to save the input from user when the send button i pressed
+        /// </summary>
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
             string msg = SendBox.Text;
             SendBox.Clear();
-            Client c  = ViewModel.ClientList[0];
+            Client c = ViewModel.ClientList[0];
             c.SendMsg = msg;
         }
     }
