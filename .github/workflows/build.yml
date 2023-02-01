@@ -43,13 +43,17 @@ jobs:
       - name: ReportGenerator Client
         uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
         with:
-          reports: |
-            'Client\coveragereport\**\coverage.cobertura.xml'
-            'Server\coveragereport\**\coverage.cobertura.xml'
-          targetdir: |
-            'Client\coveragereport'
-            'Server\coveragereport'
+          reports: 'Client\coveragereport\**\coverage.cobertura.xml'
+          targetdir: 'Client\coveragereport'
           reporttypes: 'HtmlSummary'
+          
+      - name: ReportGenerator Server
+        uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
+        with:
+          reports: 'Server\coveragereport\**\coverage.cobertura.xml'
+          targetdir: 'Server\coveragereport'
+          reporttypes: 'HtmlSummary'
+
 
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
