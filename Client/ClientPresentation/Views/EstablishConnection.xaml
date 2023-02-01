@@ -15,10 +15,10 @@
             <Button x:Name="ConnectBtn" Grid.Row="0" Content="Connect" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="ConnectToServerClick" Width="60"/>
         </StackPanel>
         
-        <StackPanel DockPanel.Dock="Top" Height="80">
-            <Label Content="IP Address" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,55,0,0"/>
+        <StackPanel DockPanel.Dock="Top" Height="60">
+            <Label Content="IP Address" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,35,0,0"/>
         </StackPanel>
-        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Height="35">
+        <Grid DockPanel.Dock="Top" VerticalAlignment="Top" Height="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="95"/>
                 <ColumnDefinition Width="60"/>
@@ -42,7 +42,7 @@
             
         </Grid>
 
-        <StackPanel DockPanel.Dock="Top" Height="60">
+        <StackPanel DockPanel.Dock="Top" Height="70">
             <Label Content="Port Number" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBox x:Name="portID" Text="{Binding Path=portNumber, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" MaxLength="5" Width="50" Height="20" TextAlignment="Center"/>
         </StackPanel>
