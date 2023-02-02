@@ -101,7 +101,7 @@
 
         public void GetMessageFromClient(string msgstr)
         {
-            byte[] msg = Encoding.UTF8.GetBytes(msgstr + "\n");
+            byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
             int bytesSent = Sender.Send(msg);
         }
 
