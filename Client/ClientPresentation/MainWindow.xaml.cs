@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,10 +31,14 @@ namespace ClientPresentation
         {
             EstablishConnection ec = new EstablishConnection();
             ec.ShowDialog();
-            string ip = ec.IpAddress;
+            ConectionInfo cInfo = new ConectionInfo();
+            cInfo.IP = IPAddress.Parse(ec.IpAddress);
+            cInfo.Port = Int32.Parse(ec.PortNumber);
+            cInfo.UserName = ec.Name;
             ViewModel = new MainWindowViewModel();
+            ViewModel.UserClient[0].Name = ec.Name;
             Client client = new Client();
-            client.StartClient(ip, ServerMassage);
+            client.StartClient(cInfo, ServerMassage);
             InitializeComponent();
 
         }

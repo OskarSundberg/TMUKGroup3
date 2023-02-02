@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Server
@@ -31,7 +32,11 @@ namespace Server
                 {
                     Console.WriteLine("Waiting for anything");
                     Socket handler = listener.Accept();
-                    User user = new User("Name", handler);
+                    byte[] bytes = new byte[64000];
+                    int bytesRead;
+                    bytesRead = handler.Receive(bytes);
+                    string name = Encoding.UTF8.GetString(bytes, 0, bytesRead);
+                    User user = new User(name, handler);
                     allchat.UserJoin(user);
                     Console.WriteLine("Sent connection to session");
 

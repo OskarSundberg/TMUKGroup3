@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ClientPresentation;
 using System.Windows.Input;
+using System.Web;
 
 namespace ClientPresentation.ViewModels
 {
@@ -23,9 +24,10 @@ namespace ClientPresentation.ViewModels
 
         public MainWindowViewModel()
         {
-            Client client = (new Client() { Name = "Dictator" });
+            //Client client = (new Client() { Name = "N/A" });
+            Client client = new Client();
             UserClient.Add(client);
-            UserName = client.Name;
+            //UserName = client.Name;
         }
 
 
