@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -40,6 +41,7 @@ namespace ClientPresentation
             App.Current.Dispatcher.Invoke(() =>
             {
                 MessagesBox.AppendText($"{message}\n");
+                MessageBoxScrollBar.ScrollToEnd();
             });
         }
         /// <summary>
@@ -51,6 +53,20 @@ namespace ClientPresentation
             SendBox.Clear();
             Client c = ViewModel.UserClient[0];
             c.SendMsg = msg;
+        }
+
+        /// <summary>
+        /// Used to save the input from user when the return key i pressed
+        /// </summary>
+        private void SendBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                string msg = SendBox.Text;
+                SendBox.Clear();
+                Client c = ViewModel.UserClient[0];
+                c.SendMsg = msg;
+            }
         }
     }
 }
