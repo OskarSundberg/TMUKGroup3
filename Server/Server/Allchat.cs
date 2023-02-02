@@ -22,9 +22,14 @@ namespace Server
             newUser.Handler.Send(echoWelcomeMsg);
             return 1;
         }
+        /// <summary>
+        /// This function monitors the port for new messages from users.
+        /// And uses echo to send out everthing it finds
+        /// </summary>
+        /// <param name="user"></param>
         public void Monitor(User user)
         {
-            byte[] bytes = new byte[60000];
+            byte[] bytes = new byte[64000];
             int bytesRead;
             string msg = null;
             while (true)
@@ -33,14 +38,18 @@ namespace Server
                 {
                     try
                     {
-                        bytes = new byte[60000];
+                        //Waiting for a message then makes it a string and checks if it a valied message 
+                        bytes = new byte[64000];
                         bytesRead = user.Handler.Receive(bytes);
-                        msg += Encoding.UTF8.GetString(bytes);
-                        if (msg.IndexOf("\n") > -1)
+                        msg += Encoding.UTF8.GetString(bytes,0,bytesRead);
+                        //Check if '\u009F' is part of a string to check that its a real message
+                        if (msg.IndexOf(char.ToString('\u009F')) > -1)
                         {
+                            msg = msg.Remove(msg.Length - 1, 1);
                             break;
                         }
                     }
+                    //Check if a user have left and then ends the connection to user
                     catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);
@@ -50,7 +59,7 @@ namespace Server
                     }
                 }
                 //Testing purpose
-                Console.WriteLine($"Text received : {msg}");
+                Console.WriteLine($"{msg}");
                 Echo(msg);
                 bytes = null;
                 msg = null;
@@ -77,7 +86,7 @@ namespace Server
                 person.Handler.Shutdown(SocketShutdown.Both);
                 person.Handler.Close();
                 userList.Remove(person);
-                Echo($"{person.Name} has left the chat :(");
+                Echo($"{person.Name} has left the chat");
                 return 1;
             }
             catch (Exception e)
