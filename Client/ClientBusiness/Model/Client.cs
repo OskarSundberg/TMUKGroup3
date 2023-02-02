@@ -15,6 +15,10 @@
         private string name;
 
         public static Socket Sender { get; set; }
+
+        //callback 
+        private Action<string> _massageCallBack;
+
         public string Name
         {
             get { return name; }
@@ -54,7 +58,7 @@
                 OnPropertyChanged();
             }
         }
-        public void StartClient(string ip)
+        public void StartClient(string ip, Action<string> massageCallBack)
         {
 
 
@@ -64,7 +68,7 @@
                 IPEndPoint server = new IPEndPoint(ipAddress, 13375);
 
                 Sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-
+                this._massageCallBack = massageCallBack;
 
                 try
                 {
@@ -110,10 +114,11 @@
                 bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
-                    Console.WriteLine("Echoed test = {0}", Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                    this._massageCallBack(Encoding.UTF8.GetString(bytes, 0, bytesRec));
                 }
             }
         }
+
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

@@ -31,11 +31,17 @@ namespace ClientPresentation
             string ip = ec.IpAddress;
             ViewModel = new MainWindowViewModel();
             Client client = new Client();
-            client.StartClient(ip);
+            client.StartClient(ip, ServerMassage);
             InitializeComponent();
 
         }
-
+        private void ServerMassage(string message)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                MessagesBox.AppendText($"{message}\n");
+            });
+        }
         /// <summary>
         /// Used to save the input from user when the send button i pressed
         /// </summary>
