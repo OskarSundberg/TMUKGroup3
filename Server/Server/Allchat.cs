@@ -27,17 +27,26 @@ namespace Server
             byte[] bytes = new byte[60000];
             int bytesRead;
             string msg = null;
-
             while (true)
             {
                 while (true)
                 {
-                    bytes = new byte[60000];
-                    bytesRead = user.Handler.Receive(bytes);
-                    msg += Encoding.UTF8.GetString(bytes);
-                    if (msg.IndexOf("\n") > -1)
+                    try
                     {
-                        break;
+                        bytes = new byte[60000];
+                        bytesRead = user.Handler.Receive(bytes);
+                        msg += Encoding.UTF8.GetString(bytes);
+                        if (msg.IndexOf("\n") > -1)
+                        {
+                            break;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                        Console.WriteLine(user.Name);
+                        EndSession(user);
+                        return;
                     }
                 }
                 //Testing purpose
@@ -48,7 +57,6 @@ namespace Server
                 bytesRead = 0;
                 Thread.Sleep(1000);
             }
-
         }
         public int Echo(string msg)
         {
@@ -68,6 +76,8 @@ namespace Server
             {
                 person.Handler.Shutdown(SocketShutdown.Both);
                 person.Handler.Close();
+                userList.Remove(person);
+                Echo($"{person.Name} has left the chat :(");
                 return 1;
             }
             catch (Exception e)
