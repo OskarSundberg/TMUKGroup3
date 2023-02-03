@@ -38,16 +38,17 @@
         Grid.Row="0"/>
 
         <!--here the user adds what they like to write-->
-        <TextBox x:Name="SendBox" Text="{Binding Path=SendBox, Mode=TwoWay}" Grid.Column="1" Grid.Row="2"/>
-        
-        
+        <TextBox x:Name="SendBox" Text="{Binding Path=SendBox, Mode=TwoWay}" Grid.Column="1" Grid.Row="2" Keyboard.KeyDown="SendBox_KeyDown" />
+
         <!--Here is the send button-->
         <Button Grid.Row="2" Grid.Column="3"
             Content="Send"
             Click="Button_Click_Save"/>
 
         <!--Here the message are going to be displayed-->
-        <TextBox x:Name="MessagesBox" Grid.Row="1" Grid.Column="1"/>
-        
+        <ScrollViewer x:Name="MessageBoxScrollBar" Grid.Row="1" Grid.Column="1" CanContentScroll="True">
+            <TextBox x:Name="MessagesBox" />
+        </ScrollViewer>
+
     </Grid>
 </Window>

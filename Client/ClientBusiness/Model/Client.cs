@@ -58,22 +58,23 @@
                 OnPropertyChanged();
             }
         }
-        public void StartClient(string ip, Action<string> massageCallBack)
+        public void StartClient(ConectionInfo cInfo, Action<string> massageCallBack)
         {
 
 
             try
             {
-                IPAddress ipAddress = IPAddress.Parse(ip);
-                IPEndPoint server = new IPEndPoint(ipAddress, 13375);
+                //IPAddress ipAddress = IPAddress.Parse(Ip);
+                IPEndPoint server = new IPEndPoint(cInfo.IP, 13375);
 
-                Sender = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 this._massageCallBack = massageCallBack;
 
                 try
                 {
                     Sender.Connect(server);
-
+                    byte[] cUseName = Encoding.UTF8.GetBytes(cInfo.UserName);
+                    Sender.Send(cUseName);
                     Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
 
                     Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
