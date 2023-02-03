@@ -46,13 +46,13 @@
             }
         }
 
-        private string reviedMsg;
-        public string ReviedMsg
+        private string receivedMsg;
+        public string ReceivedMsg
         {
-            get { return reviedMsg; }
+            get { return receivedMsg; }
             set
             {
-                if (value == reviedMsg)
+                if (value == receivedMsg)
                     return;
                 name = value;
                 OnPropertyChanged();
