@@ -69,8 +69,10 @@ namespace Server
         }
         public int Echo(string msg)
         {
+            Emoji emoji = new Emoji();
             lock (lockThread)
             {
+                msg = emoji.ReplaceEmoji(msg);
                 byte[] echo = Encoding.UTF8.GetBytes(msg);
                 foreach (User u in userList)
                 {
