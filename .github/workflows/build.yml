@@ -36,9 +36,9 @@ jobs:
         run: dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Client/coveragereport/
 
       - name: Linter Server
-        run: dotnet format ./Server/Server.sln
+        run: dotnet format ./Server/Server.sln --verify-no-changes
       - name: Linter Client
-        run: dotnet format ./Client/Client.sln
+        run: dotnet format ./Client/Client.sln --verify-no-changes
 
       - name: ReportGenerator Client
         uses: danielpalme/ReportGenerator-GitHub-Action@5.1.15
