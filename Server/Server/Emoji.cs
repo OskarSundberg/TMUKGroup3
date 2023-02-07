@@ -16,9 +16,9 @@ namespace Server
         };
 
         //Scans the string for Key words and replaces them
-        public string ReplaceEmoji (string input)
+        public string ReplaceEmoji(string input)
         {
-            foreach(KeyValuePair<string, string> pair in emojiDic)
+            foreach (KeyValuePair<string, string> pair in emojiDic)
             {
                 input = input.Replace(pair.Key, pair.Value);
             }

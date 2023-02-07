@@ -8,8 +8,8 @@ namespace ClientNUnitTest
             //I setup kan vi istället instansiera vårat MathClass math variabel
         }
 
-        [Test] 
-        public void TestClientName() 
+        [Test]
+        public void TestClientName()
         {
             //ARRANGE
             Client client = new Client();
@@ -18,8 +18,8 @@ namespace ClientNUnitTest
             client.Name = "Test";
 
             //ASSERT
-            Assert.AreEqual("Test", client.Name); 
-        
+            Assert.That(client.Name, Is.EqualTo("Test"));
+
         }
     }
 }

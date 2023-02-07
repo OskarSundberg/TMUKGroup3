@@ -111,7 +111,7 @@ namespace ServerNUnit
         [Test]
         public void Emoji_Test()
         {
-            Emoji emoji= new Emoji();
+            Emoji emoji = new Emoji();
             string test = emoji.emojiDic.Keys.First();
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));

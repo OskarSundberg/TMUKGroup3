@@ -41,7 +41,7 @@ namespace Server
                         //Waiting for a message then makes it a string and checks if it a valied message 
                         bytes = new byte[64000];
                         bytesRead = user.Handler.Receive(bytes);
-                        msg += Encoding.UTF8.GetString(bytes,0,bytesRead);
+                        msg += Encoding.UTF8.GetString(bytes, 0, bytesRead);
                         //Check if '\u009F' is part of a string to check that its a real message
                         if (msg.IndexOf(char.ToString('\u009F')) > -1)
                         {

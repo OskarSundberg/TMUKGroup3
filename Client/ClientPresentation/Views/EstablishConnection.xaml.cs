@@ -57,7 +57,7 @@ namespace ClientPresentation.Views
         private string SectionsToString()
         {
             string ipAddress;
-            
+
             ipAddress = FirstIP.Text + "." + SecondIP.Text + "." + ThirdIP.Text + "." + FourthIP.Text;
 
             return ipAddress;
@@ -73,7 +73,7 @@ namespace ClientPresentation.Views
 
         private void MoveToNextBox(TextBox current)
         {
-            if(current.GetLineLength(0) == 3)
+            if (current.GetLineLength(0) == 3)
             {
 
             }
