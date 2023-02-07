@@ -108,5 +108,17 @@ namespace ServerNUnit
             Assert.That(testUserOne.IsOnline, Is.EqualTo(false));
         }
 
+        [Test]
+        public void Emoji_Test()
+        {
+            Emoji emoji= new Emoji();
+            string test = emoji.emojiDic.Keys.First();
+            test = emoji.ReplaceEmoji(test);
+            Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
+            test = emoji.emojiDic.Keys.Last();
+            test = emoji.ReplaceEmoji(test);
+            Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
+        }
+
     }
 }
