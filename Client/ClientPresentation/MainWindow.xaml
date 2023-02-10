@@ -47,7 +47,7 @@
 
         <!--Here the message are going to be displayed-->
         <ScrollViewer x:Name="MessageBoxScrollBar" Grid.Row="1" Grid.Column="1" CanContentScroll="True">
-            <TextBox x:Name="MessagesBox" />
+            <TextBox x:Name="MessagesBox"  Focusable="False"/>
         </ScrollViewer>
 
     </Grid>
