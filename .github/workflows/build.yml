@@ -42,7 +42,7 @@ jobs:
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: CoverageReport
+          name: ServerCoverageReport
           path: Server/coveragereport\summary.html
 
   Client:
@@ -84,5 +84,5 @@ jobs:
       - name: Upload coverage report artifact
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: CoverageReport
+          name: ClientCoverageReport
           path: Client/coveragereport/summary.html
