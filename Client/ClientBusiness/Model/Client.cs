@@ -16,8 +16,8 @@
 
         public static Socket Sender { get; set; }
 
-        //callback 
-        private Action<string> _massageCallBack;
+        //callback
+        private Action<string> _messageCallBack;
 
         public string Name
         {
@@ -58,7 +58,7 @@
                 OnPropertyChanged();
             }
         }
-        public void StartClient(ConectionInfo cInfo, Action<string> massageCallBack)
+        public void StartClient(ConnectionInfo cInfo, Action<string> massageCallBack)
         {
 
 
@@ -68,7 +68,7 @@
                 IPEndPoint server = new IPEndPoint(cInfo.IP, 13375);
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                this._massageCallBack = massageCallBack;
+                this._messageCallBack = massageCallBack;
 
                 try
                 {
@@ -115,7 +115,7 @@
                 bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
-                    this._massageCallBack(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                    this._messageCallBack(Encoding.UTF8.GetString(bytes, 0, bytesRec));
                 }
             }
         }

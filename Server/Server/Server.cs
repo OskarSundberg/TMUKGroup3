@@ -17,10 +17,10 @@ namespace Server
         {
             string hostName = Dns.GetHostName();
             IPHostEntry iPHostEntry = Dns.GetHostEntry(hostName);
-            IPAddress iPAddress = iPHostEntry.AddressList[1];
+            IPAddress iPAddress = iPHostEntry.AddressList[0];
             int port = 13375;
             IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, port);
-            Console.WriteLine("Pleas connect to IP: {0} and port: {1}", iPAddress, port);
+            Console.WriteLine("Please connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
             {
