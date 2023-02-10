@@ -11,6 +11,12 @@ namespace Server
     {
         List<User> userList = new List<User>();
         object lockThread = new object();
+
+        /// <summary>
+        /// This method adds a User to the userList and starts a thread for the User.
+        /// The method also displays a welcome message for the User.
+        /// </summary>
+        /// <param name="newUser"></param>
         public int UserJoin(User newUser)
         {
             userList.Add(newUser);
@@ -22,8 +28,9 @@ namespace Server
             newUser.Handler.Send(echoWelcomeMsg);
             return 1;
         }
+
         /// <summary>
-        /// This function monitors the port for new messages from users.
+        /// This method monitors the port for new messages from users.
         /// And uses echo to send out everthing it finds
         /// </summary>
         /// <param name="user"></param>
@@ -67,6 +74,11 @@ namespace Server
                 Thread.Sleep(1000);
             }
         }
+
+        /// <summary>
+        /// This method echoes the message from one user to all other users.
+        /// </summary>
+        /// <param name="msg"></param>
         public int Echo(string msg)
         {
             Emoji emoji = new Emoji();
@@ -81,14 +93,19 @@ namespace Server
                 return 1;
             }
         }
-        public int EndSession(User person)
+
+        /// <summary>
+        /// This method ends the session between a user and server.
+        /// </summary>
+        /// <param name="user"></param>
+        public int EndSession(User user)
         {
             try
             {
-                person.Handler.Shutdown(SocketShutdown.Both);
-                person.Handler.Close();
-                userList.Remove(person);
-                Echo($"{person.Name} has left the chat");
+                user.Handler.Shutdown(SocketShutdown.Both);
+                user.Handler.Close();
+                userList.Remove(user);
+                Echo($"{user.Name} has left the chat");
                 return 1;
             }
             catch (Exception e)
