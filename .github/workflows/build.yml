@@ -40,10 +40,10 @@ jobs:
           reporttypes: 'HtmlSummary'
 
       - name: Upload coverage report artifact
-        uses: actions/upload-artifact@v2.2.3
+        uses: actions/upload-artifact@v3
         with:
-          name: CoverageReport
-          path: Server/coveragereport\summary.html
+          name: ServerCoverageReport
+          path: Server/coveragereport/summary.html
 
   Client:
 
@@ -82,7 +82,7 @@ jobs:
           reporttypes: 'HtmlSummary'
 
       - name: Upload coverage report artifact
-        uses: actions/upload-artifact@v2.2.3
+        uses: actions/upload-artifact@v3
         with:
-          name: CoverageReport
+          name: ClientCoverageReport
           path: Client/coveragereport/summary.html
