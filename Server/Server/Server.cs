@@ -13,6 +13,11 @@ namespace Server
             StartServer();
             return;
         }
+
+        /// <summary>
+        /// This method starts up the server and uses a try catch block to make sure everything works as it should.
+        /// </summary>
+        /// <param></param>
         public static void StartServer()
         {
             string hostName = Dns.GetHostName();

@@ -18,7 +18,10 @@ namespace Server
             {";)", "😉"}
         };
 
-        //Scans the string for Key words and replaces them
+        /// <summary>
+        /// This method searches and replaces key words in a userstring to supported emojis.
+        /// </summary>
+        /// <param name="input"></param>
         public string ReplaceEmoji(string input)
         {
             foreach (KeyValuePair<string, string> pair in emojiDic)
