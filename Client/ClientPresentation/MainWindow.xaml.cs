@@ -31,18 +31,18 @@ namespace ClientPresentation
         {
             EstablishConnection ec = new EstablishConnection();
             ec.ShowDialog();
-            ConectionInfo cInfo = new ConectionInfo();
+            ConnectionInfo cInfo = new ConnectionInfo();
             cInfo.IP = IPAddress.Parse(ec.IpAddress);
             cInfo.Port = Int32.Parse(ec.PortNumber);
             cInfo.UserName = ec.Name;
             ViewModel = new MainWindowViewModel();
             ViewModel.UserClient[0].Name = ec.Name;
             Client client = new Client();
-            client.StartClient(cInfo, ServerMassage);
+            client.StartClient(cInfo, ServerMessage);
             InitializeComponent();
 
         }
-        private void ServerMassage(string message)
+        private void ServerMessage(string message)
         {
             App.Current.Dispatcher.Invoke(() =>
             {

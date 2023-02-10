@@ -8,7 +8,7 @@ using System.Net;
 
 namespace ClientBusiness.Model
 {
-    public class ConectionInfo
+    public class ConnectionInfo
     {
         public IPAddress IP { get; set; }
         public int Port { get; set; }
