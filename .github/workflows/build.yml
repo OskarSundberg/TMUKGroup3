@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ServerCoverageReport
-          path: Server/coveragereport\summary.html
+          path: Server/coveragereport/summary.html
 
   Client:
 
