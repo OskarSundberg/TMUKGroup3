@@ -14,16 +14,21 @@ namespace Server
             StartServer();
             return;
         }
+
+        /// <summary>
+        /// This method starts up the server and uses a try catch block to make sure everything works as it should.
+        /// </summary>
+        /// <param></param>
         public static void StartServer()
         {
             string hostName = Dns.GetHostName();
             IPHostEntry iPHostEntry = Dns.GetHostEntry(hostName);
-            IPAddress iPAddress = iPHostEntry.AddressList[4];
+            IPAddress iPAddress = iPHostEntry.AddressList[1];
             int port = 13375;
             int dataPort = 31337;
             IPEndPoint iPEndPointData = new IPEndPoint(iPAddress, dataPort);
             IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, port);
-            Console.WriteLine("Pleas connect to IP: {0} and port: {1}", iPAddress, port);
+            Console.WriteLine("Please connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
             {
