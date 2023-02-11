@@ -15,6 +15,7 @@
         private string name;
 
         public static Socket Sender { get; set; }
+        public static Socket DataSender { get; set; }
 
         //callback 
         private Action<string> _massageCallBack;
@@ -65,7 +66,7 @@
             try
             {
                 //IPAddress ipAddress = IPAddress.Parse(Ip);
-                IPEndPoint server = new IPEndPoint(cInfo.IP, 13375);
+                IPEndPoint server = new IPEndPoint(cInfo.IP, cInfo.Port);
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 this._massageCallBack = massageCallBack;
@@ -76,6 +77,24 @@
                     byte[] cUseName = Encoding.UTF8.GetBytes(cInfo.UserName);
                     Sender.Send(cUseName);
                     Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
+
+                    int bytesRec;
+                    byte[] bytes = new byte[64000];
+                    bytesRec = Sender.Receive(bytes);
+                    string dataPort = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                    try
+                    {
+                        IPEndPoint serverData = new IPEndPoint(cInfo.IP, Int32.Parse(dataPort));
+                        DataSender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                        DataSender.Connect(serverData);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.ToString());
+                    }
+                    Thread recieveDataThread = new Thread(RecieveDataFromServer);
+                    recieveDataThread.IsBackground = true;
+                    recieveDataThread.Start();
 
                     Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
                     recieveMessageThread.IsBackground = true;
@@ -120,6 +139,18 @@
             }
         }
 
+        public void RecieveDataFromServer()
+        {
+            int bytesRec;
+            byte[] bytes = new byte[64000];
+            while (true)
+            {
+                bytesRec = DataSender.Receive(bytes);
+                if (bytesRec != 0)
+                {
+                }
+            }
+        }
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
