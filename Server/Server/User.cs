@@ -22,7 +22,7 @@ namespace Server
         }
 
         public Socket DataHandler
-        { 
+        {
             get { return dataHandler; }
             set { dataHandler = value; }
         }
