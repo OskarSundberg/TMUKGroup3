@@ -57,7 +57,7 @@ namespace ClientNUnitTest
         [Test]
         public void GetMessageFromClient_Test()
         {
-            //Client.Sender = senderOne;
+            Client.Sender = senderOne;
             Assert.DoesNotThrow( ()=> clientTest.GetMessageFromClient("123123"));
         }
     }
