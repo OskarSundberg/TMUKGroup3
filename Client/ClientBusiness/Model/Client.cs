@@ -60,11 +60,8 @@
         }
         public void StartClient(ConnectionInfo cInfo, Action<string> massageCallBack)
         {
-
-
             try
             {
-                //IPAddress ipAddress = IPAddress.Parse(Ip);
                 IPEndPoint server = new IPEndPoint(cInfo.IP, 13375);
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -73,6 +70,10 @@
                 try
                 {
                     Sender.Connect(server);
+                    if (!SocketConnected(Sender))
+                    {
+                        throw new Exception("Not Connected");
+                    }
                     byte[] cUseName = Encoding.UTF8.GetBytes(cInfo.UserName);
                     Sender.Send(cUseName);
                     Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
@@ -80,14 +81,6 @@
                     Thread recieveMessageThread = new Thread(RecieveMessageFromServer);
                     recieveMessageThread.IsBackground = true;
                     recieveMessageThread.Start();
-                }
-                catch (ArgumentNullException e)
-                {
-                    Console.WriteLine("ArgumentNullException : {0}", e.ToString());
-                }
-                catch (SocketException e)
-                {
-                    Console.WriteLine("SocketException : {0}", e.ToString());
                 }
                 catch (Exception e)
                 {
@@ -102,8 +95,15 @@
 
         public void GetMessageFromClient(string msgstr)
         {
-            byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
-            int bytesSent = Sender.Send(msg);
+            try
+            {
+                byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
+                int bytesSent = Sender.Send(msg);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         public void RecieveMessageFromServer()
@@ -124,6 +124,16 @@
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        bool SocketConnected(Socket socket)
+        {
+            bool connectionSent = socket.Poll(1000, SelectMode.SelectRead);
+            bool connectionEstablished = (socket.Available == 0);
+            if (connectionSent && connectionEstablished)
+                return false;
+            else
+                return true;
         }
     }
 }
