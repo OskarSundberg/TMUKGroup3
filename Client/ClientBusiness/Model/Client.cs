@@ -126,11 +126,11 @@
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        bool SocketConnected(Socket s)
+        bool SocketConnected(Socket socket)
         {
-            bool part1 = s.Poll(1000, SelectMode.SelectRead);
-            bool part2 = (s.Available == 0);
-            if (part1 && part2)
+            bool connectionSent = socket.Poll(1000, SelectMode.SelectRead);
+            bool connectionEstablished = (socket.Available == 0);
+            if (connectionSent && connectionEstablished)
                 return false;
             else
                 return true;
