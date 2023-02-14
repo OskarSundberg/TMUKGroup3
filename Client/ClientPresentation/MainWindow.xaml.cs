@@ -31,10 +31,7 @@ namespace ClientPresentation
         {
             EstablishConnection ec = new EstablishConnection();
             ec.ShowDialog();
-            ConnectionInfo cInfo = new ConnectionInfo();
-            cInfo.IP = IPAddress.Parse(ec.IpAddress);
-            cInfo.Port = Int32.Parse(ec.PortNumber);
-            cInfo.UserName = ec.Name;
+            ConnectionInfo cInfo = new ConnectionInfo(IPAddress.Parse(ec.IpAddress), Int32.Parse(ec.PortNumber), ec.Name);
             ViewModel = new MainWindowViewModel();
             ViewModel.UserClient[0].Name = ec.Name;
             Client client = new Client();

@@ -60,11 +60,8 @@
         }
         public void StartClient(ConnectionInfo cInfo, Action<string> massageCallBack)
         {
-
-
             try
             {
-                //IPAddress ipAddress = IPAddress.Parse(Ip);
                 IPEndPoint server = new IPEndPoint(cInfo.IP, 13375);
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -102,8 +99,13 @@
 
         public void GetMessageFromClient(string msgstr)
         {
-            byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
-            int bytesSent = Sender.Send(msg);
+            try
+            {
+                byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
+                int bytesSent = Sender.Send(msg);
+            }
+            catch (Exception e) 
+            { Console.WriteLine(e.ToString()); }
         }
 
         public void RecieveMessageFromServer()
