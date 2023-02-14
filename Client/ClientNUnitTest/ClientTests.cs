@@ -22,7 +22,7 @@ namespace ClientNUnitTest
 
             clientTest = new Client();
             connectionInfoTest = new ConnectionInfo(IPAddress.Parse("127.0.0.1"), 13375, "Test");
-            
+
         }
 
         [Test]
@@ -52,13 +52,13 @@ namespace ClientNUnitTest
         {
             void ServerMessage(string message) { }
 
-            Assert.DoesNotThrow( ()=> clientTest.StartClient(connectionInfoTest, ServerMessage));
+            Assert.DoesNotThrow(() => clientTest.StartClient(connectionInfoTest, ServerMessage));
         }
         [Test]
         public void GetMessageFromClient_Test()
         {
             Client.Sender = senderOne;
-            Assert.DoesNotThrow( ()=> clientTest.GetMessageFromClient("123123"));
+            Assert.DoesNotThrow(() => clientTest.GetMessageFromClient("123123"));
         }
     }
 }

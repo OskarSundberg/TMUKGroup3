@@ -100,9 +100,9 @@
                 byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
                 int bytesSent = Sender.Send(msg);
             }
-            catch (Exception e) 
-            { 
-                Console.WriteLine(e.ToString()); 
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
             }
         }
 
