@@ -80,7 +80,7 @@ namespace ClientPresentation
         {
             if (e.Key == Key.Enter)
             {
-                if (true == SpamFilter())
+                if (SpamFilter())
                 {
                     Send_message();
                 }
