@@ -36,9 +36,9 @@ namespace Server
         /// <param name="user"></param>
         public void Monitor(User user)
         {
-            byte[] ?bytes = new byte[64000];
+            byte[]? bytes = new byte[64000];
             int bytesRead;
-            string ?msg = null;
+            string? msg = null;
             while (true)
             {
                 while (true)
