@@ -20,11 +20,11 @@ namespace Server
         /// <param></param>
         public static void StartServer()
         {
-            string hostName = Dns.GetHostName();
-            IPHostEntry iPHostEntry = Dns.GetHostEntry(hostName);
-            IPAddress iPAddress = iPHostEntry.AddressList[0];
+            string? hostName = Dns.GetHostName();
+            IPHostEntry? iPHostEntry = Dns.GetHostEntry(hostName);
+            IPAddress? iPAddress = iPHostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             int port = 13375;
-            IPEndPoint iPEndPoint = new IPEndPoint(iPAddress, port);
+            IPEndPoint? iPEndPoint = new IPEndPoint(iPAddress, port);
             Console.WriteLine("Please connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
