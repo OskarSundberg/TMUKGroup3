@@ -1,5 +1,7 @@
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using System.Net;
 using System.Net.Sockets;
+using System.Windows;
 
 namespace ClientNUnitTest
 {
@@ -9,7 +11,7 @@ namespace ClientNUnitTest
         ConnectionInfo connectionInfoTest;
         Socket listener;
         Socket senderOne;
-
+        ClientPresentation.MainWindow MainWindow;
         [OneTimeSetUp]
         public void Setup()
         {
@@ -22,6 +24,14 @@ namespace ClientNUnitTest
 
             clientTest = new Client();
             connectionInfoTest = new ConnectionInfo(IPAddress.Parse("127.0.0.1"), 13375, "Test");
+
+            var t = new Thread(() =>
+            {
+                MainWindow = new ClientPresentation.MainWindow("test");
+                System.Windows.Threading.Dispatcher.Run();
+            });
+            t.SetApartmentState(ApartmentState.STA);
+            t.Start();
 
         }
 
@@ -59,6 +69,18 @@ namespace ClientNUnitTest
         {
             Client.Sender = senderOne;
             Assert.DoesNotThrow(() => clientTest.GetMessageFromClient("123123"));
+        }
+
+        [Test]
+        public void SpamFilter_Test()
+        {
+            MainWindow.Time = DateTime.Now;
+
+            Thread.Sleep(1000);
+            Assert.That(MainWindow.SpamFilter() != false);
+
+            MainWindow.Time = DateTime.Now;
+            Assert.That(MainWindow.SpamFilter() == false);
         }
     }
 }
