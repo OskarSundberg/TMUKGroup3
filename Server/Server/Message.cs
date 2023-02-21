@@ -13,16 +13,16 @@ namespace Server
         private string userFrom;
 
         public string UserTo { get; private set; }
-        public string UserFrom { get {return userFrom; } }
+        public string UserFrom { get { return userFrom; } }
         public string Msg { get { return msg; } }
-        public Message(string msg, string userFrom) 
+        public Message(string msg, string userFrom)
         {
             this.msg = msg;
             this.userFrom = userFrom;
         }
         public byte[] SerializeMsg(Message msg)
         {
-            BinaryFormatter binaryFormatter= new BinaryFormatter();
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
             using (MemoryStream stream = new MemoryStream())
             {
                 binaryFormatter.Serialize(stream, msg);
