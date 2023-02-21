@@ -88,13 +88,13 @@ Open `...\TMUKGroup3\` as current directory in CLI
 To get code coverage report for Server Input:
 
 ```
-dotnet test ./Server/Server.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
+dotnet test ./Server/Server.sln --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Server/coveragereport/
 reportgenerator -reports:"Server\coveragereport\**\coverage.cobertura.xml" -targetdir:"Server\coveragereport" -reporttype:Html
 ```
 
 To get code coverage report for Client Input:
 ```
-dotnet test ./Client/Client.sln --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Client/coveragereport/
+dotnet test ./Client/Client.sln --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./Client/coveragereport/
 reportgenerator -reports:"Client\coveragereport\**\coverage.cobertura.xml" -targetdir:"Client\coveragereport" -reporttype:Html
 ```
 
