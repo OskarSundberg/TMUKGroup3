@@ -48,8 +48,6 @@ namespace Server
                     bytesRead = handler.Receive(bytes);
                     string name = Encoding.UTF8.GetString(bytes, 0, bytesRead);
                     User user = new User(name, handler);
-                    byte[] bytePort = Encoding.UTF8.GetBytes(dataPort.ToString());
-                    user.Handler.Send(bytePort);
                     Console.WriteLine("Waiting for connection to data port");
                     Socket dataHandler = listenerData.Accept();
                     user.DataHandler = dataHandler;

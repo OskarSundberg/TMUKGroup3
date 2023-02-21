@@ -82,8 +82,8 @@
 
                     int bytesRec;
                     byte[] bytes = new byte[64000];
-                    bytesRec = Sender.Receive(bytes);
-                    string dataPort = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                    IPAddress ip = IPAddress.Parse("127.0.0.1");
+                    string dataPort = "31337";
                     try
                     {
                         IPEndPoint serverData = new IPEndPoint(cInfo.IP, Int32.Parse(dataPort));
