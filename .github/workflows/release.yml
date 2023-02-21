@@ -32,17 +32,21 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload Release Asset
-        id: upload-release-asset 
+      - name: Upload Client Release Asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: |
-            ./Server/Server/bin/Debug/net6.0/Server.exe
-            ./Client/ClientPresentation/bin/Debug/net6.0-windows/ClientPresentation.exe
-          asset_name: |
-            Server.exe
-            Client.exe
+          asset_path: ./Client/ClientPresentation/bin/Debug/net6.0-windows/ClientPresentation.exe
+          asset_name: Client.exe
+          asset_content_type: application/octet-stream
+      - name: Upload Server Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./Server/Server/bin/Debug/net6.0/Server.exe
+          asset_name: Server.exe
           asset_content_type: application/octet-stream
