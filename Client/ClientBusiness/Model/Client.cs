@@ -1,14 +1,16 @@
-﻿namespace ClientBusiness.Model
+﻿using System;
+using System.ComponentModel;
+using System.Net;
+using System.Net.Sockets;
+using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Xml.Linq;
+
+namespace ClientBusiness.Model
 {
-    using System;
-    using System.ComponentModel;
-    using System.Net;
-    using System.Net.Sockets;
-    using System.Reflection;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Text;
-    using System.Xml.Linq;
+
 
     public class Client : INotifyPropertyChanged
     {
@@ -118,7 +120,7 @@
         {
             try
             {
-                Message msg = new(msgstr, name);
+                MsgPacket.Message msg = new(msgstr, name);
                 byte[] bytes = msgHandler.SerializeMsg(msg);
                 int bytesSent = Sender.Send(bytes);
             }
@@ -137,7 +139,7 @@
                 bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
-                    Message msg = msgHandler.DeserializeMsg(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
                     this._messageCallBack(msg.UserFrom + ": " + msg.Msg);
                 }
             }

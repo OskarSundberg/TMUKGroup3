@@ -1,15 +1,15 @@
-﻿using Microsoft.VisualBasic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ClientBusiness.Model
+namespace MsgPacket
 {
     [Serializable]
-    public class Message
+    public class Message : SerializationBinder
     {
         public string UserTo { get; set; }
         public string UserFrom { get; set; }
@@ -18,6 +18,11 @@ namespace ClientBusiness.Model
         {
             this.Msg = msg;
             this.UserFrom = userFrom;
+        }
+        public override Type BindToType(string AssemblyName, string TypeName)
+        {
+            Type typeToDeserialize = Type.GetType(String.Format(" {0}, {1}", TypeName, AssemblyName));
+            return typeToDeserialize;
         }
     }
 }
