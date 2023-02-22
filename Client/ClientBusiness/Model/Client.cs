@@ -73,7 +73,7 @@
                     Sender.Connect(server);
                     if (!SocketConnected(Sender))
                         throw new Exception("Not Connected");
-                    
+
                     byte[] cUseName = Encoding.UTF8.GetBytes(cInfo.UserName);
                     Sender.Send(cUseName);
                     Console.WriteLine($"Socket connected to {Sender.RemoteEndPoint.ToString()}");
