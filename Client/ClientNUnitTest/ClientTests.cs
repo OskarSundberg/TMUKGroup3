@@ -11,6 +11,7 @@ namespace ClientNUnitTest
         Client clientTest;
         ConnectionInfo connectionInfoTest;
         Socket listener;
+        Socket dataListener;
         Socket senderOne;
         static MainWindow MainWindow { get; set; }
         [OneTimeSetUp]
@@ -18,10 +19,14 @@ namespace ClientNUnitTest
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             IPEndPoint server = new IPEndPoint(ipAddress, 13375);
+            IPEndPoint dataconnection = new IPEndPoint(ipAddress, 31337);
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            dataListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(server);
+            dataListener.Bind(dataconnection);
             listener.Listen(10);
+            dataListener.Listen(10);
 
             clientTest = new Client();
             connectionInfoTest = new ConnectionInfo(IPAddress.Parse("127.0.0.1"), 13375, "Test");
@@ -57,10 +62,11 @@ namespace ClientNUnitTest
 
         // Does not test if connection is established
         [Test]
+        //[Timeout (2000)]
         public void StartClient_Test()
         {
             void ServerMessage(string message) { }
-
+            Client.Sender = senderOne;
             Assert.DoesNotThrow(() => clientTest.StartClient(connectionInfoTest, ServerMessage));
         }
         [Test]

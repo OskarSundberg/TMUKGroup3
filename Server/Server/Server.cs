@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Globalization;
+using System.Net;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
@@ -25,13 +26,19 @@ namespace Server
             IPAddress? iPAddress = iPHostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             int port = 13375;
             IPEndPoint? iPEndPoint = new IPEndPoint(iPAddress, port);
+            int dataPort = 31337;
+            IPEndPoint iPEndPointData = new IPEndPoint(iPAddress, dataPort);
+
             Console.WriteLine("Please connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
             {
                 Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                Socket listenerData = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 listener.Bind(iPEndPoint);
                 listener.Listen(10);
+                listenerData.Bind(iPEndPointData);
+                listenerData.Listen(10);
 
                 while (true)
                 {
@@ -42,6 +49,9 @@ namespace Server
                     bytesRead = handler.Receive(bytes);
                     string name = Encoding.UTF8.GetString(bytes, 0, bytesRead);
                     User user = new User(name, handler);
+                    Console.WriteLine("Waiting for connection to data port");
+                    Socket dataHandler = listenerData.Accept();
+                    user.DataHandler = dataHandler;
                     allchat.UserJoin(user);
                     Console.WriteLine("Sent connection to session");
 

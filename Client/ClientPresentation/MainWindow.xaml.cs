@@ -67,19 +67,21 @@ namespace ClientPresentation
                 MessageBoxScrollBar.ScrollToEnd();
             });
         }
+
         /// <summary>
         /// Sends whats in the send box when Save button clicked.
         /// </summary>
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
             if (true == SpamFilter())
+
             {
                 string msg = SendBox.Text;
                 SendBox.Clear();
                 Send_message(msg);
             }
-        }
 
+        }
 
         /// <summary>
         /// Sends what is in the send boc when enter is pressed.
@@ -100,6 +102,7 @@ namespace ClientPresentation
                 }
             }
         }
+
         /// <summary>
         /// Used to send the input to server
         /// </summary>
@@ -115,11 +118,12 @@ namespace ClientPresentation
                 return true;
             }
             else
-            {
                 ServerMessage("BotenAnna: You are not allowed to spam in the chat! (ง•o•)ง");
                 return false;
             }
+
         }
+
         /// <summary>
         /// Stops the user from sending more the one message a second 
         /// </summary>

@@ -10,6 +10,7 @@ namespace Server
     internal class User
     {
         private Socket handler;
+        private Socket dataHandler;
         private string name;
         private bool isOnline;
         private Thread thread;
@@ -18,6 +19,12 @@ namespace Server
         {
             get { return handler; }
             set { handler = value; }
+        }
+
+        public Socket DataHandler
+        {
+            get { return dataHandler; }
+            set { dataHandler = value; }
         }
 
         public string Name
