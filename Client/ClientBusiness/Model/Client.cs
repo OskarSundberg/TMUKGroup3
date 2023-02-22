@@ -15,6 +15,7 @@
         public event PropertyChangedEventHandler? PropertyChanged;
         private string name;
 
+        MessageHandler msgHandler = new();
         public static Socket Sender { get; set; }
         public static Socket DataSender { get; set; }
 
@@ -42,7 +43,7 @@
                 if (value == null || Name == null)
                     return;
 
-                GetMessageFromClient(Name + ": " + value);
+                GetMessageFromClient(value);
                 sendMsg = value;
                 OnPropertyChanged();
             }
@@ -81,7 +82,6 @@
                     Sender.Send(cUseName);
                     Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
 
-                    int bytesRec;
                     byte[] bytes = new byte[64000];
                     IPAddress ip = IPAddress.Parse("127.0.0.1");
                     string dataPort = "31337";
@@ -118,8 +118,9 @@
         {
             try
             {
-                byte[] msg = Encoding.UTF8.GetBytes(msgstr + char.ToString('\u009F'));
-                int bytesSent = Sender.Send(msg);
+                Message msg = new(msgstr, name);
+                byte[] bytes = msgHandler.SerializeMsg(msg);
+                int bytesSent = Sender.Send(bytes);
             }
             catch (Exception e)
             {
@@ -136,7 +137,8 @@
                 bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
-                    this._messageCallBack(Encoding.UTF8.GetString(bytes, 0, bytesRec));
+                    Message msg = msgHandler.DeserializeMsg(bytes);
+                    this._messageCallBack(msg.UserFrom + ": " + msg.Msg);
                 }
             }
         }

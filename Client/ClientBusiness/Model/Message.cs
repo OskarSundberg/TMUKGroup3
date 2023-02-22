@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -7,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace ClientBusiness.Model
 {
+    [Serializable]
     public class Message
     {
-        private string msg;
-        private string userFrom;
-
-        public string UserTo { get; private set; }
-        public string UserFrom { get { return userFrom; } }
-        public string Msg { get { return msg; } }
+        public string UserTo { get; set; }
+        public string UserFrom { get; set; }
+        public string Msg { get; set; }
         public Message(string msg, string userFrom)
         {
-            this.msg = msg;
-            this.userFrom = userFrom;
+            this.Msg = msg;
+            this.UserFrom = userFrom;
         }
     }
 }
