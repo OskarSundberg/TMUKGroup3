@@ -21,15 +21,10 @@ namespace ClientPresentation.ViewModels
         public Client Chosen_Client { get; set; }
         public string UserName { get; set; }
 
-
         public MainWindowViewModel()
         {
-            //Client client = (new Client() { Name = "N/A" });
             Client client = new Client();
             UserClient.Add(client);
-            //UserName = client.Name;
         }
-
-
     }
 }

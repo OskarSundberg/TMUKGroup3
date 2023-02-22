@@ -67,7 +67,6 @@ namespace ClientBusiness.Model
         {
             try
             {
-                //IPAddress ipAddress = IPAddress.Parse(Ip);
                 IPEndPoint server = new IPEndPoint(cInfo.IP, cInfo.Port);
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -77,12 +76,11 @@ namespace ClientBusiness.Model
                 {
                     Sender.Connect(server);
                     if (!SocketConnected(Sender))
-                    {
                         throw new Exception("Not Connected");
-                    }
+
                     byte[] cUseName = Encoding.UTF8.GetBytes(cInfo.UserName);
                     Sender.Send(cUseName);
-                    Console.WriteLine("Socket connected to {0}", Sender.RemoteEndPoint.ToString());
+                    Console.WriteLine($"Socket connected to {Sender.RemoteEndPoint.ToString()}");
 
                     byte[] bytes = new byte[64000];
                     IPAddress ip = IPAddress.Parse("127.0.0.1");
@@ -107,12 +105,12 @@ namespace ClientBusiness.Model
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Unexpected exception : {0}", e.ToString());
+                    Console.WriteLine($"Exception : {e.ToString()}");
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine($"Exception : {e.ToString()}");
             }
         }
 
