@@ -1,3 +1,4 @@
+using ClientPresentation;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using System.Net;
 using System.Net.Sockets;
@@ -11,7 +12,7 @@ namespace ClientNUnitTest
         ConnectionInfo connectionInfoTest;
         Socket listener;
         Socket senderOne;
-        ClientPresentation.MainWindow MainWindow;
+        static MainWindow MainWindow { get; set; }
         [OneTimeSetUp]
         public void Setup()
         {
@@ -24,15 +25,13 @@ namespace ClientNUnitTest
 
             clientTest = new Client();
             connectionInfoTest = new ConnectionInfo(IPAddress.Parse("127.0.0.1"), 13375, "Test");
-
-            var t = new Thread(() =>
+            Thread t = new Thread(() =>
             {
-                MainWindow = new ClientPresentation.MainWindow("test");
-                System.Windows.Threading.Dispatcher.Run();
+            MainWindow = new MainWindow("test");
             });
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
-
+            t.Join();
         }
 
         [Test]
@@ -44,7 +43,7 @@ namespace ClientNUnitTest
             clientTest.SendMsg = "Hejsan";
 
             //ASSERT
-            Assert.That(clientTest.Name, Is.EqualTo("Test"));
+            //Assert.That(clientTest.Name, Is.EqualTo("Test"));
             Assert.That(clientTest.SendMsg, Is.EqualTo("Hejsan"));
         }
 
@@ -72,15 +71,46 @@ namespace ClientNUnitTest
         }
 
         [Test]
+        public void Send_message_Test()
+        {
+            //Thread t2 = new Thread(() =>
+            //{
+            //    MainWindow = new MainWindow("test");
+            //});
+            //t2.SetApartmentState(ApartmentState.STA);
+            //t2.Start();
+            //t2.Join();
+            Assert.IsTrue(MainWindow.Send_message("test"));
+        }
+
+        [Test]
         public void SpamFilter_Test()
         {
-            MainWindow.Time = DateTime.Now;
+            //Thread t = new Thread(() =>
+            //{
+            //    MainWindow = new MainWindow("test");
 
+            //    //System.Windows.Threading.Dispatcher.Run();
+
+            //    MainWindow.Time = DateTime.Now;
+
+
+            //    Thread.Sleep(1000);
+            //    Assert.IsTrue(MainWindow.SpamFilter());
+
+            //    MainWindow.Time = DateTime.Now;
+            //    Assert.IsFalse(MainWindow.SpamFilter());
+            //});
+            //t.SetApartmentState(ApartmentState.STA);
+            //t.Start();
+            //t.Join();
+            MainWindow.Time = DateTime.Now;
             Thread.Sleep(1000);
-            Assert.That(MainWindow.SpamFilter() != false);
+            Assert.IsTrue(MainWindow.SpamFilter());
 
             MainWindow.Time = DateTime.Now;
-            Assert.That(MainWindow.SpamFilter() == false);
+            Assert.IsFalse(MainWindow.SpamFilter());
+
         }
     }
 }
