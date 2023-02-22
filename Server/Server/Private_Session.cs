@@ -34,24 +34,23 @@ namespace Server
                 return -1;
             }
         }
-        public int Echo(string msg)
+        public int Echo(byte[] msg)
         {
-            byte[] echo = Encoding.UTF8.GetBytes(msg);
             foreach (User u in members)
             {
-                u.Handler.Send(echo);
+                u.Handler.Send(msg);
             }
             return 1;
         }
         public void Monitor(User u)
         {
-            byte[] bytes = new byte[4096];
+            byte[] bytes = new byte[46000];
             int byteRec;
 
             while (true)
             {
                 byteRec = u.Handler.Receive(bytes);
-                Echo(Encoding.UTF8.GetString(bytes, 0, byteRec));
+                Echo(bytes);
             }
         }
     }
