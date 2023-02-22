@@ -35,7 +35,7 @@ namespace Server
                 return -1;
             }
         }
-        public int Echo(Message msg)
+        public int Echo(MsgPacket.Message msg)
         {
             Emoji emoji = new Emoji();
             msg.Msg = emoji.ReplaceEmoji(msg.Msg);
@@ -55,7 +55,7 @@ namespace Server
             {
                 bytes = new byte[64000];
                 byteRec = u.Handler.Receive(bytes);
-                Message msg = msgHandler.DeserializeMsg(bytes);
+                MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
                 Echo(msg);
                 bytes = null;
                 msg = null;

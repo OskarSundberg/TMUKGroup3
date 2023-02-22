@@ -9,7 +9,7 @@ namespace Server
 {
     internal class MessageHandler
     {
-        public byte[] SerializeMsg(Message msg)
+        public byte[] SerializeMsg(MsgPacket.Message msg)
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
             using (MemoryStream stream = new MemoryStream())
@@ -18,14 +18,14 @@ namespace Server
                 return stream.ToArray();
             }
         }
-        public Message DeserializeMsg(byte[] bytes)
+        public MsgPacket.Message DeserializeMsg(byte[] bytes)
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream())
+            using (MemoryStream stream = new MemoryStream(bytes))
             {
                 stream.Write(bytes);
                 Object obj = binaryFormatter.Deserialize(stream);
-                return (Message)obj;
+                return (MsgPacket.Message)obj;
             }
         }
     }

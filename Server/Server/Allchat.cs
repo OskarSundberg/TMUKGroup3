@@ -25,7 +25,7 @@ namespace Server
             newUser.Thread.IsBackground = true;
             newUser.Thread.Start();
             string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
-            Message welcomeMessage = new(welcomeMsg, "Server");
+            MsgPacket.Message welcomeMessage = new(welcomeMsg, "Server");
             newUser.Handler.Send(msgHandler.SerializeMsg(welcomeMessage));
             return 1;
         }
@@ -46,7 +46,7 @@ namespace Server
                     //Waiting for a message then makes it a string and checks if it a valied message 
                     bytes = new byte[64000];
                     bytesRead = user.Handler.Receive(bytes);
-                    Message msg = msgHandler.DeserializeMsg(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
                     //Testing purpose
                     Console.WriteLine($"{msg.Msg}");
                     Echo(msg);
@@ -71,7 +71,7 @@ namespace Server
         /// This method echoes the message from one user to all other users.
         /// </summary>
         /// <param name="msg"></param>
-        public int Echo(Message msg)
+        public int Echo(MsgPacket.Message msg)
         {
             Emoji emoji = new Emoji();
             lock (lockThread)
@@ -98,7 +98,7 @@ namespace Server
                 user.Handler.Close();
                 userList.Remove(user);
                 string userLeave = $"{user.Name} has left the chat";
-                Message msg = new(userLeave, user.Name);
+                MsgPacket.Message msg = new(userLeave, user.Name);
                 Echo(msg);
                 return 1;
             }
