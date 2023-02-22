@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClientBusiness.Model
 {
-    internal class Message
+    public class Message
     {
         private string msg;
         private string userFrom;
@@ -19,25 +19,6 @@ namespace ClientBusiness.Model
         {
             this.msg = msg;
             this.userFrom = userFrom;
-        }
-        public byte[] SerializeMsg(Message msg)
-        {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                binaryFormatter.Serialize(stream, msg);
-                return stream.ToArray();
-            }
-        }
-        public Object DeserializeMsg(byte[] bytes)
-        {
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                stream.Write(bytes);
-                Object obj = binaryFormatter.Deserialize(stream);
-                return obj;
-            }
         }
     }
 }
