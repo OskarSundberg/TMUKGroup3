@@ -57,9 +57,7 @@ namespace ClientPresentation.Views
         private string SectionsToString()
         {
             string ipAddress;
-
             ipAddress = FirstIP.Text + "." + SecondIP.Text + "." + ThirdIP.Text + "." + FourthIP.Text;
-
             return ipAddress;
         }
 

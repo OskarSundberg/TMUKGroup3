@@ -58,7 +58,7 @@ namespace ClientPresentation
             InitializeComponent();
             SendBox.Text = test;
         }
- 
+
         private void ServerMessage(string message)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -67,6 +67,7 @@ namespace ClientPresentation
                 MessageBoxScrollBar.ScrollToEnd();
             });
         }
+
         /// <summary>
         /// Sends whats in the send box when Save button clicked.
         /// </summary>
@@ -79,7 +80,6 @@ namespace ClientPresentation
                 Send_message(msg);
             }
         }
-
 
         /// <summary>
         /// Sends what is in the send boc when enter is pressed.
@@ -98,8 +98,10 @@ namespace ClientPresentation
                 {
                     ServerMessage("BotenAnna: slow down partner! You can't send more then one message a second!");
                 }
+
             }
         }
+
         /// <summary>
         /// Used to send the input to server
         /// </summary>
@@ -115,11 +117,11 @@ namespace ClientPresentation
                 return true;
             }
             else
-            {
                 ServerMessage("BotenAnna: You are not allowed to spam in the chat! (ง•o•)ง");
-                return false;
-            }
+            return false;
         }
+
+
         /// <summary>
         /// Stops the user from sending more the one message a second 
         /// </summary>
@@ -134,7 +136,6 @@ namespace ClientPresentation
             else
                 Time = DateTime.Now;
             return true;
-
         }
     }
 }
