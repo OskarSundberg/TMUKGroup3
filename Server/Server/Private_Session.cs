@@ -11,6 +11,7 @@ namespace Server
     internal class Private_Session
     {
         List<User> members = new List<User>();
+        MessageHandler msgHandler = new MessageHandler();
         public Private_Session(User userOne, User userTwo)
         {
             members.Add(userOne);
@@ -34,23 +35,31 @@ namespace Server
                 return -1;
             }
         }
-        public int Echo(byte[] msg)
+        public int Echo(Message msg)
         {
+            Emoji emoji = new Emoji();
+            msg.Msg = emoji.ReplaceEmoji(msg.Msg);
+            byte[] echo = msgHandler.SerializeMsg(msg);
             foreach (User u in members)
             {
-                u.Handler.Send(msg);
+                u.Handler.Send(echo);
             }
             return 1;
         }
         public void Monitor(User u)
         {
-            byte[] bytes = new byte[46000];
+            byte[] bytes = new byte[64000];
             int byteRec;
 
             while (true)
             {
+                bytes = new byte[64000];
                 byteRec = u.Handler.Receive(bytes);
-                Echo(bytes);
+                Message msg = msgHandler.DeserializeMsg(bytes);
+                Echo(msg);
+                bytes = null;
+                msg = null;
+                byteRec = 0;
             }
         }
     }

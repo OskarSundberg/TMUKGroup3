@@ -41,31 +41,28 @@ namespace Server
             int bytesRead;
             while (true)
             {
-                while (true)
+                try
                 {
-                    try
-                    {
-                        //Waiting for a message then makes it a string and checks if it a valied message 
-                        bytes = new byte[64000];
-                        bytesRead = user.Handler.Receive(bytes);
-                        Message msg = msgHandler.DeserializeMsg(bytes);
-                        //Testing purpose
-                        Console.WriteLine($"{msg.Msg}");
-                        Echo(msg);
-                        bytes = null;
-                        msg = null;
-                        bytesRead = 0;
-                        Thread.Sleep(1000);
+                    //Waiting for a message then makes it a string and checks if it a valied message 
+                    bytes = new byte[64000];
+                    bytesRead = user.Handler.Receive(bytes);
+                    Message msg = msgHandler.DeserializeMsg(bytes);
+                    //Testing purpose
+                    Console.WriteLine($"{msg.Msg}");
+                    Echo(msg);
+                    bytes = null;
+                    msg = null;
+                    bytesRead = 0;
+                    Thread.Sleep(1000);
 
-                    }
-                    //Check if a user have left and then ends the connection to user
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(user.Name);
-                        EndSession(user);
-                        return;
-                    }
+                }
+                //Check if a user have left and then ends the connection to user
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    Console.WriteLine(user.Name);
+                    EndSession(user);
+                    return;
                 }
             }
         }
