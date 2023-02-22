@@ -98,7 +98,6 @@ namespace ClientPresentation
                 {
                     ServerMessage("BotenAnna: slow down partner! You can't send more then one message a second!");
                 }
-
             }
         }
 

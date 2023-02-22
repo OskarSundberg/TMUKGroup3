@@ -37,7 +37,6 @@ namespace ClientNUnitTest
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             t.Join();
-
         }
 
         [Test]
