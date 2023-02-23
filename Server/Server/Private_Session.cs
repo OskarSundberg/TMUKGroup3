@@ -55,7 +55,7 @@ namespace Server
             {
                 bytes = new byte[64000];
                 byteRec = u.Handler.Receive(bytes);
-                MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
+                MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, byteRec);
                 Echo(msg);
                 bytes = null;
                 msg = null;

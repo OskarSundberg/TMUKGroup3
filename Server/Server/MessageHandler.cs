@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Sockets;
 
 namespace Server
 {
@@ -13,13 +14,14 @@ namespace Server
     {
         public byte[] SerializeMsg(MsgPacket.Message msg)
         {
-            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(msg);
-            return jsonBytes;
+            string json = JsonSerializer.Serialize(msg);
+            byte[] buffer = System.Text.Encoding.UTF8.GetBytes(json);
+            return buffer;
         }
-        public MsgPacket.Message DeserializeMsg(byte[] bytes)
+        public MsgPacket.Message DeserializeMsg(byte[] buffer, int bytesReceived)
         {
-            var readOnlySpan = new ReadOnlySpan<byte>(bytes);
-            MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(readOnlySpan)!;
+            string json = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+            MsgPacket.Message ?msg = JsonSerializer.Deserialize<MsgPacket.Message>(json)!;
             return msg;
         }
     }

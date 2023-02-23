@@ -46,7 +46,7 @@ namespace Server
                     //Waiting for a message then makes it a string and checks if it a valied message 
                     bytes = new byte[64000];
                     bytesRead = user.Handler.Receive(bytes);
-                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
                     //Testing purpose
                     Console.WriteLine($"{msg.Msg}");
                     Echo(msg);
@@ -57,10 +57,9 @@ namespace Server
 
                 }
                 //Check if a user have left and then ends the connection to user
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex.Message);
-                    Console.WriteLine(user.Name);
+                    Console.Write($"{user.Name} has closed it's connection!");
                     EndSession(user);
                     return;
                 }
