@@ -1,5 +1,5 @@
 ﻿using ClientBusiness.Model;
-using ClientPresentation.Commands;
+//using ClientPresentation.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,6 +20,7 @@ namespace ClientPresentation.ViewModels
         public Client UserClinet1 { get; set; }
         public Client Chosen_Client { get; set; }
         public string UserName { get; set; }
+
 
         public MainWindowViewModel()
         {
