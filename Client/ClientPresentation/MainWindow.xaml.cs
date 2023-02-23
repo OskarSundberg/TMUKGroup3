@@ -28,6 +28,7 @@ namespace ClientPresentation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ClientPresentation.MainWindow GetMainWindow { get; set; }
         public MainWindowViewModel ViewModel { get; set; }
         /// <summary>
         /// Used to determine the time from the last meassage sent
@@ -48,8 +49,16 @@ namespace ClientPresentation
             client.StartClient(cInfo, ServerMessage);
             Time = DateTime.Now;
             InitializeComponent();
-
         }
+        public MainWindow(string test)
+        {
+            OldMessage = "hello";
+            ViewModel = new MainWindowViewModel();
+            ViewModel.UserClient[0].Name = "test";
+            InitializeComponent();
+            SendBox.Text = test;
+        }
+
         private void ServerMessage(string message)
         {
             App.Current.Dispatcher.Invoke(() =>
@@ -65,7 +74,11 @@ namespace ClientPresentation
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
             if (true == SpamFilter())
-                Send_message();
+            {
+                string msg = SendBox.Text;
+                SendBox.Clear();
+                Send_message(msg);
+            }
         }
 
         /// <summary>
@@ -76,17 +89,23 @@ namespace ClientPresentation
             if (e.Key == Key.Enter)
             {
                 if (SpamFilter())
-                    Send_message();
+                {
+                    string msg = SendBox.Text;
+                    SendBox.Clear();
+                    Send_message(msg);
+                }
+                else
+                {
+                    ServerMessage("BotenAnna: slow down partner! You can't send more then one message a second!");
+                }
             }
         }
 
         /// <summary>
         /// Used to send the input to server
         /// </summary>
-        private void Send_message()
+        public bool Send_message(string msg)
         {
-            string msg = SendBox.Text;
-            SendBox.Clear();
             //stops user from sendig a empty message and the samme twice in a row
             if (msg != "" && msg != OldMessage)
             {
@@ -94,27 +113,28 @@ namespace ClientPresentation
                 c.SendMsg = msg;
                 OldMessage = msg;
                 Time = DateTime.Now;
+                return true;
             }
             else
                 ServerMessage("BotenAnna: You are not allowed to spam in the chat! (ง•o•)ง");
+            return false;
         }
+
 
         /// <summary>
         /// Stops the user from sending more the one message a second 
         /// </summary>
         /// <returns>  true :if more the a second has past</returns>
         /// <returns> false :if less the a second has past</returns>
-        bool SpamFilter()
+        public bool SpamFilter()
         {
             if (Time.AddMilliseconds(1000) > DateTime.Now)
             {
-                ServerMessage("BotenAnna: slow down partner! You can't send more then one message a second!");
                 return false;
             }
             else
                 Time = DateTime.Now;
             return true;
-
         }
     }
 }
