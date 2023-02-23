@@ -106,8 +106,22 @@ namespace ClientPresentation
         /// </summary>
         public bool Send_message(string msg)
         {
+            if (msg == "/help")
+            {
+                //sorry for the messy code but it nice in the chat:) i promises
+                ServerMessage("BotenAnna: " +
+                              "\n===========================================================" +
+                              "\n /online                  -> gives a list of users onlie." +
+                              "\n===========================================================" +
+                              "\n /wisper [user_tag] -> privet chat whit the user you chose." +
+                              "\n===========================================================" +
+                              "\n /unicorn                -> unicorn in the chat for all to see." +
+                              "\n===========================================================" +
+                              "\n :D and ;)                -> prints a smile in the chat" +
+                              "\n===========================================================");
+            }
             //stops user from sendig a empty message and the samme twice in a row
-            if (msg != "" && msg != OldMessage)
+            else if (msg != "" && msg != OldMessage)
             {
                 Client c = ViewModel.UserClient[0];
                 c.SendMsg = msg;
