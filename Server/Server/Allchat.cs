@@ -48,43 +48,39 @@ namespace Server
                         //Waiting for a message then makes it a string and checks if it a valied message 
                         bytes = new byte[64000];
                         bytesRead = user.Handler.Receive(bytes);
-                        msg += Encoding.UTF8.GetString(bytes, 0, bytesRead);
-                        //Check if '\u009F' is part of a string to check that its a real message
-                        if (msg.IndexOf(char.ToString('\u009F')) > -1)
+                        MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
+                        //Testing purpose
+                        Console.WriteLine($"{msg.Msg}");
+                        //Should probably be a method and not here
+                        if (msg.Msg == "/online")
                         {
-                            msg = msg.Remove(msg.Length - 1, 1);
-                            break;
+                            string usersOnline = "Users curently online:";
+                            foreach (User u in userList)
+                            {
+                                usersOnline += "\n" + u.Name;
+                            }
+                            MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
+
+                            user.Handler.Send(msgHandler.SerializeMsg(realmsg));
                         }
+                        else
+                        {
+                            Echo(msg);
+                        }
+                        bytes = null;
+                        msg = null;
+                        bytesRead = 0;
+                        Thread.Sleep(1000);
+
                     }
                     //Check if a user have left and then ends the connection to user
-                    catch (Exception ex)
+                    catch
                     {
-                        Console.WriteLine(ex.Message);
-                        Console.WriteLine(user.Name);
+                        Console.Write($"{user.Name} has closed it's connection!");
                         EndSession(user);
                         return;
                     }
                 }
-                //Testing purpose
-                Console.WriteLine($"{msg}");
-                if (msg == user.Name + ": /online")
-                {
-                    string usersOnline = "Users curently online:\n";
-                    foreach (User u in userList)
-                    {
-                        usersOnline += "\n" + u.Name;
-                    }
-                    byte[] userOnlineByte = Encoding.UTF8.GetBytes(usersOnline);
-                    user.Handler.Send(userOnlineByte);
-                }
-                else
-                {
-                    Echo(msg);
-                }
-                bytes = null;
-                msg = null;
-                bytesRead = 0;
-                Thread.Sleep(1000);
             }
         }
 
