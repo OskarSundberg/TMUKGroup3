@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -47,8 +48,10 @@ namespace ClientPresentation
             Client client = new Client();
             client.StartClient(cInfo, ServerMessage);
             Time = DateTime.Now;
+            Thread checkConnection = new Thread(()=> CheckConnection(Client.Sender));
+            checkConnection.Start();
+            checkConnection.IsBackground = true;
             InitializeComponent();
-
         }
         private void ServerMessage(string message)
         {
@@ -115,6 +118,16 @@ namespace ClientPresentation
                 Time = DateTime.Now;
             return true;
 
+        }
+
+        void CheckConnection(Socket s)
+        {
+            while(s.Connected)
+                Thread.Sleep(3000);
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                MessagesBox.AppendText("Server has shut down. Click connect to retry connection");
+            });
         }
     }
 }
