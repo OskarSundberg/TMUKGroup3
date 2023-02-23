@@ -40,13 +40,25 @@ namespace ClientPresentation
         public string OldMessage { get; set; }
         public MainWindow()
         {
+            Client client = new Client();
             EstablishConnection ec = new EstablishConnection();
+            ViewModel = new MainWindowViewModel();
             ec.ShowDialog();
             ConnectionInfo cInfo = new ConnectionInfo(IPAddress.Parse(ec.IpAddress), Int32.Parse(ec.PortNumber), ec.Name);
-            ViewModel = new MainWindowViewModel();
             ViewModel.UserClient[0].Name = ec.Name;
-            Client client = new Client();
             client.StartClient(cInfo, ServerMessage);
+            if (!Client.Sender.Connected)
+                ec.ErrorCode.Foreground = Brushes.Red;
+            while (!Client.Sender.Connected)
+            {
+                ec.ShowDialog();
+                cInfo.IP = IPAddress.Parse(ec.IpAddress);
+                cInfo.Port = Int32.Parse(ec.PortNumber);
+                cInfo.UserName = ec.Name;
+                ViewModel.UserClient[0].Name = ec.Name;
+                client.StartClient(cInfo, ServerMessage);
+            }
+            ec.Hide();
             Time = DateTime.Now;
             Thread checkConnection = new Thread(() => CheckConnection(Client.Sender));
             checkConnection.Start();
