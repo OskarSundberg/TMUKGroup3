@@ -1,4 +1,4 @@
-# Chat application
+# UniChat 2
 
 [![Build Status for Chat program][build-status]][build-log]
 
