@@ -67,10 +67,10 @@ namespace Server
                 }
                 //Testing purpose
                 Console.WriteLine($"{msg}");
-                if(msg == user.Name + ": /online")
+                if (msg == user.Name + ": /online")
                 {
                     string usersOnline = "Users curently online:\n";
-                    foreach(User u in userList)
+                    foreach (User u in userList)
                     {
                         usersOnline += "\n" + u.Name;
                     }
