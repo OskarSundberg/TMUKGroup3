@@ -137,7 +137,7 @@ namespace ClientBusiness.Model
                 bytesRec = Sender.Receive(bytes);
                 if (bytesRec != 0)
                 {
-                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRec);
                     this._messageCallBack(msg.UserFrom + ": " + msg.Msg);
                 }
             }

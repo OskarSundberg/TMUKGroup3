@@ -18,10 +18,10 @@ namespace ClientBusiness.Model
             byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(msg);
             return jsonBytes;
         }
-        public MsgPacket.Message DeserializeMsg(byte[] bytes)
+        public MsgPacket.Message DeserializeMsg(byte[] buffer, int bytesReceived)
         {
-            var readOnlySpan = new ReadOnlySpan<byte>(bytes);
-            MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(readOnlySpan)!;
+            string json = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
+            MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(json)!;
             return msg;
         }
     }
