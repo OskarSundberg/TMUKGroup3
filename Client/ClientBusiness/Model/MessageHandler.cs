@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Runtime.Serialization;
+using System.Text.Json;
 
 namespace ClientBusiness.Model
 {
@@ -14,21 +15,14 @@ namespace ClientBusiness.Model
     {
         public byte[] SerializeMsg(MsgPacket.Message msg)
         {
-            BinaryFormatter? binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream())
-            {
-                binaryFormatter.Serialize(stream, msg);
-                return stream.ToArray();
-            }
+            byte[] jsonBytes = JsonSerializer.SerializeToUtf8Bytes(msg);
+            return jsonBytes;
         }
         public MsgPacket.Message DeserializeMsg(byte[] bytes)
         {
-            BinaryFormatter? binaryFormatter = new BinaryFormatter();
-            using (MemoryStream stream = new MemoryStream(bytes))
-            {
-                MsgPacket.Message obj = (MsgPacket.Message)binaryFormatter.Deserialize(stream);
-                return obj;
-            }
+            var readOnlySpan = new ReadOnlySpan<byte>(bytes);
+            MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(readOnlySpan)!;
+            return msg;
         }
     }
 }

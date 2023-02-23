@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace MsgPacket
 {
     [Serializable]
-    public class Message : SerializationBinder
+    public class Message
     {
         public string UserTo { get; set; }
         public string UserFrom { get; set; }
@@ -18,11 +18,6 @@ namespace MsgPacket
         {
             this.Msg = msg;
             this.UserFrom = userFrom;
-        }
-        public override Type BindToType(string AssemblyName, string TypeName)
-        {
-            Type typeToDeserialize = Type.GetType(String.Format(" {0}, {1}", TypeName, AssemblyName));
-            return typeToDeserialize;
         }
     }
 }
