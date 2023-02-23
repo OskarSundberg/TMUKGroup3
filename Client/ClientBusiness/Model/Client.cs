@@ -137,10 +137,10 @@
                     if (bytesRec != 0)
                         this._messageCallBack(Encoding.UTF8.GetString(bytes, 0, bytesRec));
                 }
-                catch(System.Net.Sockets.SocketException e)
+                catch (System.Net.Sockets.SocketException e)
                 {
                     if (Sender.Connected == false)
-                        Console.WriteLine($"Server has most likely shut down: {e.ToString()}"); 
+                        Console.WriteLine($"Server has most likely shut down: {e.ToString()}");
                     break;
                 }
             }
@@ -157,12 +157,12 @@
                     bytesRec = DataSender.Receive(bytes);
                     if (bytesRec != 0)
                     {
-                        
+
                     }
                 }
-                catch(System.Net.Sockets.SocketException e)
+                catch (System.Net.Sockets.SocketException e)
                 {
-                    if(Sender.Connected == false)
+                    if (Sender.Connected == false)
                         Debug.WriteLine($"Server has most likely shut down: {e.ToString()}");
                     break;
                 }

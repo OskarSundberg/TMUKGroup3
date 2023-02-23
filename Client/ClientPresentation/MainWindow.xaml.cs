@@ -48,7 +48,7 @@ namespace ClientPresentation
             Client client = new Client();
             client.StartClient(cInfo, ServerMessage);
             Time = DateTime.Now;
-            Thread checkConnection = new Thread(()=> CheckConnection(Client.Sender));
+            Thread checkConnection = new Thread(() => CheckConnection(Client.Sender));
             checkConnection.Start();
             checkConnection.IsBackground = true;
             InitializeComponent();
@@ -122,7 +122,7 @@ namespace ClientPresentation
 
         void CheckConnection(Socket s)
         {
-            while(s.Connected)
+            while (s.Connected)
                 Thread.Sleep(3000);
             App.Current.Dispatcher.Invoke(() =>
             {
