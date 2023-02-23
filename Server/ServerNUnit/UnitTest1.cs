@@ -16,7 +16,7 @@ namespace ServerNUnit
         User testUserEndOne;
         User testUserTwo;
         User testUserEndTwo;
-        Message testMessageOne;
+        MsgPacket.Message testMessageOne;
         Socket senderOne;
         Socket senderTwo;
         Socket senderEndOne;
@@ -56,7 +56,7 @@ namespace ServerNUnit
             testUserEndTwo = new User("Ivo", senderEndTwo);
 
             privateChatTest = new Private_Session(testUserOne, testUserTwo);
-            testMessageOne = new Message("123", testUserOne.Name);
+            testMessageOne = new MsgPacket.Message("123", testUserOne.Name);
         }
 
         //AllChat Tests
@@ -97,7 +97,7 @@ namespace ServerNUnit
         [Test]
         public void EchoPrivate_Testing()
         {
-            Message msg = new("123", testUserOne.Name);
+            MsgPacket.Message msg = new("123", testUserOne.Name);
             Assert.That(privateChatTest.Echo(msg), Is.EqualTo(1));
         }
 
