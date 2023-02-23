@@ -67,7 +67,20 @@ namespace Server
                 }
                 //Testing purpose
                 Console.WriteLine($"{msg}");
-                Echo(msg);
+                if(msg == user.Name + ": /online")
+                {
+                    string usersOnline = "Users curently online:\n";
+                    foreach(User u in userList)
+                    {
+                        usersOnline += "\n" + u.Name;
+                    }
+                    byte[] userOnlineByte = Encoding.UTF8.GetBytes(usersOnline);
+                    user.Handler.Send(userOnlineByte);
+                }
+                else
+                {
+                    Echo(msg);
+                }
                 bytes = null;
                 msg = null;
                 bytesRead = 0;
