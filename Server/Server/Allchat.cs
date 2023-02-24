@@ -41,45 +41,42 @@ namespace Server
             int bytesRead;
             while (true)
             {
-                while (true)
+                try
                 {
-                    try
+                    //Waiting for a message then makes it a string and checks if it a valied message 
+                    bytes = new byte[64000];
+                    bytesRead = user.Handler.Receive(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
+                    //Testing purpose
+                    Console.WriteLine($"{msg.Msg}");
+                    //Should probably be a method and not here
+                    if (msg.Msg == "/online")
                     {
-                        //Waiting for a message then makes it a string and checks if it a valied message 
-                        bytes = new byte[64000];
-                        bytesRead = user.Handler.Receive(bytes);
-                        MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
-                        //Testing purpose
-                        Console.WriteLine($"{msg.Msg}");
-                        //Should probably be a method and not here
-                        if (msg.Msg == "/online")
+                        string usersOnline = "Users curently online:";
+                        foreach (User u in userList)
                         {
-                            string usersOnline = "Users curently online:";
-                            foreach (User u in userList)
-                            {
-                                usersOnline += "\n" + u.Name;
-                            }
-                            MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
-
-                            user.Handler.Send(msgHandler.SerializeMsg(realmsg));
+                            usersOnline += "\n" + u.Name;
                         }
-                        else
-                        {
-                            Echo(msg);
-                        }
-                        bytes = null;
-                        msg = null;
-                        bytesRead = 0;
-                        Thread.Sleep(1000);
+                        MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
 
+                        user.Handler.Send(msgHandler.SerializeMsg(realmsg));
                     }
-                    //Check if a user have left and then ends the connection to user
-                    catch
+                    else
                     {
-                        Console.Write($"{user.Name} has closed it's connection!");
-                        EndSession(user);
-                        return;
+                        Echo(msg);
                     }
+                    bytes = null;
+                    msg = null;
+                    bytesRead = 0;
+                    Thread.Sleep(1000);
+
+                }
+                //Check if a user have left and then ends the connection to user
+                catch
+                {
+                    Console.Write($"{user.Name} has closed it's connection!");
+                    EndSession(user);
+                    return;
                 }
             }
         }

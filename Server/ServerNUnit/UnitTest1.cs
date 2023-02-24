@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Reflection;
 using NUnit.Framework.Internal;
+using System.Text;
 
 namespace ServerNUnit
 {
@@ -122,6 +123,27 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-
+        [Test]
+        public void Server_Overload_Test()
+        {
+            Thread thread = new Thread(() => Server.Server.Main(null));
+            thread.IsBackground = true;
+            thread.Start();
+            Thread.Sleep(1000);
+            Assert.DoesNotThrow(() =>
+            {
+                IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
+                IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+                for (int i = 0; i < 101; i++)
+                {
+                    Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    client.Connect(server);
+                    byte[] cUseName = Encoding.UTF8.GetBytes($"{i}");
+                    client.Send(cUseName);
+                    Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    dataport.Connect(dataServer);
+                }
+            });
+        }
     }
 }
