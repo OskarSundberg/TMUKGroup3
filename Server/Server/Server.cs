@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -28,7 +29,6 @@ namespace Server
             IPEndPoint? iPEndPoint = new IPEndPoint(iPAddress, port);
             int dataPort = 31337;
             IPEndPoint iPEndPointData = new IPEndPoint(iPAddress, dataPort);
-
             Console.WriteLine("Please connect to IP: {0} and port: {1}", iPAddress, port);
 
             try
