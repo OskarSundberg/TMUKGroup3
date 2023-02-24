@@ -9,6 +9,7 @@ namespace Server
 {
     internal class Server
     {
+        public static IPAddress? GetIPAddress { get; set; }
         public static Allchat allchat = new Allchat();
         static void Main(string[] args)
         {
@@ -25,6 +26,7 @@ namespace Server
             string? hostName = Dns.GetHostName();
             IPHostEntry? iPHostEntry = Dns.GetHostEntry(hostName);
             IPAddress? iPAddress = iPHostEntry.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            GetIPAddress = iPAddress;
             int port = 13375;
             IPEndPoint? iPEndPoint = new IPEndPoint(iPAddress, port);
             int dataPort = 31337;
@@ -36,17 +38,16 @@ namespace Server
                 Socket listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 Socket listenerData = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 listener.Bind(iPEndPoint);
-                listener.Listen(10);
+                listener.Listen(100);
                 listenerData.Bind(iPEndPointData);
-                listenerData.Listen(10);
+                listenerData.Listen(100);
 
                 while (true)
                 {
                     Console.WriteLine("Waiting for anything");
                     Socket handler = listener.Accept();
                     byte[] bytes = new byte[64000];
-                    int bytesRead;
-                    bytesRead = handler.Receive(bytes);
+                    int bytesRead = handler.Receive(bytes);
                     string name = Encoding.UTF8.GetString(bytes, 0, bytesRead);
                     User user = new User(name, handler);
                     Console.WriteLine("Waiting for connection to data port");
