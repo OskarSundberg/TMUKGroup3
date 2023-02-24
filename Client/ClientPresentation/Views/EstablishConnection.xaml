@@ -10,7 +10,7 @@
         Title="EstablishConnection" Height="350" Width="450">
 
     <DockPanel>
-        
+
         <StackPanel DockPanel.Dock="Bottom" Height="50">
             <Button x:Name="ConnectBtn" Grid.Row="0" Content="Connect" VerticalAlignment="Bottom" HorizontalAlignment="Center" Click="ConnectToServerClick" Width="60"/>
         </StackPanel>

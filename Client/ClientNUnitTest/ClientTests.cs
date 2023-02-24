@@ -66,8 +66,9 @@ namespace ClientNUnitTest
         public void StartClient_Test()
         {
             void ServerMessage(string message) { }
+            void DataMessage(string[] data) { }
             Client.Sender = senderOne;
-            Assert.DoesNotThrow(() => clientTest.StartClient(connectionInfoTest, ServerMessage));
+            Assert.DoesNotThrow(() => clientTest.StartClient(connectionInfoTest, ServerMessage, DataMessage));
         }
         [Test]
         public void GetMessageFromClient_Test()
