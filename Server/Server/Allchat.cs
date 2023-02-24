@@ -27,6 +27,7 @@ namespace Server
             string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
             MsgPacket.Message welcomeMessage = new(welcomeMsg, "Server");
             newUser.Handler.Send(msgHandler.SerializeMsg(welcomeMessage));
+            SendUsersOnlineList();
             return 1;
         }
 
@@ -99,6 +100,31 @@ namespace Server
                 return 1;
             }
         }
+        public void SendUsersOnlineList()
+        {
+            string? usersOnline = null;
+            foreach (User u in userList)
+            {
+                usersOnline += u.Name + ",";
+            }
+            if (usersOnline != null)
+            {
+                usersOnline = usersOnline.Remove(usersOnline.Length - 1);
+                _ = EchoData(usersOnline);
+            }
+        }
+        public int EchoData(string msg)
+        {
+            lock (lockThread)
+            {
+                byte[] echo = Encoding.UTF8.GetBytes(msg);
+                foreach (User u in userList)
+                {
+                    u.DataHandler.Send(echo);
+                }
+                return 1;
+            }
+        }
 
         /// <summary>
         /// This method ends the session between a user and server.
@@ -114,6 +140,7 @@ namespace Server
                 string userLeave = $"{user.Name} has left the chat";
                 MsgPacket.Message msg = new(userLeave, user.Name);
                 Echo(msg);
+                SendUsersOnlineList();
                 return 1;
             }
             catch (Exception e)

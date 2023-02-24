@@ -46,7 +46,7 @@ namespace ClientPresentation
             ViewModel = new MainWindowViewModel();
             ViewModel.UserClient[0].Name = ec.Name;
             Client client = new Client();
-            client.StartClient(cInfo, ServerMessage);
+            client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
             Time = DateTime.Now;
             InitializeComponent();
         }
@@ -149,6 +149,20 @@ namespace ClientPresentation
             else
                 Time = DateTime.Now;
             return true;
+        }
+
+        public void UppdateUsersOnlinePanel(string[] users)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                UsersOnlinePanel.Children.Clear();
+                foreach (string user in users)
+                {
+                    Button button = new Button();
+                    button.Content = user;
+                    UsersOnlinePanel.Children.Add(button);
+                }
+            });
         }
     }
 }

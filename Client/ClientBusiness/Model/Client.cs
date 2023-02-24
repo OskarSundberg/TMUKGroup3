@@ -23,6 +23,7 @@ namespace ClientBusiness.Model
 
         //callback
         private Action<string> _messageCallBack;
+        private Action<string[]> _uppdateUserOnlnePanel;
 
         public string Name
         {
@@ -63,7 +64,7 @@ namespace ClientBusiness.Model
                 OnPropertyChanged();
             }
         }
-        public void StartClient(ConnectionInfo cInfo, Action<string> massageCallBack)
+        public void StartClient(ConnectionInfo cInfo, Action<string> massageCallBack, Action<string[]> UsersOnlnePanel)
         {
             try
             {
@@ -71,6 +72,7 @@ namespace ClientBusiness.Model
 
                 Sender = new Socket(cInfo.IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                 this._messageCallBack = massageCallBack;
+                this._uppdateUserOnlnePanel = UsersOnlnePanel;
 
                 try
                 {
@@ -152,6 +154,9 @@ namespace ClientBusiness.Model
                 bytesRec = DataSender.Receive(bytes);
                 if (bytesRec != 0)
                 {
+                    string msg = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                    string[] usersOnline = msg.Split(',');
+                    this._uppdateUserOnlnePanel(usersOnline);
                 }
             }
         }

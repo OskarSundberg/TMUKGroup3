@@ -23,16 +23,26 @@ namespace ServerNUnit
         Socket senderEndOne;
         Socket senderEndTwo;
         Socket listener;
+        Socket dataListener;
+        Socket dataOne;
 
         [OneTimeSetUp]
         public void Setup()
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             IPEndPoint server = new IPEndPoint(ipAddress, 13375);
+            IPEndPoint serverData = new IPEndPoint(ipAddress, 31337);
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(server);
             listener.Listen(10);
+
+            dataListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            dataListener.Bind(serverData);
+            dataListener.Listen(10);
+
+            dataOne = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataOne.Connect(serverData);
 
             senderOne = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             senderOne.Connect(server);
@@ -50,6 +60,7 @@ namespace ServerNUnit
 
             //Creating test user that will not be closed
             testUserOne = new User("Sam", senderOne);
+            testUserOne.DataHandler = dataOne;
             testUserTwo = new User("Samme", senderTwo);
 
             //Creating test user that WILL be closed only use 1 time
