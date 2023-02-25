@@ -13,6 +13,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -106,19 +107,28 @@ namespace ClientPresentation
         /// </summary>
         public bool Send_message(string msg)
         {
-            if (msg == "/help")
+            if (msg == "/help" || msg == "/emoij")
             {
-                //sorry for the messy code but it nice in the chat:) i promises
-                ServerMessage("BotenAnna: " +
-                              "\n===========================================================" +
-                              "\n /online                  -> gives a list of users onlie." +
-                              "\n===========================================================" +
-                              "\n /wisper [user_tag] -> privet chat whit the user you chose." +
-                              "\n===========================================================" +
-                              "\n /unicorn                -> unicorn in the chat for all to see." +
-                              "\n===========================================================" +
-                              "\n :D and ;)                -> prints a smile in the chat" +
-                              "\n===========================================================");
+                if (msg == "/help")
+                {
+                    ServerMessage("BotenAnna: " +
+                                  "\n===========================================================" +
+                                  "\n /online                  -> gives a list of users onlie." +
+                                  "\n===========================================================" +
+                                  "\n /wisper [user_tag] -> privet chat whit the user you chose." +
+                                  "\n===========================================================" +
+                                  "\n /unicorn                -> unicorn in the chat for all to see." +
+                                  "\n===========================================================" +
+                                  "\n /emoij                  ->list of possible emoijs in the chat.");
+                }
+                else
+                {
+                    ServerMessage("BotenAnna: " +
+                                     "\n===========================================================" +
+                                     "\nType the emoij you like to send betwen ::" +
+                                     "\nFor exampel ::D: or :<3:" +
+                                     "\n :D \n ;)\n :o \n :( \n :/\n  <3\n  </3\n  100\n ok\n thumbsup ");
+                }
             }
             //stops user from sendig a empty message and the samme twice in a row
             else if (msg != "" && msg != OldMessage)
