@@ -107,27 +107,27 @@ namespace ClientPresentation
         /// </summary>
         public bool Send_message(string msg)
         {
-            if (msg == "/help" || msg == "/emoij")
+            if (msg == "/help" || msg == "/emoji")
             {
                 if (msg == "/help")
                 {
                     ServerMessage("BotenAnna: " +
                                   "\n===========================================================" +
-                                  "\n /online                  -> gives a list of users onlie." +
+                                  "\n/whisper [user_tag] -> private chat with the user you choose." +
                                   "\n===========================================================" +
-                                  "\n /wisper [user_tag] -> privet chat whit the user you chose." +
+                                  "\n /wisper [user_tag]  -> privet chat whit the user you chose." +
                                   "\n===========================================================" +
-                                  "\n /unicorn                -> unicorn in the chat for all to see." +
+                                  "\n /unicorn                 -> unicorn in the chat for all to see." +
                                   "\n===========================================================" +
-                                  "\n /emoij                  ->list of possible emoijs in the chat.");
+                                  "\n /emoji                    ->list of possible emojis in the chat.");
                 }
                 else
                 {
                     ServerMessage("BotenAnna: " +
                                      "\n===========================================================" +
-                                     "\nType the emoij you like to send betwen ::" +
-                                     "\nFor exampel ::D: or :<3:" +
-                                     "\n :D \n ;)\n :o \n :( \n :/\n  <3\n  </3\n  100\n ok\n thumbsup ");
+                                     "\nType the emoji you like to send between ::" +
+                                     "\nFor example ::D: or :<3:" +
+                                     "\n:D \n;)\n:o \n:( \n:/\n<3\n</3\n100\nok\nthumbsup ");
                 }
             }
             //stops user from sendig a empty message and the samme twice in a row
