@@ -1,8 +1,12 @@
 using ClientPresentation;
+using ClientPresentation.Views;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+using MsgPacket;
 using System.Net;
 using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace ClientNUnitTest
 {
@@ -13,13 +17,16 @@ namespace ClientNUnitTest
         Socket listener;
         Socket dataListener;
         Socket senderOne;
+        RandomGen rg;
         static MainWindow MainWindow { get; set; }
+        static EstablishConnection ec { get; set; }
         [OneTimeSetUp]
         public void Setup()
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             IPEndPoint server = new IPEndPoint(ipAddress, 13375);
             IPEndPoint dataconnection = new IPEndPoint(ipAddress, 31337);
+            rg = new RandomGen();
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             dataListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -37,6 +44,17 @@ namespace ClientNUnitTest
             t.SetApartmentState(ApartmentState.STA);
             t.Start();
             t.Join();
+
+            Thread t2 = new Thread(() =>
+            {
+                ec = new EstablishConnection();
+                ec.IpAddress = "123";
+                ec.Name = "Test";
+                ec.PortNumber = "23";
+            });
+            t2.SetApartmentState(ApartmentState.STA);
+            t2.Start();
+            t2.Join();
         }
 
         [Test]
@@ -94,5 +112,97 @@ namespace ClientNUnitTest
             Assert.IsFalse(MainWindow.SpamFilter());
 
         }
+
+        /// <summary>
+        /// a properti of the method is that two equal strings should give the same byte array. 
+        /// the test asserts that the same msg will reslut in the same utput.
+        /// </summary>
+        [Test]
+        public void MessageHandler_Test()
+        {
+            byte[] a, b;
+            string str_message, userName;
+            MsgPacket.Message msg;
+            userName = "botenAnna";
+            RandomGen rg = new RandomGen();
+            MessageHandler messageHandler = new MessageHandler();
+
+            for (int i = 0; i < 100; i++)
+            {
+                str_message = rg.Gen_String(10);
+                msg = new MsgPacket.Message(str_message, userName);
+                a = messageHandler.SerializeMsg(msg);
+                b = messageHandler.SerializeMsg(msg);
+                Assert.That(b, Is.EqualTo(a));
+            }
+        }
+        /// <summary>
+        /// a properti of the method is that two equal strings should give the same byte array. 
+        /// Then the opposite should hold. two different messegs gives 2 different byte arrays
+        /// </summary>
+        [Test]
+        public void MessageHandler_Test_Difrent_Messeges()
+        {
+            byte[] a, b;
+            string str_message, userName;
+            MsgPacket.Message msg;
+            userName = "botenAnna";
+            MessageHandler messageHandler = new MessageHandler();
+
+            str_message = rg.Gen_String(10);
+            msg = new MsgPacket.Message(str_message, userName);
+            a = messageHandler.SerializeMsg(msg);
+            Thread.Sleep(20);
+            for (int i = 0; i < 100; i++)
+            {
+                str_message = rg.Gen_String(10);
+                msg = new MsgPacket.Message(str_message, userName);
+                b = messageHandler.SerializeMsg(msg);
+
+                Assert.False(a == b);
+            }
+        }
+
+        /// <summary>
+        /// If a == b and then b == C we konwe a == C by Transitivity.
+        /// the random funktions whit 128 difrent utputs, gives (1/128)^3 whitch is very low. 
+        /// so if all a b and c are the same then somthing is wrong.
+        /// </summary>
+        [Test]
+        public void Gen_Int_Test()
+        {
+            int a, b, c;
+            a = rg.Gen_Int();
+            b = rg.Gen_Int();
+            c = rg.Gen_Int();
+            if (a == b)
+                Assert.False(b == c);
+            else
+                Assert.NotNull(a);
+
+        }
+
+        [Test]
+        public void EstablishConnection_Test()
+        {
+            string ip = "127.0.0.1";
+            ec.IpAddress = ip;
+            Assert.That(ip, Is.EqualTo(ec.IpAddress));
+            ec.IpAddress = "123";
+            Assert.That(ip, Is.Not.EqualTo(ec.IpAddress));
+
+            string name = "Test";
+            ec.Name = name;
+            Assert.That(name, Is.EqualTo(ec.Name));
+            ec.Name = "NotTest";
+            Assert.That(name, Is.Not.EqualTo(ec.Name));
+
+            string port = "13375";
+            ec.PortNumber = port;
+            Assert.That(port, Is.EqualTo(ec.PortNumber));
+            ec.PortNumber = "123";
+            Assert.That(name, Is.Not.EqualTo(ec.Name));
+        }
+
     }
 }
