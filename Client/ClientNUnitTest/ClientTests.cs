@@ -57,6 +57,7 @@ namespace ClientNUnitTest
             t2.Join();
         }
 
+        #region [client]
         [Test]
         public void TestClientNameAndMsg()
         {
@@ -77,7 +78,6 @@ namespace ClientNUnitTest
             Assert.IsNotNull(connectionInfoTest.IP);
             Assert.IsNotNull(connectionInfoTest.Port);
         }
-
         // Does not test if connection is established
         [Test]
         //[Timeout (2000)]
@@ -94,13 +94,18 @@ namespace ClientNUnitTest
             Client.Sender = senderOne;
             Assert.DoesNotThrow(() => clientTest.GetMessageFromClient("123123"));
         }
+        #endregion
+
+        #region [MainWindo]
 
         [Test]
         public void Send_message_Test()
         {
             Assert.IsTrue(MainWindow.Send_message("test"));
         }
-
+        /// <summary>
+        /// Test that user cant send more the one message a secconed
+        /// </summary>
         [Test]
         public void SpamFilter_Test()
         {
@@ -112,7 +117,9 @@ namespace ClientNUnitTest
             Assert.IsFalse(MainWindow.SpamFilter());
 
         }
+        #endregion
 
+        #region [Model]
         /// <summary>
         /// a properti of the method is that two equal strings should give the same byte array. 
         /// the test asserts that the same msg will reslut in the same utput.
@@ -162,7 +169,9 @@ namespace ClientNUnitTest
                 Assert.False(a == b);
             }
         }
+        #endregion
 
+        #region [RandomGen]
         /// <summary>
         /// If a == b and then b == C we konwe a == C by Transitivity.
         /// the random funktions whit 128 difrent utputs, gives (1/128)^3 whitch is very low. 
@@ -181,7 +190,12 @@ namespace ClientNUnitTest
                 Assert.NotNull(a);
 
         }
+        #endregion
 
+        #region [EstablishConnection]
+        /// <summary>
+        /// Test some basic in EstablishConnection 
+        /// </summary>
         [Test]
         public void EstablishConnection_Test()
         {
@@ -203,6 +217,7 @@ namespace ClientNUnitTest
             ec.PortNumber = "123";
             Assert.That(name, Is.Not.EqualTo(ec.Name));
         }
+        #endregion
 
     }
 }
