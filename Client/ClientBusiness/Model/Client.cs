@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -10,7 +11,6 @@ using System.Xml.Linq;
 
 namespace ClientBusiness.Model
 {
-
 
     public class Client : INotifyPropertyChanged
     {
@@ -136,11 +136,20 @@ namespace ClientBusiness.Model
             byte[] bytes = new byte[64000]; //nearly max size
             while (true)
             {
-                bytesRec = Sender.Receive(bytes);
-                if (bytesRec != 0)
+                try
                 {
-                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRec);
-                    this._messageCallBack(msg.UserFrom + ": " + msg.Msg);
+                    bytesRec = Sender.Receive(bytes);
+                    if (bytesRec != 0)
+                    {
+                        MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRec);
+                        this._messageCallBack(msg.UserFrom + ": " + msg.Msg);
+                    }
+                }
+                catch (System.Net.Sockets.SocketException e)
+                {
+                    if (!Sender.Connected)
+                        Debug.WriteLine($"Server has most likely shut down: {e.ToString()}");
+                    break;
                 }
             }
         }
@@ -151,12 +160,21 @@ namespace ClientBusiness.Model
             byte[] bytes = new byte[64000];
             while (true)
             {
-                bytesRec = DataSender.Receive(bytes);
-                if (bytesRec != 0)
+                try
                 {
-                    string msg = Encoding.UTF8.GetString(bytes, 0, bytesRec);
-                    string[] usersOnline = msg.Split(',');
-                    this._uppdateUserOnlnePanel(usersOnline);
+                    bytesRec = DataSender.Receive(bytes);
+                    if (bytesRec != 0)
+                    {
+                        string msg = Encoding.UTF8.GetString(bytes, 0, bytesRec);
+                        string[] usersOnline = msg.Split(',');
+                        this._uppdateUserOnlnePanel(usersOnline);
+                    }
+                }
+                catch (System.Net.Sockets.SocketException e)
+                {
+                    if (!Sender.Connected)
+                        Debug.WriteLine($"Server has most likely shut down: {e.ToString()}");
+                    break;
                 }
             }
         }

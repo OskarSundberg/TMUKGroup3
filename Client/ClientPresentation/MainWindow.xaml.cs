@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -40,14 +41,29 @@ namespace ClientPresentation
         public string OldMessage { get; set; }
         public MainWindow()
         {
+            Client client = new Client();
             EstablishConnection ec = new EstablishConnection();
+            ViewModel = new MainWindowViewModel();
             ec.ShowDialog();
             ConnectionInfo cInfo = new ConnectionInfo(IPAddress.Parse(ec.IpAddress), Int32.Parse(ec.PortNumber), ec.Name);
-            ViewModel = new MainWindowViewModel();
             ViewModel.UserClient[0].Name = ec.Name;
-            Client client = new Client();
             client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
+            if (!Client.Sender.Connected)
+                ec.ErrorCode.Foreground = Brushes.Red;
+            while (!Client.Sender.Connected)
+            {
+                ec.ShowDialog();
+                cInfo.IP = IPAddress.Parse(ec.IpAddress);
+                cInfo.Port = Int32.Parse(ec.PortNumber);
+                cInfo.UserName = ec.Name;
+                ViewModel.UserClient[0].Name = ec.Name;
+                client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
+            }
+            ec.Hide();
             Time = DateTime.Now;
+            Thread checkConnection = new Thread(() => CheckConnection(Client.Sender));
+            checkConnection.Start();
+            checkConnection.IsBackground = true;
             InitializeComponent();
         }
         public MainWindow(string test)
@@ -149,6 +165,16 @@ namespace ClientPresentation
             else
                 Time = DateTime.Now;
             return true;
+        }
+
+        public void CheckConnection(Socket s)
+        {
+            while (s.Connected)
+                Thread.Sleep(3000);
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                MessagesBox.AppendText("Server has shut down. Click connect to retry connection");
+            });
         }
 
         public void UppdateUsersOnlinePanel(string[] users)
