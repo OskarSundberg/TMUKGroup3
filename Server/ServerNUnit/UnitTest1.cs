@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using NUnit.Framework.Internal;
 using System.Text;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 
 namespace ServerNUnit
 {
@@ -91,6 +92,13 @@ namespace ServerNUnit
             Assert.That(allChatTest.EndSession(testUserEndOne), Is.EqualTo(1));
         }
 
+        [Test]
+        public void SendUsersOnlineList_Test()
+        {
+            allChatTest.UserJoin(testUserOne);
+            Assert.DoesNotThrow(() => { allChatTest.SendUsersOnlineList(); });
+        }
+
         //Private_Session Tests
 
         [Test]
@@ -155,6 +163,18 @@ namespace ServerNUnit
                     dataport.Connect(dataServer);
                 }
             });
+        }
+
+        [Test]
+        public void MessageHadler_Test()
+        {
+            MsgPacket.Message msg = new("ABC123", "Sam");
+            MessageHandler msgHandler = new MessageHandler();
+            byte[] msgByte = msgHandler.SerializeMsg(msg);
+            int bytesRecived = msgByte.Length;
+            MsgPacket.Message recivedMsg = msgHandler.DeserializeMsg(msgByte, bytesRecived);
+            Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
+            Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
     }
 }
