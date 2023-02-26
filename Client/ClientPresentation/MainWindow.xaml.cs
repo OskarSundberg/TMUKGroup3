@@ -47,7 +47,7 @@ namespace ClientPresentation
             ec.ShowDialog();
             ConnectionInfo cInfo = new ConnectionInfo(IPAddress.Parse(ec.IpAddress), Int32.Parse(ec.PortNumber), ec.Name);
             ViewModel.UserClient[0].Name = ec.Name;
-            client.StartClient(cInfo, ServerMessage);
+            client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
             if (!Client.Sender.Connected)
                 ec.ErrorCode.Foreground = Brushes.Red;
             while (!Client.Sender.Connected)
@@ -167,13 +167,27 @@ namespace ClientPresentation
             return true;
         }
 
-        void CheckConnection(Socket s)
+        public void CheckConnection(Socket s)
         {
             while (s.Connected)
                 Thread.Sleep(3000);
             App.Current.Dispatcher.Invoke(() =>
             {
                 MessagesBox.AppendText("Server has shut down. Click connect to retry connection");
+            });
+        }
+
+        public void UppdateUsersOnlinePanel(string[] users)
+        {
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                UsersOnlinePanel.Children.Clear();
+                foreach (string user in users)
+                {
+                    Button button = new Button();
+                    button.Content = user;
+                    UsersOnlinePanel.Children.Add(button);
+                }
             });
         }
     }

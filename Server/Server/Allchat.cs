@@ -27,6 +27,7 @@ namespace Server
             string welcomeMsg = $"Welcome to the chat {newUser.Name}!";
             MsgPacket.Message welcomeMessage = new(welcomeMsg, "Server");
             newUser.Handler.Send(msgHandler.SerializeMsg(welcomeMessage));
+            SendUsersOnlineList();
             return 1;
         }
 
@@ -41,45 +42,42 @@ namespace Server
             int bytesRead;
             while (true)
             {
-                while (true)
+                try
                 {
-                    try
+                    //Waiting for a message then makes it a string and checks if it a valied message 
+                    bytes = new byte[64000];
+                    bytesRead = user.Handler.Receive(bytes);
+                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
+                    //Testing purpose
+                    Console.WriteLine($"{msg.Msg}");
+                    //Should probably be a method and not here
+                    if (msg.Msg == "/online")
                     {
-                        //Waiting for a message then makes it a string and checks if it a valied message 
-                        bytes = new byte[64000];
-                        bytesRead = user.Handler.Receive(bytes);
-                        MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
-                        //Testing purpose
-                        Console.WriteLine($"{msg.Msg}");
-                        //Should probably be a method and not here
-                        if (msg.Msg == "/online")
+                        string usersOnline = "Users curently online:";
+                        foreach (User u in userList)
                         {
-                            string usersOnline = "Users curently online:";
-                            foreach (User u in userList)
-                            {
-                                usersOnline += "\n" + u.Name;
-                            }
-                            MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
-
-                            user.Handler.Send(msgHandler.SerializeMsg(realmsg));
+                            usersOnline += "\n" + u.Name;
                         }
-                        else
-                        {
-                            Echo(msg);
-                        }
-                        bytes = null;
-                        msg = null;
-                        bytesRead = 0;
-                        Thread.Sleep(1000);
+                        MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
 
+                        user.Handler.Send(msgHandler.SerializeMsg(realmsg));
                     }
-                    //Check if a user have left and then ends the connection to user
-                    catch
+                    else
                     {
-                        Console.Write($"{user.Name} has closed it's connection!");
-                        EndSession(user);
-                        return;
+                        Echo(msg);
                     }
+                    bytes = null;
+                    msg = null;
+                    bytesRead = 0;
+                    Thread.Sleep(1000);
+
+                }
+                //Check if a user have left and then ends the connection to user
+                catch
+                {
+                    Console.Write($"{user.Name} has closed it's connection!");
+                    EndSession(user);
+                    return;
                 }
             }
         }
@@ -102,6 +100,31 @@ namespace Server
                 return 1;
             }
         }
+        public void SendUsersOnlineList()
+        {
+            string? usersOnline = null;
+            foreach (User u in userList)
+            {
+                usersOnline += u.Name + ",";
+            }
+            if (usersOnline != null)
+            {
+                usersOnline = usersOnline.Remove(usersOnline.Length - 1);
+                _ = EchoData(usersOnline);
+            }
+        }
+        public int EchoData(string msg)
+        {
+            lock (lockThread)
+            {
+                byte[] echo = Encoding.UTF8.GetBytes(msg);
+                foreach (User u in userList)
+                {
+                    u.DataHandler.Send(echo);
+                }
+                return 1;
+            }
+        }
 
         /// <summary>
         /// This method ends the session between a user and server.
@@ -117,6 +140,7 @@ namespace Server
                 string userLeave = $"{user.Name} has left the chat";
                 MsgPacket.Message msg = new(userLeave, user.Name);
                 Echo(msg);
+                SendUsersOnlineList();
                 return 1;
             }
             catch (Exception e)

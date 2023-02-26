@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Reflection;
 using NUnit.Framework.Internal;
+using System.Text;
 
 namespace ServerNUnit
 {
@@ -22,16 +23,26 @@ namespace ServerNUnit
         Socket senderEndOne;
         Socket senderEndTwo;
         Socket listener;
+        Socket dataListener;
+        Socket dataOne;
 
         [OneTimeSetUp]
         public void Setup()
         {
             IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             IPEndPoint server = new IPEndPoint(ipAddress, 13375);
+            IPEndPoint serverData = new IPEndPoint(ipAddress, 31337);
 
             listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             listener.Bind(server);
             listener.Listen(10);
+
+            dataListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            dataListener.Bind(serverData);
+            dataListener.Listen(10);
+
+            dataOne = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataOne.Connect(serverData);
 
             senderOne = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             senderOne.Connect(server);
@@ -49,6 +60,7 @@ namespace ServerNUnit
 
             //Creating test user that will not be closed
             testUserOne = new User("Sam", senderOne);
+            testUserOne.DataHandler = dataOne;
             testUserTwo = new User("Samme", senderTwo);
 
             //Creating test user that WILL be closed only use 1 time
@@ -122,6 +134,27 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-
+        [Test]
+        public void Server_Overload_Test()
+        {
+            Thread thread = new Thread(() => Server.Server.Main(null));
+            thread.IsBackground = true;
+            thread.Start();
+            Thread.Sleep(1000);
+            Assert.DoesNotThrow(() =>
+            {
+                IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
+                IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+                for (int i = 0; i < 101; i++)
+                {
+                    Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    client.Connect(server);
+                    byte[] cUseName = Encoding.UTF8.GetBytes($"{i}");
+                    client.Send(cUseName);
+                    Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    dataport.Connect(dataServer);
+                }
+            });
+        }
     }
 }
