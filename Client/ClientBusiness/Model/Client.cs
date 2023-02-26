@@ -147,8 +147,8 @@ namespace ClientBusiness.Model
                 }
                 catch (System.Net.Sockets.SocketException e)
                 {
-                    if (Sender.Connected == false)
-                        Console.WriteLine($"Server has most likely shut down: {e.ToString()}");
+                    if (!Sender.Connected)
+                        Debug.WriteLine($"Server has most likely shut down: {e.ToString()}");
                     break;
                 }
             }
@@ -172,7 +172,7 @@ namespace ClientBusiness.Model
                 }
                 catch (System.Net.Sockets.SocketException e)
                 {
-                    if (Sender.Connected == false)
+                    if (!Sender.Connected)
                         Debug.WriteLine($"Server has most likely shut down: {e.ToString()}");
                     break;
                 }

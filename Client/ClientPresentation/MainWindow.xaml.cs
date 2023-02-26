@@ -57,7 +57,7 @@ namespace ClientPresentation
                 cInfo.Port = Int32.Parse(ec.PortNumber);
                 cInfo.UserName = ec.Name;
                 ViewModel.UserClient[0].Name = ec.Name;
-                client.StartClient(cInfo, ServerMessage);
+                client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
             }
             ec.Hide();
             Time = DateTime.Now;
