@@ -6,6 +6,7 @@ using System.Net;
 using System.Reflection;
 using NUnit.Framework.Internal;
 using System.Text;
+using System;
 
 namespace ServerNUnit
 {
@@ -155,6 +156,31 @@ namespace ServerNUnit
                     dataport.Connect(dataServer);
                 }
             });
+        }
+        [Test]
+        public void OutputLeaveTest()
+        {
+            string userName = "asdads";
+            Thread thread = new Thread(() => Server.Server.Main(null));
+            thread.IsBackground = true;
+            thread.Start();
+            Thread.Sleep(1000);
+            IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
+            IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+            Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            client.Connect(server);
+            byte[] cUseName = Encoding.UTF8.GetBytes($"{userName}");
+            client.Send(cUseName);
+            Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataport.Connect(dataServer);
+            Thread.Sleep(1000);
+            using (StringWriter stringWriter = new StringWriter())
+            {
+                Console.SetOut(stringWriter);
+                client.Disconnect(true);
+                string expected = $"{userName} has closed it's connection!";
+                Assert.That(stringWriter.ToString(), Is.EqualTo(expected));
+            }
         }
     }
 }
