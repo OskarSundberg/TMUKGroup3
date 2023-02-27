@@ -106,7 +106,7 @@ namespace ServerNUnit
         public void UserJoin_Test()
         {
             Assert.That(allChatTest.UserJoin(testUserOne), Is.EqualTo(1));
-            
+
         }
 
         [Test]
