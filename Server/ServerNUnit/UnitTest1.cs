@@ -145,7 +145,7 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-        [Test]
+        [Test, Order(1)]
         public void Server_Overload_Test()
         {
             Thread thread = new Thread(() => Server.Server.Main(null));
@@ -166,6 +166,8 @@ namespace ServerNUnit
                     dataport.Connect(dataServer);
                 }
             });
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
         }
         [Test]
         public void OutputLeaveTest()
@@ -183,7 +185,7 @@ namespace ServerNUnit
             client.Send(cUseName);
             Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             dataport.Connect(dataServer);
-            Thread.Sleep(1);
+            Thread.Sleep(1000);
             using (StringWriter stringWriter = new StringWriter())
             {
                 Console.SetOut(stringWriter);
@@ -191,6 +193,8 @@ namespace ServerNUnit
                 string expected = $"{userName} has closed it's connection!";
                 Assert.That(stringWriter.ToString(), Is.EqualTo(expected));
             }
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
         }
 
         [Test]
