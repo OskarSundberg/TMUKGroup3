@@ -120,12 +120,12 @@ namespace ClientBusiness.Model
         {
             try
             {
-                if(msgstr.Length > 9)
+                if (msgstr.Length > 9)
                 {
-                    if(msgstr.Substring(0,8) == "/wisper/")
+                    if (msgstr.Substring(0, 8) == "/wisper/")
                     {
                         string[] toFromMsg = msgstr.Split("/");
-                        for(int i = 4; i < toFromMsg.Length; i++)
+                        for (int i = 4; i < toFromMsg.Length; i++)
                         {
                             toFromMsg[3] += toFromMsg[i];
                         }
