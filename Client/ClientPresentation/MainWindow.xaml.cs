@@ -196,10 +196,5 @@ namespace ClientPresentation
                 }
             });
         }
-
-        public void WisperButton_Click(string name)
-        {
-
-        }
     }
 }
