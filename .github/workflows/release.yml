@@ -38,7 +38,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Client/ClientPresentation/bin/Debug/**/
+          asset_path: ./Client/ClientPresentation/bin/Debug/net6.0-windows7.0/ClientPresentation.exe
           asset_name: ClientPresentation.exe
           asset_content_type: application/octet-stream
       - name: Upload Server Release Asset
@@ -47,6 +47,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Server/Server/bin/Debug/net6.0/
+          asset_path: ./Server/Server/bin/Debug/net6.0/Server.exe
           asset_name: Server.exe
           asset_content_type: application/octet-stream
