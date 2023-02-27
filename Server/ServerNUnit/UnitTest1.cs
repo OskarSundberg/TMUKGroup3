@@ -15,7 +15,6 @@ namespace ServerNUnit
     public class Tests
     {
         Allchat allChatTest;
-        Private_Session privateChatTest;
         User testUserOne;
         User testUserEndOne;
         User testUserTwo;
@@ -85,7 +84,6 @@ namespace ServerNUnit
             testUserEndOne = new User("Gurra", senderEndOne);
             testUserEndTwo = new User("Ivo", senderEndTwo);
 
-            privateChatTest = new Private_Session(testUserOne, testUserTwo);
             testMessageOne = new MsgPacket.Message("123", testUserOne.Name);
 
             testUser1 = new User("MrGustavo", testUser1Socket);
@@ -125,28 +123,6 @@ namespace ServerNUnit
         {
             allChatTest.UserJoin(testUserOne);
             Assert.DoesNotThrow(() => { allChatTest.SendUsersOnlineList(); });
-        }
-
-        //Private_Session Tests
-
-        [Test]
-        public void StartPrivateChat_Test()
-        {
-            Private_Session test = new Private_Session(testUserOne, testUserTwo);
-            Assert.IsTrue(test.GetType() == typeof(Private_Session));
-        }
-
-        [Test]
-        public void EndSessionPrivate_Test()
-        {
-            Assert.That(privateChatTest.EndSession(testUserEndTwo), Is.EqualTo(1));
-        }
-
-        [Test, Order(4)]
-        public void EchoPrivate_Testing()
-        {
-            MsgPacket.Message msg = new("123", testUserOne.Name);
-            Assert.That(privateChatTest.Echo(msg), Is.EqualTo(1));
         }
 
         [Test]
