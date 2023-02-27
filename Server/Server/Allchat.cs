@@ -92,7 +92,7 @@ namespace Server
         }
         public void Whisper(MsgPacket.Message message, User userFrom)
         {
-            if (message.UserTo !=null)
+            if (message.UserTo != null)
             {
                 try
                 {
@@ -100,7 +100,7 @@ namespace Server
                     userTo.Handler.Send(msgHandler.SerializeMsg(message));
                     userFrom.Handler.Send(msgHandler.SerializeMsg(message));
                 }
-                catch 
+                catch
                 {
                     MsgPacket.Message errorMessage = new MsgPacket.Message($"Can't find user{message.UserTo}", "Server");
                     userFrom.Handler.Send(msgHandler.SerializeMsg(errorMessage));
