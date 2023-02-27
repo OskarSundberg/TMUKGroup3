@@ -190,7 +190,7 @@ namespace ClientPresentation
                     button.Click += (sender, e) =>
                     {
                         Button b = (Button)sender;
-                        SendBox.AppendText("/wisper/" + b.Name.ToString() + "/");
+                        SendBox.AppendText("/whisper/" + b.Name.ToString() + "/");
                     };
                     UsersOnlinePanel.Children.Add(button);
                 }
