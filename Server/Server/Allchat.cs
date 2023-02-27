@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MsgPacket;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -62,6 +63,11 @@ namespace Server
 
                         user.Handler.Send(msgHandler.SerializeMsg(realmsg));
                     }
+                    else if (msg.Msg == "/emoji")
+                    {
+                        user.Handler.Send(msgHandler.SerializeMsg(SendEmojiList()));
+
+                    }
                     else
                     {
                         Echo(msg);
@@ -119,6 +125,19 @@ namespace Server
                     Console.WriteLine(e.ToString());
                 }
             }
+        }
+        public Message SendEmojiList()
+        {
+            Emoji emoji = new Emoji();
+            string? emojiList = null;
+            List<string> emojiStr;
+            emojiStr = emoji.emojiDic.Keys.ToList();
+            foreach (string e in emojiStr)
+            {
+                emojiList += e + "->" + emoji.ReplaceEmoji(e) + "\n";
+            }
+
+            return new Message(emojiList, "Server");
         }
         public int EchoData(string msg)
         {
