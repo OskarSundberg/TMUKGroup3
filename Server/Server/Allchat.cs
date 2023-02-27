@@ -1,6 +1,7 @@
 ﻿using MsgPacket;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -86,6 +87,16 @@ namespace Server
                     return;
                 }
             }
+        }
+
+
+        public List<User> UserList
+        {
+            get
+            {
+                return userList;
+            }
+
         }
 
         /// <summary>

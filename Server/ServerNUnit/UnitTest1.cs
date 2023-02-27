@@ -18,6 +18,7 @@ namespace ServerNUnit
         User testUserEndOne;
         User testUserTwo;
         User testUserEndTwo;
+        User testUser1, testUser2, testUser3, testUser4;
         MsgPacket.Message testMessageOne;
         Socket senderOne;
         Socket senderTwo;
@@ -26,6 +27,7 @@ namespace ServerNUnit
         Socket listener;
         Socket dataListener;
         Socket dataOne;
+        Socket testUser1Socket, testUser2Socket, testUser3Socket, testUser4Socket;
 
         [OneTimeSetUp]
         public void Setup()
@@ -57,6 +59,18 @@ namespace ServerNUnit
             senderEndTwo = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             senderEndTwo.Connect(server);
 
+            testUser1Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            testUser1Socket.Connect(server);
+
+            testUser2Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            testUser2Socket.Connect(server);
+
+            testUser3Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            testUser3Socket.Connect(server);
+
+            testUser4Socket = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            testUser4Socket.Connect(server);
+
             allChatTest = new Allchat();
 
             //Creating test user that will not be closed
@@ -70,6 +84,15 @@ namespace ServerNUnit
 
             privateChatTest = new Private_Session(testUserOne, testUserTwo);
             testMessageOne = new MsgPacket.Message("123", testUserOne.Name);
+
+            testUser1 = new User("MrGustavo", testUser1Socket);
+            testUser1.DataHandler = dataOne;
+            testUser2 = new User("MrBigGuy", testUser2Socket);
+            testUser2.DataHandler = dataOne;
+            testUser3 = new User("EdSheeran", testUser3Socket);
+            testUser3.DataHandler = dataOne;
+            testUser4 = new User("MyLegsDontWork", testUser4Socket);
+            testUser4.DataHandler = dataOne;
         }
 
         //AllChat Tests
@@ -84,6 +107,7 @@ namespace ServerNUnit
         public void UserJoin_Test()
         {
             Assert.That(allChatTest.UserJoin(testUserOne), Is.EqualTo(1));
+
         }
 
         [Test]
@@ -122,6 +146,22 @@ namespace ServerNUnit
         }
 
         //User Tests
+
+        [Test]
+        public void Users_In_Server_Test()
+        {
+            Allchat testchat = new Allchat();
+            testchat.UserJoin(testUser1);
+            testchat.UserJoin(testUser2);
+            testchat.UserJoin(testUser3);
+            testchat.UserJoin(testUser4);
+            Assert.That(testchat.UserList.Count, Is.EqualTo(4));
+            Assert.That(testchat.UserList[0].Name, Is.EqualTo("MrGustavo"));
+            Assert.That(testchat.UserList[1].Name, Is.EqualTo("MrBigGuy"));
+            Assert.That(testchat.UserList[2].Name, Is.EqualTo("EdSheeran"));
+            Assert.That(testchat.UserList[3].Name, Is.EqualTo("MyLegsDontWork"));
+
+        }
 
         [Test]
         public void User_Test()
