@@ -110,7 +110,14 @@ namespace Server
             if (usersOnline != null)
             {
                 usersOnline = usersOnline.Remove(usersOnline.Length - 1);
-                _ = EchoData(usersOnline);
+                try
+                {
+                    _ = EchoData(usersOnline);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.ToString());
+                }
             }
         }
         public int EchoData(string msg)
