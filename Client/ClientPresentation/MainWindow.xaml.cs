@@ -107,28 +107,18 @@ namespace ClientPresentation
         /// </summary>
         public bool Send_message(string msg)
         {
-            if (msg == "/help" || msg == "/emoji")
+            if (msg == "/help")
             {
-                if (msg == "/help")
-                {
-                    ServerMessage("BotenAnna: " +
-                                  "\n===========================================================" +
-                                  "\n/online \t\t  -> gives a list of users online."  +
-                                  "\n===========================================================" +
-                                  "\n/whisper [user_tag] -> private chat with the user you choose.s" +
-                                  "\n===========================================================" +
-                                  "\n/unicorn\t\t  -> unicorn in the chat for all to see." +
-                                  "\n===========================================================" +
-                                  "\n/emoji  \t\t  ->list of possible emojis in the chat.");
-                }
-                else
-                {
-                    ServerMessage("BotenAnna: " +
-                                     "\n===========================================================" +
-                                     "\nType the emoji you like to send between ::" +
-                                     "\nFor example ::D: or :<3:" +
-                                     "\n:D \n;)\n:o \n:( \n:/\n<3\n</3\n100\nok\nthumbsup ");
-                }
+                ServerMessage("BotenAnna: " +
+                              "\n===========================================================" +
+                              "\n/online \t\t  -> gives a list of users online." +
+                              "\n===========================================================" +
+                              "\n/whisper [user_tag] -> private chat with the user you choose.s" +
+                              "\n===========================================================" +
+                              "\n/unicorn\t\t  -> unicorn in the chat for all to see." +
+                              "\n===========================================================" +
+                              "\n/emoji  \t\t  ->list of possible emojis in the chat.");
+
             }
             //stops user from sendig a empty message and the samme twice in a row
             else if (msg != "" && msg != OldMessage)
