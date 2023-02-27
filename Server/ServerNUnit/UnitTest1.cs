@@ -106,6 +106,7 @@ namespace ServerNUnit
         public void UserJoin_Test()
         {
             Assert.That(allChatTest.UserJoin(testUserOne), Is.EqualTo(1));
+            
         }
 
         [Test]
@@ -141,15 +142,16 @@ namespace ServerNUnit
         [Test]
         public void Users_In_Server_Test()
         {
-            allChatTest.UserJoin(testUser1);
-            allChatTest.UserJoin(testUser2);
-            allChatTest.UserJoin(testUser3);
-            allChatTest.UserJoin(testUser4);
-            Assert.That(allChatTest.UserList.Count, Is.EqualTo(4));
-            Assert.That(allChatTest.UserList[0].Name, Is.EqualTo("MrGustavo"));
-            Assert.That(allChatTest.UserList[1].Name, Is.EqualTo("MrBigGuy"));
-            Assert.That(allChatTest.UserList[2].Name, Is.EqualTo("EdSheeran"));
-            Assert.That(allChatTest.UserList[3].Name, Is.EqualTo("MyLegsDontWork"));
+            Allchat testchat = new Allchat();
+            testchat.UserJoin(testUser1);
+            testchat.UserJoin(testUser2);
+            testchat.UserJoin(testUser3);
+            testchat.UserJoin(testUser4);
+            Assert.That(testchat.UserList.Count, Is.EqualTo(4));
+            Assert.That(testchat.UserList[0].Name, Is.EqualTo("MrGustavo"));
+            Assert.That(testchat.UserList[1].Name, Is.EqualTo("MrBigGuy"));
+            Assert.That(testchat.UserList[2].Name, Is.EqualTo("EdSheeran"));
+            Assert.That(testchat.UserList[3].Name, Is.EqualTo("MyLegsDontWork"));
 
         }
 
