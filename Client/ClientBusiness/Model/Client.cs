@@ -120,9 +120,27 @@ namespace ClientBusiness.Model
         {
             try
             {
-                MsgPacket.Message msg = new(msgstr, name);
-                byte[] bytes = msgHandler.SerializeMsg(msg);
-                int bytesSent = Sender.Send(bytes);
+                if(msgstr.Length > 9)
+                {
+                    if(msgstr.Substring(0,8) == "/wisper/")
+                    {
+                        string[] toFromMsg = msgstr.Split("/");
+                        for(int i = 4; i < toFromMsg.Length; i++)
+                        {
+                            toFromMsg[3] += toFromMsg[i];
+                        }
+                        MsgPacket.Message msgTo = new(toFromMsg[3], name);
+                        msgTo.UserTo = toFromMsg[2];
+                        byte[] bytes = msgHandler.SerializeMsg(msgTo);
+                        int bytesSent = Sender.Send(bytes);
+                    }
+                }
+                else
+                {
+                    MsgPacket.Message msg = new(msgstr, name);
+                    byte[] bytes = msgHandler.SerializeMsg(msg);
+                    int bytesSent = Sender.Send(bytes);
+                }
             }
             catch (Exception e)
             {
