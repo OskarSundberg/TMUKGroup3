@@ -28,6 +28,7 @@ namespace ServerNUnit
         Socket listener;
         Socket dataListener;
         Socket dataOne;
+        object threadLock;
 
         [OneTimeSetUp]
         public void Setup()
@@ -116,7 +117,7 @@ namespace ServerNUnit
             Assert.That(privateChatTest.EndSession(testUserEndTwo), Is.EqualTo(1));
         }
 
-        [Test]
+        [Test,Order(4)]
         public void EchoPrivate_Testing()
         {
             MsgPacket.Message msg = new("123", testUserOne.Name);
@@ -155,7 +156,7 @@ namespace ServerNUnit
             {
                 IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
                 IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
-                for (int i = 0; i < 101; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     client.Connect(server);
@@ -170,7 +171,7 @@ namespace ServerNUnit
         public void OutputLeaveTest()
         {
             string userName = "asdads";
-            Thread thread = new Thread(() => Server.Server.Main(null));
+            Thread thread = new Thread(() => Server.Server.StartServer());
             thread.IsBackground = true;
             thread.Start();
             Thread.Sleep(1000);
@@ -182,7 +183,7 @@ namespace ServerNUnit
             client.Send(cUseName);
             Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             dataport.Connect(dataServer);
-            Thread.Sleep(1000);
+            Thread.Sleep(1);
             using (StringWriter stringWriter = new StringWriter())
             {
                 Console.SetOut(stringWriter);
