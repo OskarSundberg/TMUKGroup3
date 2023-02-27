@@ -186,7 +186,7 @@ namespace ServerNUnit
             Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             dataport.Connect(dataServer);
             StringWriter stringWriter = new StringWriter();
-            Thread.Sleep(1000);
+            Thread.Sleep(5000);
             Console.SetOut(stringWriter);
             client.Disconnect(true);
             string expected = $"{userName} has closed it's connection!";
