@@ -7,6 +7,8 @@ using System.Reflection;
 using NUnit.Framework.Internal;
 using System.Text;
 using System;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+
 
 namespace ServerNUnit
 {
@@ -90,6 +92,13 @@ namespace ServerNUnit
         public void EndSession_Test()
         {
             Assert.That(allChatTest.EndSession(testUserEndOne), Is.EqualTo(1));
+        }
+
+        [Test]
+        public void SendUsersOnlineList_Test()
+        {
+            allChatTest.UserJoin(testUserOne);
+            Assert.DoesNotThrow(() => { allChatTest.SendUsersOnlineList(); });
         }
 
         //Private_Session Tests
@@ -181,6 +190,18 @@ namespace ServerNUnit
                 string expected = $"{userName} has closed it's connection!";
                 Assert.That(stringWriter.ToString(), Is.EqualTo(expected));
             }
+        }
+
+        [Test]
+        public void MessageHadler_Test()
+        {
+            MsgPacket.Message msg = new("ABC123", "Sam");
+            MessageHandler msgHandler = new MessageHandler();
+            byte[] msgByte = msgHandler.SerializeMsg(msg);
+            int bytesRecived = msgByte.Length;
+            MsgPacket.Message recivedMsg = msgHandler.DeserializeMsg(msgByte, bytesRecived);
+            Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
+            Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
     }
 }
