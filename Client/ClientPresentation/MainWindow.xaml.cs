@@ -186,6 +186,12 @@ namespace ClientPresentation
                 {
                     Button button = new Button();
                     button.Content = user;
+                    button.Name = user;
+                    button.Click += (sender, e) =>
+                    {
+                        Button b = (Button)sender;
+                        SendBox.AppendText("/wisper/" + b.Name.ToString() + "/");
+                    };
                     UsersOnlinePanel.Children.Add(button);
                 }
             });
