@@ -104,7 +104,7 @@ namespace Server
                 }
                 else
                 {
-                    MsgPacket.Message errorMessage = new MsgPacket.Message($"Can't find user{message.UserTo}", "Server");
+                    MsgPacket.Message errorMessage = new MsgPacket.Message($"Can't find user {message.UserTo}", "Server");
                     userFrom.Handler.Send(msgHandler.SerializeMsg(errorMessage));
                 }
             }
