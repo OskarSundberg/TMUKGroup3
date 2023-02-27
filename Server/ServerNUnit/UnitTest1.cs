@@ -145,6 +145,18 @@ namespace ServerNUnit
             Assert.That(privateChatTest.Echo(msg), Is.EqualTo(1));
         }
 
+        [Test]
+        public void Invalid_Message_Test()
+        {
+            MsgPacket.Message msg = new("MessageOne", "UserOne");
+            MessageHandler msgHandler = new MessageHandler();
+            byte[] msgByte = msgHandler.SerializeMsg(msg);
+            int bytesRecived = msgByte.Length;
+            MsgPacket.Message recivedMsg = msgHandler.DeserializeMsg(msgByte, bytesRecived);
+            Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
+            Assert.That(recivedMsg.Msg, !Is.EqualTo("SomethingDifferent"));
+        }
+
         //User Tests
 
         [Test]
