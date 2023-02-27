@@ -145,7 +145,7 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-        [Test]
+        [Test, Order(1)]
         public void Server_Overload_Test()
         {
             Thread thread = new Thread(() => Server.Server.Main(null));
