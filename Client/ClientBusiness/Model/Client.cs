@@ -120,12 +120,12 @@ namespace ClientBusiness.Model
         {
             try
             {
-                if (msgstr.Length > 9 && msgstr.Substring(0, 8) == "/whisper/")
+                if (msgstr.Length > 9 && msgstr.Substring(0, 9) == "/whisper/")
                 {
                     string[] toFromMsg = msgstr.Split("/");
                     for (int i = 4; i < toFromMsg.Length; i++)
                     {
-                        toFromMsg[3] += toFromMsg[i];
+                        toFromMsg[3] += "/" + toFromMsg[i];
                     }
                     MsgPacket.Message msgTo = new(toFromMsg[3], name);
                     msgTo.UserTo = toFromMsg[2];
