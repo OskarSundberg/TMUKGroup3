@@ -28,6 +28,7 @@ namespace ServerNUnit
         Socket dataListener;
         Socket dataOne;
         Socket testUser1Socket, testUser2Socket, testUser3Socket, testUser4Socket;
+        Emoji emoji = new Emoji();
 
         [OneTimeSetUp]
         public void Setup()
@@ -93,6 +94,8 @@ namespace ServerNUnit
             testUser3.DataHandler = dataOne;
             testUser4 = new User("MyLegsDontWork", testUser4Socket);
             testUser4.DataHandler = dataOne;
+
+
         }
 
         //AllChat Tests
@@ -182,6 +185,19 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
+       
+        [Test]
+        //a string whit no emoji should not be changed when run through ReplaceEmoji
+        public void Emoji_Test_v2()
+        {
+            string input, output;
+            for (int i = 0; i < 100; i++)
+            {
+                input = "test"+i;
+                output = emoji.ReplaceEmoji(input);
+                Assert.IsTrue(input.Equals(output));
+            }
+        }
         [Test]
         public void Server_Overload_Test()
         {
@@ -216,5 +232,6 @@ namespace ServerNUnit
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
+  
     }
 }
