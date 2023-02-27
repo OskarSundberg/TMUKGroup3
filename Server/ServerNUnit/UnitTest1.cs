@@ -6,7 +6,9 @@ using System.Net;
 using System.Reflection;
 using NUnit.Framework.Internal;
 using System.Text;
+using System;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
+
 
 namespace ServerNUnit
 {
@@ -110,7 +112,6 @@ namespace ServerNUnit
         public void UserJoin_Test()
         {
             Assert.That(allChatTest.UserJoin(testUserOne), Is.EqualTo(1));
-
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace ServerNUnit
             Assert.That(privateChatTest.EndSession(testUserEndTwo), Is.EqualTo(1));
         }
 
-        [Test]
+        [Test, Order(4)]
         public void EchoPrivate_Testing()
         {
             MsgPacket.Message msg = new("123", testUserOne.Name);
@@ -175,7 +176,6 @@ namespace ServerNUnit
             Assert.That(testchat.UserList[1].Name, Is.EqualTo("MrBigGuy"));
             Assert.That(testchat.UserList[2].Name, Is.EqualTo("EdSheeran"));
             Assert.That(testchat.UserList[3].Name, Is.EqualTo("MyLegsDontWork"));
-
         }
 
         [Test]
@@ -221,7 +221,7 @@ namespace ServerNUnit
             {
                 IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
                 IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
-                for (int i = 0; i < 101; i++)
+                for (int i = 0; i < 100; i++)
                 {
                     Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
                     client.Connect(server);
@@ -231,6 +231,33 @@ namespace ServerNUnit
                     dataport.Connect(dataServer);
                 }
             });
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
+        }
+        [Test]
+        public void OutputLeaveTest()
+        {
+            string userName = "asdads";
+            Thread thread = new Thread(() => Server.Server.StartServer());
+            thread.IsBackground = true;
+            thread.Start();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+            Thread.Sleep(1000);
+            IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
+            IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+            Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            client.Connect(server);
+            byte[] cUseName = Encoding.UTF8.GetBytes($"{userName}");
+            client.Send(cUseName);
+            Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataport.Connect(dataServer);
+            client.Disconnect(true);
+            Thread.Sleep(1000);
+            string expected = $"{userName} has closed it's connection!";
+            Assert.That(stringWriter.ToString().Contains(expected));
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
         }
 
         [Test]
@@ -244,6 +271,5 @@ namespace ServerNUnit
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
-
     }
 }
