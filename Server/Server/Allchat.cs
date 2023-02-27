@@ -92,15 +92,17 @@ namespace Server
         }
         public void Whisper(MsgPacket.Message message, User userFrom)
         {
+            Emoji emoji = new Emoji();
             if (message.UserTo != null)
             {
-                try
+                message.Msg = emoji.ReplaceEmoji(message.Msg);
+                User? userTo = userList.Find(_ => _.Name == message.UserTo);
+                if (userTo != null)
                 {
-                    User? userTo = userList.Find(_ => _.Name == message.UserTo);
                     userTo.Handler.Send(msgHandler.SerializeMsg(message));
                     userFrom.Handler.Send(msgHandler.SerializeMsg(message));
                 }
-                catch
+                else
                 {
                     MsgPacket.Message errorMessage = new MsgPacket.Message($"Can't find user{message.UserTo}", "Server");
                     userFrom.Handler.Send(msgHandler.SerializeMsg(errorMessage));
