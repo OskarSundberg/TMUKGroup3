@@ -117,7 +117,7 @@ namespace ServerNUnit
             Assert.That(privateChatTest.EndSession(testUserEndTwo), Is.EqualTo(1));
         }
 
-        [Test,Order(4)]
+        [Test, Order(4)]
         public void EchoPrivate_Testing()
         {
             MsgPacket.Message msg = new("123", testUserOne.Name);
