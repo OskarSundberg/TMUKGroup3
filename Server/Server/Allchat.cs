@@ -15,6 +15,8 @@ namespace Server
         object lockThread = new object();
         MessageHandler msgHandler = new MessageHandler();
 
+        public List<User> UserList { get { return userList; } }
+
         /// <summary>
         /// This method adds a User to the userList and starts a thread for the User.
         /// The method also displays a welcome message for the User.
@@ -49,35 +51,14 @@ namespace Server
                     //Waiting for a message then makes it a string and checks if it a valied message 
                     bytes = new byte[64000];
                     bytesRead = user.Handler.Receive(bytes);
-                    MsgPacket.Message msg = msgHandler.DeserializeMsg(bytes, bytesRead);
+                    MsgPacket.Message? message = msgHandler.DeserializeMsg(bytes, bytesRead);
                     //Testing purpose
-                    Console.WriteLine($"{msg.Msg}");
-                    //Should probably be a method and not here
-                    if (msg.Msg == "/online")
-                    {
-                        string usersOnline = "Users curently online:";
-                        foreach (User u in userList)
-                        {
-                            usersOnline += "\n" + u.Name;
-                        }
-                        MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
-
-                        user.Handler.Send(msgHandler.SerializeMsg(realmsg));
-                    }
-                    else if (msg.Msg == "/emoji")
-                    {
-                        user.Handler.Send(msgHandler.SerializeMsg(SendEmojiList()));
-
-                    }
-                    else
-                    {
-                        Echo(msg);
-                    }
+                    Console.WriteLine($"{message.Msg}");
+                    Whisper(message, user);
                     bytes = null;
-                    msg = null;
+                    message = null;
                     bytesRead = 0;
                     Thread.Sleep(1000);
-
                 }
                 //Check if a user have left and then ends the connection to user
                 catch
@@ -88,15 +69,47 @@ namespace Server
                 }
             }
         }
-
-
-        public List<User> UserList
+        public void MessageChecks(MsgPacket.Message message, User user)
         {
-            get
+            switch (message.Msg)
             {
-                return userList;
+                case "/online":
+                    string usersOnline = "Users curently online:";
+                    foreach (User u in userList)
+                    {
+                        usersOnline += "\n" + u.Name;
+                    }
+                    MsgPacket.Message realmsg = new MsgPacket.Message(usersOnline, "Server");
+                    user.Handler.Send(msgHandler.SerializeMsg(realmsg));
+                    break;
+                case "/emoji":
+                    user.Handler.Send(msgHandler.SerializeMsg(SendEmojiList()));
+                    break;
+                default:
+                    Echo(message);
+                    break;
             }
-
+        }
+        public void Whisper(MsgPacket.Message message, User userFrom)
+        {
+            if (message.UserTo != null)
+            {
+                try
+                {
+                    User? userTo = userList.Find(_ => _.Name == message.UserTo);
+                    userTo.Handler.Send(msgHandler.SerializeMsg(message));
+                    userFrom.Handler.Send(msgHandler.SerializeMsg(message));
+                }
+                catch
+                {
+                    MsgPacket.Message errorMessage = new MsgPacket.Message($"Can't find user{message.UserTo}", "Server");
+                    userFrom.Handler.Send(msgHandler.SerializeMsg(errorMessage));
+                }
+            }
+            else
+            {
+                MessageChecks(message, userFrom);
+            }
         }
 
         /// <summary>
