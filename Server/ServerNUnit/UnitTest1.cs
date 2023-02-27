@@ -185,7 +185,7 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-       
+
         [Test]
         //a string whit no emoji should not be changed when run through ReplaceEmoji
         public void Emoji_Test_v2()
@@ -193,7 +193,7 @@ namespace ServerNUnit
             string input, output;
             for (int i = 0; i < 100; i++)
             {
-                input = "test"+i;
+                input = "test" + i;
                 output = emoji.ReplaceEmoji(input);
                 Assert.IsTrue(input.Equals(output));
             }
@@ -232,6 +232,6 @@ namespace ServerNUnit
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
-  
+
     }
 }
