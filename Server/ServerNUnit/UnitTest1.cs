@@ -145,7 +145,7 @@ namespace ServerNUnit
             test = emoji.ReplaceEmoji(test);
             Assert.IsTrue(emoji.emojiDic.ContainsValue(test));
         }
-        [Test, Order(1)]
+        [Test]
         public void Server_Overload_Test()
         {
             Thread thread = new Thread(() => Server.Server.Main(null));
@@ -176,6 +176,8 @@ namespace ServerNUnit
             Thread thread = new Thread(() => Server.Server.StartServer());
             thread.IsBackground = true;
             thread.Start();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
             Thread.Sleep(1000);
             IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
             IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
@@ -185,10 +187,8 @@ namespace ServerNUnit
             client.Send(cUseName);
             Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             dataport.Connect(dataServer);
-            StringWriter stringWriter = new StringWriter();
-            Thread.Sleep(5000);
-            Console.SetOut(stringWriter);
             client.Disconnect(true);
+            Thread.Sleep(1000);
             string expected = $"{userName} has closed it's connection!";
             Assert.That(stringWriter.ToString().Contains(expected));
             Server.Server.ServerSocket.Close();
