@@ -113,13 +113,13 @@ namespace ClientPresentation
                 {
                     ServerMessage("BotenAnna: " +
                                   "\n===========================================================" +
-                                  "\n/whisper [user_tag] -> private chat with the user you choose." +
+                                  "\n/online \t\t  -> gives a list of users online."  +
                                   "\n===========================================================" +
-                                  "\n /wisper [user_tag]  -> privet chat whit the user you chose." +
+                                  "\n/whisper [user_tag] -> private chat with the user you choose.s" +
                                   "\n===========================================================" +
-                                  "\n /unicorn                 -> unicorn in the chat for all to see." +
+                                  "\n/unicorn\t\t  -> unicorn in the chat for all to see." +
                                   "\n===========================================================" +
-                                  "\n /emoji                    ->list of possible emojis in the chat.");
+                                  "\n/emoji  \t\t  ->list of possible emojis in the chat.");
                 }
                 else
                 {
