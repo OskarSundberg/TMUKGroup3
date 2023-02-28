@@ -50,7 +50,7 @@ namespace ClientPresentation
             ViewModel.UserClient[0].Name = ec.Name;
             client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
             if (!Client.Sender.Connected)
-                ec.ErrorCode.Foreground = Brushes.Red;
+                ec.ErrorCode.Text = ec.errormsg[1];
             while (!Client.Sender.Connected)
             {
                 ec.ShowDialog();
