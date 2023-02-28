@@ -247,9 +247,9 @@ namespace ServerNUnit
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
-
+        // Testing for adding and removing clients to server
         [Test]
-        public void Add_Client_Test()
+        public void Add_And_Remove_Client_Test()
         {
             MessageHandler msgHandler = new MessageHandler();
             Thread thread = new Thread(() => Server.Server.Main(null));
