@@ -168,7 +168,6 @@ namespace ServerNUnit
             Thread.Sleep(1000);
             IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
             IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
-
             Assert.DoesNotThrow(() =>
             {
                 for (int i = 0; i < 100; i++)
