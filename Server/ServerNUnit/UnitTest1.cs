@@ -272,6 +272,8 @@ namespace ServerNUnit
                     client.Disconnect(true);
                 }
             });
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
         }
     }
 }
