@@ -14,6 +14,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -124,17 +125,16 @@ namespace ClientPresentation
         {
             if (msg == "/help")
             {
-                //sorry for the messy code but it nice in the chat:) i promises
                 ServerMessage("BotenAnna: " +
                               "\n===========================================================" +
-                              "\n /online                  -> gives a list of users onlie." +
+                              "\n/online \t\t  -> gives a list of users online." +
                               "\n===========================================================" +
-                              "\n /wisper [user_tag] -> privet chat whit the user you chose." +
+                              "\n/whisper [user_tag] -> private chat with the user you choose.s" +
                               "\n===========================================================" +
-                              "\n /unicorn                -> unicorn in the chat for all to see." +
+                              "\n/unicorn\t\t  -> unicorn in the chat for all to see." +
                               "\n===========================================================" +
-                              "\n :D and ;)                -> prints a smile in the chat" +
-                              "\n===========================================================");
+                              "\n/emoji  \t\t  ->list of possible emojis in the chat.");
+
             }
             //stops user from sendig a empty message and the samme twice in a row
             else if (msg != "" && msg != OldMessage)
@@ -186,6 +186,12 @@ namespace ClientPresentation
                 {
                     Button button = new Button();
                     button.Content = user;
+                    button.Name = user;
+                    button.Click += (sender, e) =>
+                    {
+                        Button b = (Button)sender;
+                        SendBox.AppendText("/whisper/" + b.Name.ToString() + "/");
+                    };
                     UsersOnlinePanel.Children.Add(button);
                 }
             });

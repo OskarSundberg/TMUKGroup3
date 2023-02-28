@@ -11,7 +11,7 @@ using System.Text.Json;
 
 namespace ClientBusiness.Model
 {
-    internal class MessageHandler
+    public class MessageHandler
     {
         public byte[] SerializeMsg(MsgPacket.Message msg)
         {

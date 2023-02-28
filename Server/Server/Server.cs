@@ -9,8 +9,13 @@ namespace Server
 {
     internal class Server
     {
+        public static Socket? ServerSocket { get { return serverSocket; } }
+        public static Socket? ServerSocketData { get { return serverSocketData; } }
         public static IPAddress? GetIPAddress { get; set; }
         public static Allchat allchat = new Allchat();
+
+        private static Socket? serverSocketData;
+        private static Socket? serverSocket;
         public static void Main(string[] args)
         {
             StartServer();
@@ -30,11 +35,11 @@ namespace Server
             Console.WriteLine("Please connect to IP: {0} and port: {1}", GetIPAddress, 13375);
             try
             {
-                Socket listener = StartSocket(iPEndPoint);
-                Socket listenerData = StartSocket(iPEndPointData);
+                serverSocket = StartSocket(iPEndPoint);
+                serverSocketData = StartSocket(iPEndPointData);
                 while (true)
                 {
-                    CreateUser(listener, listenerData);
+                    CreateUser(serverSocket, serverSocketData);
                 }
             }
             catch (Exception e)
