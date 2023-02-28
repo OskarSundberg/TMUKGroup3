@@ -23,6 +23,7 @@ namespace ClientPresentation.Views
     /// </summary>
     public partial class EstablishConnection : Window
     {
+        public ObservableCollection<string> errormsg = new ObservableCollection<string>();
 
         private IPAddress ipAddress;
 
@@ -51,8 +52,9 @@ namespace ClientPresentation.Views
         public EstablishConnection()
         {
             InitializeComponent();
-            ErrorCode.Foreground = Brushes.White;
-            ErrorCodeIP.Foreground = Brushes.White;
+            errormsg.Add("Wrong IP");
+            errormsg.Add("Could not connect to server");
+            errormsg.Add("");
         }
 
         /// <summary>
@@ -68,7 +70,7 @@ namespace ClientPresentation.Views
             }
             catch (Exception e)
             {
-                ErrorCodeIP.Foreground = Brushes.Red;
+                ErrorCode.Text = errormsg[0];
             }
             return null;
         }
@@ -85,8 +87,8 @@ namespace ClientPresentation.Views
             name = userID.Text;
             if (ipAddress != null)
             {
+                ErrorCode.Text = errormsg[2];
                 EC.Hide();
-                ErrorCodeIP.Foreground = Brushes.White;
             }
         }
 
