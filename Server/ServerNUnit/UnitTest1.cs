@@ -8,7 +8,7 @@ using NUnit.Framework.Internal;
 using System.Text;
 using System;
 using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-
+using System.Security;
 
 namespace ServerNUnit
 {
@@ -246,6 +246,34 @@ namespace ServerNUnit
             MsgPacket.Message recivedMsg = msgHandler.DeserializeMsg(msgByte, bytesRecived);
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
+        }
+        // Testing for adding and removing clients to server
+        [Test]
+        public void Add_And_Remove_Client_Test()
+        {
+            MessageHandler msgHandler = new MessageHandler();
+            Thread thread = new Thread(() => Server.Server.Main(null));
+            thread.IsBackground = true;
+            thread.Start();
+            Thread.Sleep(1000);
+            IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
+            IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+            Assert.DoesNotThrow(() =>
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    client.Connect(server);
+                    byte[] cUseName = Encoding.UTF8.GetBytes($"{i}");
+                    client.Send(cUseName);
+                    Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                    dataport.Connect(dataServer);
+                    Thread.Sleep(1);
+                    client.Disconnect(true);
+                }
+            });
+            Server.Server.ServerSocket.Close();
+            Server.Server.ServerSocketData.Close();
         }
     }
 }
