@@ -38,8 +38,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./Client/ClientPresentation/bin/Debug/**/ClientPresentation.exe
-          asset_name: Client.exe
+          asset_path: ./Client/ClientPresentation/bin/Debug/net6.0-windows7.0/ClientPresentation.exe
+          asset_name: ClientPresentation.exe
           asset_content_type: application/octet-stream
       - name: Upload Server Release Asset
         uses: actions/upload-release-asset@v1

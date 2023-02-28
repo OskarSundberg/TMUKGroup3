@@ -7,38 +7,42 @@
         mc:Ignorable="d"
         x:Name="EC"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="EstablishConnection" Height="250" Width="350">
 
+        Title="EstablishConnection" Height="500" Width="700">
+
+    <Window.Background>
+        <ImageBrush ImageSource="Unichat2.jpg" Stretch="Fill"/>
+    </Window.Background>
     <DockPanel>
 
-        <StackPanel DockPanel.Dock="Bottom" Height="30">
-            <Button x:Name="ConnectBtn" Grid.Row="0" Content="Connect" VerticalAlignment="Center" HorizontalAlignment="Center" Click="ConnectToServerClick" Width="60"/>
+        <StackPanel DockPanel.Dock="Bottom" Height="100">
+            <Button x:Name="ConnectBtn" Grid.Row="0" Content="Connect" VerticalAlignment="Center" HorizontalAlignment="Center" Click="ConnectToServerClick" Width="80" Height="30"/>
         </StackPanel>
 
-        <StackPanel DockPanel.Dock="Top" Height="40">
-            <Label Content="IP address" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="15,15,0,0"/>
-            <Label Content="Port" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,-27,100,0"/>
+        <StackPanel DockPanel.Dock="Top" Height="180">
+            <Label Content="IP address" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="90,160,0,0" Foreground="White"/>
+            <Label Content="Port" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,-26,85,0" Foreground="White"/>
         </StackPanel>
         <Grid DockPanel.Dock="Top" VerticalAlignment="Center" Height="20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="90"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="30"/>
+                <ColumnDefinition Width="90"/>
                 <ColumnDefinition Width="160"/>
             </Grid.ColumnDefinitions>
 
-            <TextBox x:Name="FirstIP" Grid.Column="1"   Text="{Binding Path=FirstIP, Mode=TwoWay}"  HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="1,1,0,1" Width="30" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
-            <TextBox x:Name="FirstDot" Grid.Column="2"  Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="15" Height="20" TextAlignment="Center" Focusable="False"/>
-            <TextBox x:Name="SecondIP" Grid.Column="3"  Text="{Binding Path=SecondIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,0,1" Width="30" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
-            <TextBox x:Name="SecondDot" Grid.Column="4" Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="15" Height="20" TextAlignment="Center" Focusable="False"/>
-            <TextBox x:Name="ThirdIP" Grid.Column="5"   Text="{Binding Path=ThirdIP, Mode=TwoWay}"  HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,0,1" Width="30" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
-            <TextBox x:Name="ThirdDot" Grid.Column="6"  Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="15" Height="20" TextAlignment="Center" Focusable="False"/>
-            <TextBox x:Name="FourthIP" Grid.Column="7"  Text="{Binding Path=FourthIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,1,1" Width="30" Height="20" TextAlignment="Center" PreviewKeyDown="OnAction"/>
+            <TextBox x:Name="FirstIP" Grid.Column="1"   Text="{Binding Path=FirstIP, Mode=TwoWay}"  HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="1,1,0,1" Width="90" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
+            <TextBox x:Name="FirstDot" Grid.Column="2"  Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="30" Height="20" TextAlignment="Center" Focusable="False"/>
+            <TextBox x:Name="SecondIP" Grid.Column="3"  Text="{Binding Path=SecondIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,0,1" Width="90" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
+            <TextBox x:Name="SecondDot" Grid.Column="4" Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="30" Height="20" TextAlignment="Center" Focusable="False"/>
+            <TextBox x:Name="ThirdIP" Grid.Column="5"   Text="{Binding Path=ThirdIP, Mode=TwoWay}"  HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,0,1" Width="90" Height="20" TextAlignment="Center" TextChanged="TextChanged" PreviewKeyDown="OnAction"/>
+            <TextBox x:Name="ThirdDot" Grid.Column="6"  Text="." HorizontalAlignment="Center" VerticalAlignment="Center" BorderThickness="0,1,0,1" Width="30" Height="20" TextAlignment="Center" Focusable="False"/>
+            <TextBox x:Name="FourthIP" Grid.Column="7"  Text="{Binding Path=FourthIP, Mode=TwoWay}" HorizontalAlignment="Center" VerticalAlignment="Top" MaxLength="3" BorderThickness="0,1,1,1" Width="90" Height="20" TextAlignment="Center" PreviewKeyDown="OnAction"/>
             
             <TextBox x:Name="portID" Grid.Column="8" Text="{Binding Path=portNumber, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Left" MaxLength="5" Width="75" Height="20" TextAlignment="Center" Margin="40,0,0,0"/>
 

@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+
 using System.Net;
 
 namespace ClientPresentation.Views
