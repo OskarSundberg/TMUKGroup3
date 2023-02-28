@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace ClientPresentation.Views
 {
