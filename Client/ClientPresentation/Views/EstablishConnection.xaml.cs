@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
+using System.Net;
 
 namespace ClientPresentation.Views
 {
@@ -23,13 +24,13 @@ namespace ClientPresentation.Views
     public partial class EstablishConnection : Window
     {
 
-        private string ipAddress;
+        private IPAddress ipAddress;
 
         private string name;
 
         private string portNumber;
 
-        public string IpAddress
+        public IPAddress IpAddress
         {
             get { return ipAddress; }
             set { ipAddress = value; }
@@ -51,6 +52,7 @@ namespace ClientPresentation.Views
         {
             InitializeComponent();
             ErrorCode.Foreground = Brushes.White;
+            ErrorCodeIP.Foreground = Brushes.White;
         }
 
         /// <summary>
@@ -58,11 +60,17 @@ namespace ClientPresentation.Views
         /// </summary>
         /// <param></param>
         /// <returns> Returns IPAdress </returns>
-        private string SectionsToString()
+        private IPAddress SectionsToString()
         {
-            string ipAddress;
-            ipAddress = FirstIP.Text + "." + SecondIP.Text + "." + ThirdIP.Text + "." + FourthIP.Text;
-            return ipAddress;
+            try
+            {
+                return IPAddress.Parse(FirstIP.Text + "." + SecondIP.Text + "." + ThirdIP.Text + "." + FourthIP.Text);
+            }
+            catch (Exception e)
+            {
+                ErrorCodeIP.Foreground = Brushes.Red;
+            }
+            return null;
         }
 
         private void ConnectToServerClick(object sender, RoutedEventArgs e)
@@ -75,7 +83,11 @@ namespace ClientPresentation.Views
             ipAddress = SectionsToString();
             portNumber = portID.Text;
             name = userID.Text;
-            EC.Hide();
+            if (ipAddress != null)
+            {
+                EC.Hide();
+                ErrorCodeIP.Foreground = Brushes.White;
+            }
         }
 
         private void MoveToNextBox(TextBox current)

@@ -46,7 +46,7 @@ namespace ClientPresentation
             EstablishConnection ec = new EstablishConnection();
             ViewModel = new MainWindowViewModel();
             ec.ShowDialog();
-            ConnectionInfo cInfo = new ConnectionInfo(IPAddress.Parse(ec.IpAddress), Int32.Parse(ec.PortNumber), ec.Name);
+            ConnectionInfo cInfo = new ConnectionInfo(ec.IpAddress, Int32.Parse(ec.PortNumber), ec.Name);
             ViewModel.UserClient[0].Name = ec.Name;
             client.StartClient(cInfo, ServerMessage, UppdateUsersOnlinePanel);
             if (!Client.Sender.Connected)
@@ -54,7 +54,7 @@ namespace ClientPresentation
             while (!Client.Sender.Connected)
             {
                 ec.ShowDialog();
-                cInfo.IP = IPAddress.Parse(ec.IpAddress);
+                cInfo.IP = ec.IpAddress;
                 cInfo.Port = Int32.Parse(ec.PortNumber);
                 cInfo.UserName = ec.Name;
                 ViewModel.UserClient[0].Name = ec.Name;

@@ -48,10 +48,11 @@
 
         </Grid>
 
-        <StackPanel DockPanel.Dock="Top" Height="60">
-            <Label Content="Username" HorizontalAlignment="Left" Margin="330,10,0,0" Foreground="White"/>
-            <TextBox x:Name="userID" Text="{Binding Path=userName, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Center" MaxLength="18" Width="145" Height="20" TextAlignment="Center" Margin="30,0,0,0" KeyDown="OnEnter"/>
-            <TextBlock x:Name="ErrorCode" Text="Could not connect to server" HorizontalAlignment="Center" Margin="0,25,0,0"/>
+        <StackPanel DockPanel.Dock="Top" Height="100">
+            <Label Content="Username" HorizontalAlignment="Left" Margin="15,10,0,0"/>
+            <TextBox x:Name="userID" Text="{Binding Path=userName, Mode=TwoWay}" VerticalAlignment="Center" HorizontalAlignment="Left" MaxLength="18" Width="145" Height="20" TextAlignment="Center" Margin="30,0,0,0" KeyDown="OnEnter"/>
+            <TextBlock x:Name="ErrorCode" Text="Could not connect to server" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+            <TextBlock x:Name="ErrorCodeIP" Text="Wrong IP" HorizontalAlignment="Center" Margin="0,-25,0,0"/>
         </StackPanel>
 
     </DockPanel>

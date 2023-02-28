@@ -36,7 +36,7 @@ namespace ClientNUnitTest
             dataListener.Listen(10);
 
             clientTest = new Client();
-            connectionInfoTest = new ConnectionInfo(IPAddress.Parse("127.0.0.1"), 13375, "Test");
+            connectionInfoTest = new ConnectionInfo(ipAddress, 13375, "Test");
             Thread t = new Thread(() =>
             {
                 MainWindow = new MainWindow("test");
@@ -48,9 +48,6 @@ namespace ClientNUnitTest
             Thread t2 = new Thread(() =>
             {
                 ec = new EstablishConnection();
-                ec.IpAddress = "123";
-                ec.Name = "Test";
-                ec.PortNumber = "23";
             });
             t2.SetApartmentState(ApartmentState.STA);
             t2.Start();
@@ -199,11 +196,9 @@ namespace ClientNUnitTest
         [Test]
         public void EstablishConnection_Test()
         {
-            string ip = "127.0.0.1";
-            ec.IpAddress = ip;
+            IPAddress ip = IPAddress.Parse("127.0.0.1");
+            ec.IpAddress = IPAddress.Parse("127.0.0.1");
             Assert.That(ip, Is.EqualTo(ec.IpAddress));
-            ec.IpAddress = "123";
-            Assert.That(ip, Is.Not.EqualTo(ec.IpAddress));
 
             string name = "Test";
             ec.Name = name;
