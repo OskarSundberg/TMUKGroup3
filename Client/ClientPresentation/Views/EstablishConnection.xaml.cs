@@ -14,9 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Runtime.CompilerServices;
-
 using System.Net;
->>>>>>>>> Temporary merge branch 2
 
 namespace ClientPresentation.Views
 {
