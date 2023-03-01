@@ -10,10 +10,23 @@
     <Window.DataContext>
         <local:MainWindowViewModel x:Name="ClinetViewModel"/>
     </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+        </Style>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Beige"></Setter>
+        </Style>
+        </Style>
+        <Style TargetType="{x:Type StackPanel}">
+            <Setter Property="Background" Value="Beige"></Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition  Width="2*"/>
+            <ColumnDefinition  Width="0*"/>
             <ColumnDefinition  Width="18*"/>
             <ColumnDefinition  Width="36*"/>
             <ColumnDefinition Width="10*"/>
