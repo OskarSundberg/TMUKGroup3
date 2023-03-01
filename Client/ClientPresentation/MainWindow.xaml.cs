@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -22,6 +23,7 @@ using System.Windows.Shapes;
 using ClientBusiness.Model;
 using ClientPresentation.ViewModels;
 using ClientPresentation.Views;
+using System.Windows.Media;
 
 namespace ClientPresentation
 {
@@ -40,6 +42,8 @@ namespace ClientPresentation
         /// Used stop the user to send the same meassage twice in a row
         /// </summary>
         public string OldMessage { get; set; }
+   
+    
         public MainWindow()
         {
             Client client = new Client();

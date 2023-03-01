@@ -11,16 +11,15 @@
         <local:MainWindowViewModel x:Name="ClinetViewModel"/>
     </Window.DataContext>
     <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="{Binding Path=ColorScheme[0]}"></Setter>
+        </Style>
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="White"/>
-        </Style>
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="Background" Value="Beige"></Setter>
-        </Style>
+            <Setter Property="Background" Value="{Binding Path=ColorScheme[1]}"/>
         </Style>
         <Style TargetType="{x:Type StackPanel}">
-            <Setter Property="Background" Value="Beige"></Setter>
+            <Setter Property="Background" Value="{Binding Path=ColorScheme[2]}"></Setter>
         </Style>
     </Window.Resources>
 
