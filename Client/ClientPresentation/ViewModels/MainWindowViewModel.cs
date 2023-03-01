@@ -50,7 +50,7 @@ namespace ClientPresentation.ViewModels
                     ColorSchemeText[0] = Brushes.White;
                 });
             }
-            else 
+            else
             {
                 App.Current.Dispatcher.Invoke(() =>
                 {
@@ -61,7 +61,7 @@ namespace ClientPresentation.ViewModels
                 });
             }
         }
-        
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
