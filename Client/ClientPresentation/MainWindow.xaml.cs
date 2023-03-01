@@ -33,7 +33,7 @@ namespace ClientPresentation
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
-    {   
+    {
         public MainWindow mainWindow { get; set; }
         public MainWindowViewModel ViewModel { get; set; }
         /// <summary>
@@ -44,7 +44,7 @@ namespace ClientPresentation
         /// Used stop the user to send the same meassage twice in a row
         /// </summary>
         public string OldMessage { get; set; }
-   
+
         public MainWindow()
         {
             Client client = new Client();
@@ -141,7 +141,7 @@ namespace ClientPresentation
                               "\n===========================================================" +
                               "\n/emoji  \t\t\t  ->list of possible emojis in the chat." +
                               "\n===========================================================" +
-                              "\n/darkmode \t\t ->Set darkmode." + 
+                              "\n/darkmode \t\t ->Set darkmode." +
                               "\n===========================================================" +
                               "\n/lightmode\t\t ->list of possible emojis in the chat.");
 
@@ -206,7 +206,7 @@ namespace ClientPresentation
                     button.Content = user;
                     button.Foreground = Brushes.White;
                     Brush brushe = (Brush)new BrushConverter().ConvertFrom("#333333");
-                    button.Background = brushe; 
+                    button.Background = brushe;
                     button.Name = user;
                     button.Click += (sender, e) =>
                     {
