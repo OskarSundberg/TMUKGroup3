@@ -53,12 +53,20 @@ namespace Server
                     bytesRead = user.Handler.Receive(bytes);
                     MsgPacket.Message? message = msgHandler.DeserializeMsg(bytes, bytesRead);
                     //Testing purpose
-                    Console.WriteLine($"{message.Msg}");
-                    Whisper(message, user);
-                    bytes = null;
-                    message = null;
-                    bytesRead = 0;
-                    Thread.Sleep(1000);
+                    if (message != null)
+                    {
+                        Console.WriteLine($"{message.Msg}");
+                        Whisper(message, user);
+                        bytes = null;
+                        message = null;
+                        bytesRead = 0;
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        EndSession(user);
+                    }
+
                 }
                 //Check if a user have left and then ends the connection to user
                 catch
@@ -188,6 +196,8 @@ namespace Server
             {
                 user.Handler.Shutdown(SocketShutdown.Both);
                 user.Handler.Close();
+                user.DataHandler.Shutdown(SocketShutdown.Both);
+                user.DataHandler.Close();
                 userList.Remove(user);
                 string userLeave = $"{user.Name} has left the chat";
                 MsgPacket.Message msg = new(userLeave, user.Name);
