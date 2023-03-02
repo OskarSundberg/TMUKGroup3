@@ -2,6 +2,10 @@
 
 [![Build Status for Chat program][build-status]][build-log]
 
+# License 
+
+We decided that we will not put a license on the project. 
+
 ---
 
 # GitHub handles
