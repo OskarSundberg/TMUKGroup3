@@ -23,7 +23,6 @@ namespace Server
             string json = Encoding.UTF8.GetString(buffer, 0, bytesReceived);
             MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(json)!;
             return msg;
-
         }
     }
 }

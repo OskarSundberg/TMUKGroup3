@@ -255,7 +255,7 @@ namespace ServerNUnit
             Thread thread = new Thread(() => serverStartUp.StartServer());
             thread.IsBackground = true;
             thread.Start();
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
         }
         private Socket JoinServer(ServerStartUp serverStartUp, string userName)
         {
