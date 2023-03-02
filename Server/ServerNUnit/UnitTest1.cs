@@ -17,19 +17,11 @@ namespace ServerNUnit
         #region [Setup]
 
         Allchat allChatTest;
-        User testUserOne;
-        User testUserEndOne;
-        User testUserTwo;
-        User testUserEndTwo;
+        User testUserOne, testUserEndOne;
         User testUser1, testUser2, testUser3, testUser4;
         MsgPacket.Message testMessageOne;
-        Socket senderOne;
-        Socket senderTwo;
-        Socket senderEndOne;
-        Socket senderEndTwo;
-        Socket listener;
-        Socket dataListener;
-        Socket dataOne;
+        Socket senderOne, senderTwo, senderEndOne, senderEndTwo;
+        Socket listener, dataListener, dataOne, dataOneEnd;
         Socket testUser1Socket, testUser2Socket, testUser3Socket, testUser4Socket;
         Emoji emoji = new Emoji();
 
@@ -59,6 +51,8 @@ namespace ServerNUnit
 
             senderEndOne = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             senderEndOne.Connect(server);
+            dataOneEnd = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataOneEnd.Connect(serverData);
 
             senderEndTwo = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             senderEndTwo.Connect(server);
@@ -80,11 +74,10 @@ namespace ServerNUnit
             //Creating test user that will not be closed
             testUserOne = new User("Sam", senderOne);
             testUserOne.DataHandler = dataOne;
-            testUserTwo = new User("Samme", senderTwo);
 
             //Creating test user that WILL be closed only use 1 time
             testUserEndOne = new User("Gurra", senderEndOne);
-            testUserEndTwo = new User("Ivo", senderEndTwo);
+            testUserEndOne.DataHandler = dataOneEnd;
 
             testMessageOne = new MsgPacket.Message("123", testUserOne.Name);
 

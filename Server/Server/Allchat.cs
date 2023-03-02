@@ -188,6 +188,8 @@ namespace Server
             {
                 user.Handler.Shutdown(SocketShutdown.Both);
                 user.Handler.Close();
+                user.DataHandler.Shutdown(SocketShutdown.Both);
+                user.DataHandler.Close();
                 userList.Remove(user);
                 string userLeave = $"{user.Name} has left the chat";
                 MsgPacket.Message msg = new(userLeave, user.Name);
