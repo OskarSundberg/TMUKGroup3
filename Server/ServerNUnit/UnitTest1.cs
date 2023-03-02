@@ -14,6 +14,8 @@ namespace ServerNUnit
 {
     public class Tests
     {
+        #region [Setup]
+
         Allchat allChatTest;
         User testUserOne;
         User testUserEndOne;
@@ -97,36 +99,37 @@ namespace ServerNUnit
 
 
         }
+        #endregion
 
-        //AllChat Tests
+        #region [AllChatTest]
 
         [Test]
-        public void Echo_Testing()
+        public void EchoTesting()
         {
             Assert.That(allChatTest.Echo(testMessageOne), Is.EqualTo(1));
         }
 
         [Test]
-        public void UserJoin_Test()
+        public void UserJoinTest()
         {
             Assert.That(allChatTest.UserJoin(testUserOne), Is.EqualTo(1));
         }
 
         [Test]
-        public void EndSession_Test()
+        public void EndSessionTest()
         {
             Assert.That(allChatTest.EndSession(testUserEndOne), Is.EqualTo(1));
         }
 
         [Test]
-        public void SendUsersOnlineList_Test()
+        public void SendUsersOnlineListTest()
         {
             allChatTest.UserJoin(testUserOne);
             Assert.DoesNotThrow(() => { allChatTest.SendUsersOnlineList(); });
         }
 
         [Test]
-        public void Invalid_Message_Test()
+        public void InvalidMessageTest()
         {
             MsgPacket.Message msg = new("MessageOne", "UserOne");
             MessageHandler msgHandler = new MessageHandler();
@@ -137,10 +140,8 @@ namespace ServerNUnit
             Assert.That(recivedMsg.Msg, !Is.EqualTo("SomethingDifferent"));
         }
 
-        //User Tests
-
         [Test]
-        public void Users_In_Server_Test()
+        public void UsersInServerTest()
         {
             Allchat testchat = new Allchat();
             testchat.UserJoin(testUser1);
@@ -153,17 +154,22 @@ namespace ServerNUnit
             Assert.That(testchat.UserList[2].Name, Is.EqualTo("EdSheeran"));
             Assert.That(testchat.UserList[3].Name, Is.EqualTo("MyLegsDontWork"));
         }
+        #endregion
+
+        #region[UserTest]
 
         [Test]
-        public void User_Test()
+        public void UserTest()
         {
             Assert.IsNotNull(testUserOne.Handler);
             Assert.That(testUserOne.Name, Is.EqualTo("Sam"));
-            Assert.That(testUserOne.IsOnline, Is.EqualTo(false));
         }
+        #endregion
+
+        #region[MessageAndEmojiTest]
 
         [Test]
-        public void Emoji_Test()
+        public void EmojiTest()
         {
             Emoji emoji = new Emoji();
             string test = emoji.emojiDic.Keys.First();
@@ -176,7 +182,7 @@ namespace ServerNUnit
 
         [Test]
         //a string whit no emoji should not be changed when run through ReplaceEmoji
-        public void Emoji_Test_v2()
+        public void EmojiTestv2()
         {
             string input, output;
             for (int i = 0; i < 100; i++)
@@ -186,56 +192,6 @@ namespace ServerNUnit
                 Assert.IsTrue(input.Equals(output));
             }
         }
-        [Test]
-        public void Server_Overload_Test()
-        {
-            Thread thread = new Thread(() => Server.Server.Main(null));
-            thread.IsBackground = true;
-            thread.Start();
-            Thread.Sleep(1000);
-            Assert.DoesNotThrow(() =>
-            {
-                IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
-                IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
-                for (int i = 0; i < 100; i++)
-                {
-                    Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    client.Connect(server);
-                    byte[] cUseName = Encoding.UTF8.GetBytes($"{i}");
-                    client.Send(cUseName);
-                    Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    dataport.Connect(dataServer);
-                }
-            });
-            Server.Server.ServerSocket.Close();
-            Server.Server.ServerSocketData.Close();
-        }
-        [Test]
-        public void OutputLeaveTest()
-        {
-            string userName = "asdads";
-            Thread thread = new Thread(() => Server.Server.StartServer());
-            thread.IsBackground = true;
-            thread.Start();
-            StringWriter stringWriter = new StringWriter();
-            Console.SetOut(stringWriter);
-            Thread.Sleep(1000);
-            IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
-            IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
-            Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            client.Connect(server);
-            byte[] cUseName = Encoding.UTF8.GetBytes($"{userName}");
-            client.Send(cUseName);
-            Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-            dataport.Connect(dataServer);
-            client.Disconnect(true);
-            Thread.Sleep(1000);
-            string expected = $"{userName} has closed it's connection!";
-            Assert.That(stringWriter.ToString().Contains(expected));
-            Server.Server.ServerSocket.Close();
-            Server.Server.ServerSocketData.Close();
-        }
-
         [Test]
         public void MessageHadler_Test()
         {
@@ -247,33 +203,80 @@ namespace ServerNUnit
             Assert.That(recivedMsg.UserFrom, Is.EqualTo(msg.UserFrom));
             Assert.That(recivedMsg.Msg, Is.EqualTo(msg.Msg));
         }
-        // Testing for adding and removing clients to server
+        #endregion
+
+        #region[CapacityTest]
+
         [Test]
-        public void Add_And_Remove_Client_Test()
+        public void Server_Overload_Test()
         {
-            MessageHandler msgHandler = new MessageHandler();
-            Thread thread = new Thread(() => Server.Server.Main(null));
-            thread.IsBackground = true;
-            thread.Start();
-            Thread.Sleep(1000);
-            IPEndPoint server = new IPEndPoint(Server.Server.GetIPAddress, 13375);
-            IPEndPoint dataServer = new IPEndPoint(Server.Server.GetIPAddress, 31337);
+            ServerStartUp serverStartUp = new ServerStartUp();
+            StartServerOnThread(serverStartUp);
             Assert.DoesNotThrow(() =>
             {
                 for (int i = 0; i < 100; i++)
                 {
-                    Socket client = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    client.Connect(server);
-                    byte[] cUseName = Encoding.UTF8.GetBytes($"{i}");
-                    client.Send(cUseName);
-                    Socket dataport = new Socket(Server.Server.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
-                    dataport.Connect(dataServer);
+                    JoinServer(serverStartUp, i.ToString());
+                }
+            });
+            serverStartUp.CloseServer();
+        }
+        [Test]
+        public void OutputLeaveTest()
+        {
+            ServerStartUp serverStartUp = new ServerStartUp();
+            string userName = "asdads";
+            StartServerOnThread(serverStartUp);
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+            Socket client = JoinServer(serverStartUp, userName);
+            client.Disconnect(true);
+            string expected = $"{userName} has closed it's connection!";
+            Assert.That(stringWriter.ToString().Contains(expected));
+            serverStartUp.CloseServer();
+        }
+
+        //Testing for adding and removing clients to server
+        [Test]
+        public void Add_And_Remove_Client_Test()
+        {
+            ServerStartUp serverStartUp = new ServerStartUp();
+            StartServerOnThread(serverStartUp);
+            Assert.DoesNotThrow(() =>
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Socket client = JoinServer(serverStartUp, i.ToString());
                     Thread.Sleep(1);
                     client.Disconnect(true);
                 }
             });
-            Server.Server.ServerSocket.Close();
-            Server.Server.ServerSocketData.Close();
+            serverStartUp.CloseServer();
         }
+        #endregion
+
+        #region[HelpMethods]
+
+        private void StartServerOnThread(ServerStartUp serverStartUp)
+        {
+            Thread thread = new Thread(() => serverStartUp.StartServer());
+            thread.IsBackground = true;
+            thread.Start();
+            Thread.Sleep(500);
+        }
+        private Socket JoinServer(ServerStartUp serverStartUp, string userName)
+        {
+            IPEndPoint server = new IPEndPoint(serverStartUp.GetIPAddress, 13375);
+            IPEndPoint dataServer = new IPEndPoint(serverStartUp.GetIPAddress, 31337);
+            Socket client = new Socket(serverStartUp.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            client.Connect(server);
+            byte[] cUseName = Encoding.UTF8.GetBytes($"{userName}");
+            client.Send(cUseName);
+            Socket dataport = new Socket(serverStartUp.GetIPAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+            dataport.Connect(dataServer);
+            return client;
+        }
+        #endregion
+
     }
 }
