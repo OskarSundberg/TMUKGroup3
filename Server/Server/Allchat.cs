@@ -59,6 +59,7 @@ namespace Server
                     message = null;
                     bytesRead = 0;
                     Thread.Sleep(1000);
+
                 }
                 //Check if a user have left and then ends the connection to user
                 catch
