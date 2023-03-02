@@ -228,7 +228,7 @@ namespace ServerNUnit
             Thread.Sleep(1000);
             string expected = $"{userName} has closed it's connection!";
             Assert.That(stringWriter.ToString().Contains(expected));
-            serverStartUp.CloseServer();         
+            serverStartUp.CloseServer();
         }
 
         //Testing for adding and removing clients to server

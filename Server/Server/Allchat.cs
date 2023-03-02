@@ -64,7 +64,7 @@ namespace Server
                     }
                     else
                     {
-                        EndSession(user); 
+                        EndSession(user);
                     }
 
                 }
