@@ -26,7 +26,7 @@ namespace Server
                 MsgPacket.Message? msg = JsonSerializer.Deserialize<MsgPacket.Message>(json)!;
                 return msg;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine("Sus");
                 return null;

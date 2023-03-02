@@ -16,7 +16,7 @@ namespace Server
 
         private Socket? serverSocketData;
         private Socket? serverSocket;
-        
+
         /// <summary>
         /// This method starts up the server and uses a try catch block to make sure everything works as it should.
         /// </summary>
