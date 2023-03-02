@@ -26,6 +26,13 @@ messaging from client to client over the server. All messages are going to be en
 chat-service secure. We are going to create a GUI in WPF which is connected to the code-behind client 
 files. 
 
+# The final project
+
+We have made a chat-service named UniChat 2. UniChat impements Client - Server model, where we have made 
+both the sever and client. We used C# for all off the code and the GUI is implemented with WPF. We did not 
+implement encrypted. This project has been made during a course in softer development. The focus has been 
+on Ci, unit-test, and Cd among other things. UniChat 2 was used to practice the skills mentioned.
+
 ## Language
 
 We will use C#
