@@ -204,12 +204,13 @@ namespace ServerNUnit
         public void Server_Overload_Test()
         {
             ServerStartUp serverStartUp = new ServerStartUp();
-            StartServerOnThread(serverStartUp);
+            Thread thread = StartServerOnThread(serverStartUp);
             Assert.DoesNotThrow(() =>
             {
                 for (int i = 0; i < 100; i++)
                 {
                     JoinServer(serverStartUp, i.ToString());
+                    Thread.Sleep(10);
                 }
             });
             serverStartUp.CloseServer();
@@ -218,15 +219,16 @@ namespace ServerNUnit
         public void OutputLeaveTest()
         {
             ServerStartUp serverStartUp = new ServerStartUp();
+            StringWriter stringWriter = new StringWriter();
             string userName = "asdads";
             StartServerOnThread(serverStartUp);
-            StringWriter stringWriter = new StringWriter();
             Console.SetOut(stringWriter);
             Socket client = JoinServer(serverStartUp, userName);
             client.Disconnect(true);
+            Thread.Sleep(1000);
             string expected = $"{userName} has closed it's connection!";
             Assert.That(stringWriter.ToString().Contains(expected));
-            serverStartUp.CloseServer();
+            serverStartUp.CloseServer();         
         }
 
         //Testing for adding and removing clients to server
@@ -250,12 +252,13 @@ namespace ServerNUnit
 
         #region[HelpMethods]
 
-        private void StartServerOnThread(ServerStartUp serverStartUp)
+        private Thread StartServerOnThread(ServerStartUp serverStartUp)
         {
             Thread thread = new Thread(() => serverStartUp.StartServer());
             thread.IsBackground = true;
             thread.Start();
             Thread.Sleep(1000);
+            return thread;
         }
         private Socket JoinServer(ServerStartUp serverStartUp, string userName)
         {
