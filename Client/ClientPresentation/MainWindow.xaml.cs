@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -22,15 +23,18 @@ using System.Windows.Shapes;
 using ClientBusiness.Model;
 using ClientPresentation.ViewModels;
 using ClientPresentation.Views;
+using System.Windows.Media;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace ClientPresentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        public ClientPresentation.MainWindow GetMainWindow { get; set; }
+        public MainWindow mainWindow { get; set; }
         public MainWindowViewModel ViewModel { get; set; }
         /// <summary>
         /// Used to determine the time from the last meassage sent
@@ -40,6 +44,7 @@ namespace ClientPresentation
         /// Used stop the user to send the same meassage twice in a row
         /// </summary>
         public string OldMessage { get; set; }
+
         public MainWindow()
         {
             Client client = new Client();
@@ -66,6 +71,7 @@ namespace ClientPresentation
             checkConnection.Start();
             checkConnection.IsBackground = true;
             InitializeComponent();
+            mainWindow = Window.GetWindow(App.Current.MainWindow) as MainWindow;
         }
         public MainWindow(string test)
         {
@@ -127,14 +133,26 @@ namespace ClientPresentation
             {
                 ServerMessage("BotenAnna: " +
                               "\n===========================================================" +
-                              "\n/online \t\t  -> gives a list of users online." +
+                              "\n/online \t\t\t  -> gives a list of users online." +
                               "\n===========================================================" +
-                              "\n/whisper [user_tag] -> private chat with the user you choose.s" +
+                              "\n/whisper [user_tag]\t -> private chat with the user you choose.s" +
                               "\n===========================================================" +
-                              "\n/unicorn\t\t  -> unicorn in the chat for all to see." +
+                              "\n/unicorn\t\t\t -> unicorn in the chat for all to see." +
                               "\n===========================================================" +
-                              "\n/emoji  \t\t  ->list of possible emojis in the chat.");
+                              "\n/emoji  \t\t\t  ->list of possible emojis in the chat." +
+                              "\n===========================================================" +
+                              "\n/darkmode \t\t ->Set darkmode." +
+                              "\n===========================================================" +
+                              "\n/lightmode\t\t ->list of possible emojis in the chat.");
 
+            }
+            else if (msg == "/darkmode")
+            {
+                mainWindow.ClinetViewModel.ColorScheme(msg);
+            }
+            else if (msg == "/lightmode")
+            {
+                mainWindow.ClinetViewModel.ColorScheme(msg);
             }
             //stops user from sendig a empty message and the samme twice in a row
             else if (msg != "" && msg != OldMessage)
@@ -186,6 +204,9 @@ namespace ClientPresentation
                 {
                     Button button = new Button();
                     button.Content = user;
+                    button.Foreground = Brushes.White;
+                    Brush brushe = (Brush)new BrushConverter().ConvertFrom("#333333");
+                    button.Background = brushe;
                     button.Name = user;
                     button.Click += (sender, e) =>
                     {
@@ -195,6 +216,11 @@ namespace ClientPresentation
                     UsersOnlinePanel.Children.Add(button);
                 }
             });
+        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
