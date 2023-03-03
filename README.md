@@ -2,10 +2,6 @@
 
 [![Build Status for Chat program][build-status]][build-log]
 
-# License 
-
-We decided that we will not put a license on the project. 
-
 ---
 
 # GitHub handles
@@ -32,10 +28,11 @@ files.
 
 # The final project
 
-We have made a chat-service named UniChat 2. UniChat impements Client - Server model, where we have made 
-both the sever and client. We used C# for all off the code and the GUI is implemented with WPF. We did not 
-implement encrypted. This project has been made during a course in softer development. The focus has been 
-on Ci, unit-test, and Cd among other things. UniChat 2 was used to practice the skills mentioned.
+We have made a chat service named UniChat 2. UniChat implements a Client-Server model, where we have 
+made both the server and client. We used C# for all of the code, and the GUI is implemented with WPF.
+We did not implement encryption. This project has been made during a course in software development.
+The focus has been on CI, unit tests, and CD, among other things. UniChat 2 was used to practice the 
+mentioned skills.
 
 ## Language
 
