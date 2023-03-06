@@ -133,17 +133,17 @@ namespace ClientPresentation
             {
                 ServerMessage("BotenAnna: " +
                               "\n===========================================================" +
-                              "\n/online \t\t\t  -> gives a list of users online." +
+                              "\n/online \t\t\t  -> Gives a list of users online." +
                               "\n===========================================================" +
-                              "\n/whisper [user_tag]\t -> private chat with the user you choose.s" +
+                              "\n/whisper [user_tag]\t -> Private chat with the user you choose.s" +
                               "\n===========================================================" +
-                              "\n/unicorn\t\t\t -> unicorn in the chat for all to see." +
+                              "\n/unicorn\t\t\t -> Unicorn in the chat for all to see." +
                               "\n===========================================================" +
-                              "\n/emoji  \t\t\t  ->list of possible emojis in the chat." +
+                              "\n/emoji  \t\t\t  -> List of possible emojis in the chat." +
                               "\n===========================================================" +
-                              "\n/darkmode \t\t ->Set darkmode." +
+                              "\n/darkmode \t\t -> Set darkmode." +
                               "\n===========================================================" +
-                              "\n/lightmode\t\t ->list of possible emojis in the chat.");
+                              "\n/lightmode\t\t -> Set lightmode.");
 
             }
             else if (msg == "/darkmode")
